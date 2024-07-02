@@ -85,9 +85,9 @@ class ToDoListViewController: UIViewController {
     }
 
     private func configureSortMenu() {
-        let sortByDeadline = createSortAction(title: "마감일로 정렬", keyPath: "마감일", ascending: true)
-        let sortByTitle = createSortAction(title: "제목순으로", keyPath: "제목", ascending: true)
-        let sortByPriority = createSortAction(title: "우선순위순으로", keyPath: "우선순위", ascending: true, filter: "마감일 == '2'")
+        let sortByDeadline = createSortAction(title: "마감일로 정렬", keyPath: "taskDeadline", ascending: true)
+        let sortByTitle = createSortAction(title: "제목순으로", keyPath: "taskTitle", ascending: true)
+        let sortByPriority = createSortAction(title: "우선순위순으로", keyPath: "taskPriority", ascending: true, filter: "taskDeadline == '2'")
         
         let sortMenu = UIMenu(title: "정렬 옵션", children: [sortByDeadline, sortByTitle, sortByPriority])
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle.fill"), menu: sortMenu)
