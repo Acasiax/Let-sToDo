@@ -23,7 +23,8 @@ class ToDoListViewController: UIViewController {
         setupUI()
         applyConstraints()
         configureView()
-        taskTableView.rowHeight = 50
+        taskTableView.rowHeight = UITableView.automaticDimension
+       // taskTableView.estimatedRowHeight = 100
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshTaskList), name: .didAddTask, object: nil)
     }

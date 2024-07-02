@@ -20,25 +20,43 @@ class TodoListTableViewCell: UITableViewCell, IdentifiableCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         [titleLB, contentLB, dateLB, tagLB, checkCircle].forEach { contentView.addSubview($0) }
-        
-        titleLB.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(8)
-        }
-        contentLB.snp.makeConstraints { make in
-            make.top.equalTo(titleLB.snp.bottom).offset(4)
-            make.leading.equalToSuperview().offset(8)
-        }
-        dateLB.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().offset(-8)
-        }
-        tagLB.snp.makeConstraints { make in
-            make.top.equalTo(dateLB.snp.bottom).offset(4)
-            make.trailing.equalToSuperview().offset(-8)
-        }
+
         checkCircle.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview().offset(-8)
-            make.width.height.equalTo(24)
+            make.leading.equalToSuperview().offset(8)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(25)
         }
+
+        titleLB.snp.makeConstraints { make in
+            make.leading.equalTo(checkCircle.snp.trailing).offset(8)
+            make.top.equalToSuperview().offset(8)
+            make.trailing.lessThanOrEqualToSuperview().offset(-8)
+        }
+
+        contentLB.snp.makeConstraints { make in
+            make.top.equalTo(titleLB.snp.bottom).offset(2)
+            make.leading.equalTo(titleLB.snp.leading)
+            make.trailing.lessThanOrEqualToSuperview().offset(-8)
+        }
+
+        dateLB.snp.makeConstraints { make in
+            make.top.equalTo(contentLB.snp.bottom).offset(2)
+            make.leading.equalTo(contentLB.snp.leading)
+            make.trailing.lessThanOrEqualToSuperview().offset(-8)  
+        }
+
+        tagLB.snp.makeConstraints { make in
+            make.top.equalTo(dateLB.snp.bottom).offset(5)
+            make.leading.equalTo(dateLB.snp.leading)
+            make.trailing.lessThanOrEqualToSuperview().offset(-8)
+            make.bottom.equalToSuperview().offset(-8)
+        }
+        
+        titleLB.numberOfLines = 0
+        contentLB.numberOfLines = 0
+        dateLB.numberOfLines = 1
+        tagLB.numberOfLines = 1
+        
     }
     
     required init?(coder: NSCoder) {
