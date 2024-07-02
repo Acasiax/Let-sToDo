@@ -13,7 +13,30 @@
 		AA376B5E2C3412FD00C371E6 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = AA376B5D2C3412FD00C371E6 /* Base */; };
 		AA376B602C3412FF00C371E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA376B5F2C3412FF00C371E6 /* Assets.xcassets */; };
 		AA376B632C3412FF00C371E6 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = AA376B622C3412FF00C371E6 /* Base */; };
+		AA376B6D2C34142700C371E6 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B6C2C34142700C371E6 /* RegisterViewController.swift */; };
+		AA376B6F2C34145700C371E6 /* MainHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */; };
+		AA376B712C34148600C371E6 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B702C34148600C371E6 /* ToDoListViewController.swift */; };
+		AA376B742C34168B00C371E6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA376B732C34168B00C371E6 /* SnapKit */; };
+		AA376B772C3416BF00C371E6 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AA376B762C3416BF00C371E6 /* RealmSwift */; };
+		AA376B782C3416CB00C371E6 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = AA376B762C3416BF00C371E6 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA376B7B2C341B4600C371E6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B7A2C341B4600C371E6 /* BaseViewController.swift */; };
+		AA376B7F2C342C1900C371E6 /* TodoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B7E2C342C1900C371E6 /* TodoListTableViewCell.swift */; };
+		AA376B812C3437E900C371E6 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B802C3437E900C371E6 /* TaskManager.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AA376B792C3416CB00C371E6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AA376B782C3416CB00C371E6 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AA376B532C3412FD00C371E6 /* Let'sToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Let'sToDo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,6 +47,12 @@
 		AA376B5F2C3412FF00C371E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA376B622C3412FF00C371E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA376B642C3412FF00C371E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA376B6C2C34142700C371E6 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewController.swift; sourceTree = "<group>"; };
+		AA376B702C34148600C371E6 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
+		AA376B7A2C341B4600C371E6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		AA376B7E2C342C1900C371E6 /* TodoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewCell.swift; sourceTree = "<group>"; };
+		AA376B802C3437E900C371E6 /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA376B772C3416BF00C371E6 /* RealmSwift in Frameworks */,
+				AA376B742C34168B00C371E6 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +87,7 @@
 		AA376B552C3412FD00C371E6 /* Let'sToDo */ = {
 			isa = PBXGroup;
 			children = (
+				AA376B6A2C3413A700C371E6 /* ToDo */,
 				AA376B562C3412FD00C371E6 /* AppDelegate.swift */,
 				AA376B582C3412FD00C371E6 /* SceneDelegate.swift */,
 				AA376B5A2C3412FD00C371E6 /* ViewController.swift */,
@@ -65,6 +97,27 @@
 				AA376B642C3412FF00C371E6 /* Info.plist */,
 			);
 			path = "Let'sToDo";
+			sourceTree = "<group>";
+		};
+		AA376B6A2C3413A700C371E6 /* ToDo */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B6B2C3413B700C371E6 /* View */,
+			);
+			path = ToDo;
+			sourceTree = "<group>";
+		};
+		AA376B6B2C3413B700C371E6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B6C2C34142700C371E6 /* RegisterViewController.swift */,
+				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
+				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
+				AA376B7A2C341B4600C371E6 /* BaseViewController.swift */,
+				AA376B7E2C342C1900C371E6 /* TodoListTableViewCell.swift */,
+				AA376B802C3437E900C371E6 /* TaskManager.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,12 +130,17 @@
 				AA376B4F2C3412FD00C371E6 /* Sources */,
 				AA376B502C3412FD00C371E6 /* Frameworks */,
 				AA376B512C3412FD00C371E6 /* Resources */,
+				AA376B792C3416CB00C371E6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "Let'sToDo";
+			packageProductDependencies = (
+				AA376B732C34168B00C371E6 /* SnapKit */,
+				AA376B762C3416BF00C371E6 /* RealmSwift */,
+			);
 			productName = "Let'sToDo";
 			productReference = AA376B532C3412FD00C371E6 /* Let'sToDo.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +169,10 @@
 				Base,
 			);
 			mainGroup = AA376B4A2C3412FD00C371E6;
+			packageReferences = (
+				AA376B722C34168B00C371E6 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				AA376B752C3416BF00C371E6 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = AA376B542C3412FD00C371E6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,9 +200,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA376B812C3437E900C371E6 /* TaskManager.swift in Sources */,
+				AA376B6D2C34142700C371E6 /* RegisterViewController.swift in Sources */,
+				AA376B6F2C34145700C371E6 /* MainHomeViewController.swift in Sources */,
 				AA376B5B2C3412FD00C371E6 /* ViewController.swift in Sources */,
 				AA376B572C3412FD00C371E6 /* AppDelegate.swift in Sources */,
+				AA376B712C34148600C371E6 /* ToDoListViewController.swift in Sources */,
+				AA376B7B2C341B4600C371E6 /* BaseViewController.swift in Sources */,
 				AA376B592C3412FD00C371E6 /* SceneDelegate.swift in Sources */,
+				AA376B7F2C342C1900C371E6 /* TodoListTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,9 +375,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.acasia.Let-sToDo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -335,9 +407,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.acasia.Let-sToDo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -363,6 +439,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA376B722C34168B00C371E6 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		AA376B752C3416BF00C371E6 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.52.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA376B732C34168B00C371E6 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA376B722C34168B00C371E6 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		AA376B762C3416BF00C371E6 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA376B752C3416BF00C371E6 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AA376B4B2C3412FD00C371E6 /* Project object */;
 }
