@@ -26,7 +26,7 @@
 		AA376B8D2C3567CF00C371E6 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B8C2C3567CF00C371E6 /* TagViewController.swift */; };
 		AA376B8F2C3567E600C371E6 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B8E2C3567E600C371E6 /* PriorityViewController.swift */; };
 		AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B902C3567FE00C371E6 /* ImageAddViewController.swift */; };
-		AA376B942C35865C00C371E6 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B932C35865C00C371E6 /* ListCell.swift */; };
+		AA376B942C35865C00C371E6 /* MainListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B932C35865C00C371E6 /* MainListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,7 +62,7 @@
 		AA376B8C2C3567CF00C371E6 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
 		AA376B8E2C3567E600C371E6 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
 		AA376B902C3567FE00C371E6 /* ImageAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAddViewController.swift; sourceTree = "<group>"; };
-		AA376B932C35865C00C371E6 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		AA376B932C35865C00C371E6 /* MainListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,7 +145,7 @@
 		AA376B922C35864D00C371E6 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				AA376B932C35865C00C371E6 /* ListCell.swift */,
+				AA376B932C35865C00C371E6 /* MainListCell.swift */,
 				AA376B7E2C342C1900C371E6 /* TodoListTableViewCell.swift */,
 			);
 			path = Cell;
@@ -234,7 +234,7 @@
 				AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */,
 				AA376B812C3437E900C371E6 /* TaskManager.swift in Sources */,
 				AA376B6D2C34142700C371E6 /* RegisterViewController.swift in Sources */,
-				AA376B942C35865C00C371E6 /* ListCell.swift in Sources */,
+				AA376B942C35865C00C371E6 /* MainListCell.swift in Sources */,
 				AA376B6F2C34145700C371E6 /* MainHomeViewController.swift in Sources */,
 				AA376B5B2C3412FD00C371E6 /* ViewController.swift in Sources */,
 				AA376B572C3412FD00C371E6 /* AppDelegate.swift in Sources */,

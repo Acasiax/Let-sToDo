@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ListCell: UICollectionViewCell, IdentifiableCell {
+class MainListCell: UICollectionViewCell, IdentifiableCell {
     
     private let titleLabel = UILabel()
     private let countLabel = UILabel()
@@ -38,7 +38,7 @@ class ListCell: UICollectionViewCell, IdentifiableCell {
         // StackView 생성
         let stackView = UIStackView(arrangedSubviews: [titleLabel, countLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = 40
         stackView.alignment = .center
        
         contentView.addSubview(stackView)
@@ -55,6 +55,6 @@ class ListCell: UICollectionViewCell, IdentifiableCell {
       //  titleLabel.textColor = .gray
         countLabel.text = count
         countLabel.textColor = .white
-        countLabel.font = .systemFont(ofSize: 20, weight: .heavy)
+        countLabel.font = .systemFont(ofSize: 25, weight: .heavy)
     }
 }
