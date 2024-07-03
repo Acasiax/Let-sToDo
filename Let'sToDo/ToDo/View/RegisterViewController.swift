@@ -10,6 +10,7 @@ import SnapKit
 import RealmSwift
 
 class RegisterViewController: UIViewController {
+  
     
     private let titleTextField = UITextField()
     private let memoTextField = UITextField()
@@ -183,6 +184,7 @@ class RegisterViewController: UIViewController {
     
     @objc func tagButtonTapped() {
         let tagVC = TagViewController()
+        tagVC.delegate = self
         self.navigationController?.pushViewController(tagVC, animated: true)
     }
     
@@ -229,6 +231,16 @@ class RegisterViewController: UIViewController {
 }
 
 
+// 확장 부분
+extension RegisterViewController: TagDataDelegate {
+    func passTagData(_ tag: String) {
+        print("전달받은 태그: \(tag)")
+        selectedTag = tag
+        tagButton.setTitle(tag, for: .normal)
+    }
+}
+
+
 extension Notification.Name {
     static let didAddTask = Notification.Name("didAddTask")
     static let didSelectDeadline = Notification.Name("didSelectDeadline")
@@ -236,3 +248,6 @@ extension Notification.Name {
     static let didSelectPriority = Notification.Name("didSelectPriority")
     static let didSelectImage = Notification.Name("didSelectImage")
 }
+
+
+

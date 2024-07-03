@@ -8,12 +8,15 @@
 import UIKit
 import SnapKit
 
-protocol TagDataDelegate: AnyObject {
+protocol TagDataDelegate {
     func passTagData(_ tag: String)
 }
 
 
 class TagViewController: UIViewController {
+    
+    var delegate: TagDataDelegate?
+    
     let showTagButton = UIButton()
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -87,18 +90,19 @@ class TagViewController: UIViewController {
     
     @objc func backButtonTapped() {
         let enteredText = textField.text ?? "미작성"
-        print("작성한 태그: \(enteredText)")
+       // print("작성한 태그: \(enteredText)")
+        delegate?.passTagData(enteredText)
         navigationController?.popViewController(animated: true)
     }
 }
 
 
 //
-extension TagViewController: TagDataDelegate {
-    func passTagData(_ tag: String) {
-        print("전달받은 태그: \(tag)")
-        showTagButton.setTitle(tag, for: .normal)
-    }
-    
-    
-}
+//extension TagViewController: TagDataDelegate {
+//    func passTagData(_ tag: String) {
+//        print("전달받은 태그: \(tag)")
+//        showTagButton.setTitle(tag, for: .normal)
+//    }
+//    
+//    
+//}
