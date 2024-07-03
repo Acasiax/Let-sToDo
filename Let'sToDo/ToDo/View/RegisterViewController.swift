@@ -30,6 +30,7 @@ class RegisterViewController: UIViewController {
         setupViews()
         setupConstraints()
         setupTextFieldObserver()
+        setupButtonActions()
     }
     
     func setupNavigationBar() {
@@ -150,6 +151,35 @@ class RegisterViewController: UIViewController {
             saveButton.isEnabled = false
         }
     }
+    
+    
+    func setupButtonActions() {
+            deadlineButton.addTarget(self, action: #selector(deadlineButtonTapped), for: .touchUpInside)
+            tagButton.addTarget(self, action: #selector(tagButtonTapped), for: .touchUpInside)
+            priorityButton.addTarget(self, action: #selector(priorityButtonTapped), for: .touchUpInside)
+            imageAddButton.addTarget(self, action: #selector(imageAddButtonTapped), for: .touchUpInside)
+        }
+        
+    @objc func deadlineButtonTapped() {
+            let deadlineVC = DeadlineViewController()
+            self.navigationController?.pushViewController(deadlineVC, animated: true)
+        }
+        
+        @objc func tagButtonTapped() {
+            let tagVC = TagViewController()
+            self.navigationController?.pushViewController(tagVC, animated: true)
+        }
+        
+        @objc func priorityButtonTapped() {
+            let priorityVC = PriorityViewController()
+            self.navigationController?.pushViewController(priorityVC, animated: true)
+        }
+        
+        @objc func imageAddButtonTapped() {
+            let imageAddVC = ImageAddViewController()
+            self.navigationController?.pushViewController(imageAddVC, animated: true)
+        }
+    
 }
 
 extension Notification.Name {

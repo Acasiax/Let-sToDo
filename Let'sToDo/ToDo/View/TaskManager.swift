@@ -15,18 +15,20 @@ class Task: Object {
     @Persisted var taskDeadline: Date?
     @Persisted var taskPriority: String = ""
     @Persisted var taskTag: String = ""
+    @Persisted var taskImage: Data?
     
     override static func primaryKey() -> String? {
         return "taskId"
     }
     
-    convenience init(taskTitle: String, taskContent: String? = nil, taskDeadline: Date? = nil, taskPriority: String = "", taskTag: String = "") {
+    convenience init(taskTitle: String, taskContent: String? = nil, taskDeadline: Date? = nil, taskPriority: String = "", taskTag: String = "", taskImage: Data? = nil) {
         self.init()
         self.taskTitle = taskTitle
         self.taskContent = taskContent
         self.taskDeadline = taskDeadline
         self.taskPriority = taskPriority
         self.taskTag = taskTag
+        self.taskImage = taskImage
     }
 }
 
