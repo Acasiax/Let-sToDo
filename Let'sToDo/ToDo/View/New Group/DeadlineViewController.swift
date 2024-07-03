@@ -82,7 +82,7 @@ class DeadlineViewController: UIViewController {
         dateFormatter.timeStyle = .none
         let dateString = dateFormatter.string(from: selectedDate)
         print("선택한 마감일: \(dateString)")
-       // NotificationCenter.default.post(name: .didSelectDeadline, object: selectedDate)
+        NotificationCenter.default.post(name: .didSelectDeadline, object: selectedDate)
         navigationController?.popViewController(animated: true)
     }
 }

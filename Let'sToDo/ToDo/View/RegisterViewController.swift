@@ -10,7 +10,7 @@ import SnapKit
 import RealmSwift
 
 class RegisterViewController: UIViewController {
-
+    
     private let titleTextField = UITextField()
     private let memoTextField = UITextField()
     private let deadlineButton = UIButton(type: .system)
@@ -20,6 +20,11 @@ class RegisterViewController: UIViewController {
     let realm = try! Realm()
     
     private var saveButton: UIBarButtonItem!
+    
+    var selectedDeadline: Date?
+    var selectedTag: String?
+    var selectedPriority: String?
+    var selectedImage: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +36,13 @@ class RegisterViewController: UIViewController {
         setupConstraints()
         setupTextFieldObserver()
         setupButtonActions()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didSelectDeadline(_:)), name: .didSelectDeadline, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didSelectTag(_:)), name: .didSelectTag, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didSelectPriority(_:)), name: .didSelectPriority, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didSelectImage(_:)), name: .didSelectImage, object: nil)
+        
+        
     }
     
     func setupNavigationBar() {
@@ -52,6 +64,10 @@ class RegisterViewController: UIViewController {
         let newTask = Task()
         newTask.taskTitle = titleTextField.text ?? ""
         newTask.taskContent = memoTextField.text
+        newTask.taskDeadline = selectedDeadline
+        newTask.taskTag = selectedTag ?? ""
+        newTask.taskPriority = selectedPriority ?? ""
+        newTask.taskImage = selectedImage
         
         
         let realm = try! Realm()
@@ -154,34 +170,69 @@ class RegisterViewController: UIViewController {
     
     
     func setupButtonActions() {
-            deadlineButton.addTarget(self, action: #selector(deadlineButtonTapped), for: .touchUpInside)
-            tagButton.addTarget(self, action: #selector(tagButtonTapped), for: .touchUpInside)
-            priorityButton.addTarget(self, action: #selector(priorityButtonTapped), for: .touchUpInside)
-            imageAddButton.addTarget(self, action: #selector(imageAddButtonTapped), for: .touchUpInside)
-        }
-        
-    @objc func deadlineButtonTapped() {
-            let deadlineVC = DeadlineViewController()
-            self.navigationController?.pushViewController(deadlineVC, animated: true)
-        }
-        
-        @objc func tagButtonTapped() {
-            let tagVC = TagViewController()
-            self.navigationController?.pushViewController(tagVC, animated: true)
-        }
-        
-        @objc func priorityButtonTapped() {
-            let priorityVC = PriorityViewController()
-            self.navigationController?.pushViewController(priorityVC, animated: true)
-        }
-        
-        @objc func imageAddButtonTapped() {
-            let imageAddVC = ImageAddViewController()
-            self.navigationController?.pushViewController(imageAddVC, animated: true)
-        }
+        deadlineButton.addTarget(self, action: #selector(deadlineButtonTapped), for: .touchUpInside)
+        tagButton.addTarget(self, action: #selector(tagButtonTapped), for: .touchUpInside)
+        priorityButton.addTarget(self, action: #selector(priorityButtonTapped), for: .touchUpInside)
+        imageAddButton.addTarget(self, action: #selector(imageAddButtonTapped), for: .touchUpInside)
+    }
     
+    @objc func deadlineButtonTapped() {
+        let deadlineVC = DeadlineViewController()
+        self.navigationController?.pushViewController(deadlineVC, animated: true)
+    }
+    
+    @objc func tagButtonTapped() {
+        let tagVC = TagViewController()
+        self.navigationController?.pushViewController(tagVC, animated: true)
+    }
+    
+    @objc func priorityButtonTapped() {
+        let priorityVC = PriorityViewController()
+        self.navigationController?.pushViewController(priorityVC, animated: true)
+    }
+    
+    @objc func imageAddButtonTapped() {
+        let imageAddVC = ImageAddViewController()
+        self.navigationController?.pushViewController(imageAddVC, animated: true)
+    }
+    
+    
+    
+    // Notification Handlers
+    @objc func didSelectDeadline(_ notification: Notification) {
+        if let date = notification.object as? Date {
+            selectedDeadline = date
+            print("선택한 마감일: \(date)")
+        }
+    }
+    
+    @objc func didSelectTag(_ notification: Notification) {
+        if let tag = notification.object as? String {
+            selectedTag = tag
+            print("작성한 태그: \(tag)")
+        }
+    }
+    
+    @objc func didSelectPriority(_ notification: Notification) {
+        if let priority = notification.object as? String {
+            selectedPriority = priority
+            print("선택한 우선순위: \(priority)")
+        }
+    }
+    
+    @objc func didSelectImage(_ notification: Notification) {
+        if let imageData = notification.object as? Data {
+            selectedImage = imageData
+            print("이미지 선택됨")
+        }
+    }
 }
+
 
 extension Notification.Name {
     static let didAddTask = Notification.Name("didAddTask")
+    static let didSelectDeadline = Notification.Name("didSelectDeadline")
+    static let didSelectTag = Notification.Name("didSelectTag")
+    static let didSelectPriority = Notification.Name("didSelectPriority")
+    static let didSelectImage = Notification.Name("didSelectImage")
 }
