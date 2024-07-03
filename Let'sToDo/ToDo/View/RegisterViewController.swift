@@ -198,7 +198,7 @@ class RegisterViewController: UIViewController {
     
     
     
-    // Notification Handlers
+    // Notification
     @objc func didSelectDeadline(_ notification: Notification) {
         if let date = notification.object as? Date {
             selectedDeadline = date
