@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 
-class TagViewController: UIViewController {
+protocol TagDataDelegate: AnyObject {
+    func passTagData(_ tag: String)
+}
 
+
+class TagViewController: UIViewController {
+    let showTagButton = UIButton()
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "태그를 입력하세요"
@@ -44,6 +49,7 @@ class TagViewController: UIViewController {
     func setupView() {
         view.addSubview(titleLabel)
         view.addSubview(textField)
+        
     }
     
     func setupConstraints() {
@@ -84,4 +90,15 @@ class TagViewController: UIViewController {
         print("작성한 태그: \(enteredText)")
         navigationController?.popViewController(animated: true)
     }
+}
+
+
+//
+extension TagViewController: TagDataDelegate {
+    func passTagData(_ tag: String) {
+        print("전달받은 태그: \(tag)")
+        showTagButton.setTitle(tag, for: .normal)
+    }
+    
+    
 }
