@@ -49,13 +49,6 @@ class DeadlineViewController: UIViewController {
             make.horizontalEdges.equalTo(titleLabel)
         }
 
-        let saveButton = UIButton(type: .system)
-        saveButton.setTitle("저장", for: .normal)
-        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        saveButton.backgroundColor = UIColor.systemBlue
-        saveButton.setTitleColor(.white, for: .normal)
-        saveButton.layer.cornerRadius = 10
-
     }
 
     private func setupNavigationBar() {
@@ -72,7 +65,6 @@ class DeadlineViewController: UIViewController {
         let dateString = dateFormatter.string(from: selectedDate)
         delegate?.passData(dateString, type: .deadline)
         print("선택한 마감일: \(dateString)")
-        NotificationCenter.default.post(name: .didSelectDeadline, object: selectedDate)
         navigationController?.popViewController(animated: true)
     }
 }

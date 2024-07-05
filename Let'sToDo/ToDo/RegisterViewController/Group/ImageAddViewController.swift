@@ -58,7 +58,7 @@ class ImageAddViewController: UIViewController, PHPickerViewControllerDelegate {
         printController.printingItem = image
         
         if let imageData = image.jpegData(compressionQuality: 0.8) {
-               NotificationCenter.default.post(name: .didSelectImage, object: imageData)
+             //  NotificationCenter.default.post(name: .didSelectImage, object: imageData)
            }
         printController.present(animated: true, completionHandler: nil)
     }

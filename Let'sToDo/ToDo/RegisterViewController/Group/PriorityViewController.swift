@@ -69,7 +69,7 @@ class PriorityViewController: UIViewController {
     @objc func backButtonTapped() {
         let selectedSegmentTitle = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) ?? "Unknown"
         print("선택한: \(selectedSegmentTitle)")
-        delegate?.passData(selectedSegmentTitle, type: .priority)
+       delegate?.passData(selectedSegmentTitle, type: .priority)
         navigationController?.popViewController(animated: true)
         
     }

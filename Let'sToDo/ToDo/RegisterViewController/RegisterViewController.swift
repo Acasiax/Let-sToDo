@@ -52,11 +52,7 @@ class RegisterViewController: UIViewController {
         setupTextFieldObserver()
         setupButtonActions()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didSelectDeadline(_:)), name: .didSelectDeadline, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didSelectTag(_:)), name: .didSelectTag, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didSelectPriority(_:)), name: .didSelectPriority, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didSelectImage(_:)), name: .didSelectImage, object: nil)
-        
+
         //램 스키마 버전 확인하는 코드
         do {
             let version = try
@@ -225,37 +221,6 @@ class RegisterViewController: UIViewController {
         self.navigationController?.pushViewController(imageAddVC, animated: true)
     }
     
-    
-    
-    // Notification
-    @objc func didSelectDeadline(_ notification: Notification) {
-        if let date = notification.object as? Date {
-            selectedDeadline = date
-            print("선택한 마감일: \(date)")
-        }
-    }
-    
-    @objc func didSelectTag(_ notification: Notification) {
-        if let tag = notification.object as? String {
-            selectedTag = tag
-            print("작성한 태그: \(tag)")
-            
-        }
-    }
-    
-    @objc func didSelectPriority(_ notification: Notification) {
-        if let priority = notification.object as? String {
-            selectedPriority = priority
-            print("선택한 우선순위: \(priority)")
-        }
-    }
-    
-    @objc func didSelectImage(_ notification: Notification) {
-        if let imageData = notification.object as? Data {
-            selectedImage = imageData
-            print("이미지 선택됨")
-        }
-    }
 }
 
 
@@ -282,16 +247,6 @@ extension RegisterViewController: DataDelegate {
             priorityButton.setTitle("내가 선택한 우선순위: \(data)", for: .normal)
         }
     }
-}
-
-
-
-extension Notification.Name {
-    static let didAddTask = Notification.Name("didAddTask")
-    static let didSelectDeadline = Notification.Name("didSelectDeadline")
-    static let didSelectTag = Notification.Name("didSelectTag")
-    static let didSelectPriority = Notification.Name("didSelectPriority")
-    static let didSelectImage = Notification.Name("didSelectImage")
 }
 
 

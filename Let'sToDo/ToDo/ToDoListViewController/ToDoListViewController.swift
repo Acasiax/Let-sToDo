@@ -26,7 +26,7 @@ class ToDoListViewController: UIViewController {
         configureView()
         taskTableView.rowHeight = UITableView.automaticDimension
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshTaskList), name: .didAddTask, object: nil)
+     //   NotificationCenter.default.addObserver(self, selector: #selector(refreshTaskList), name: .didAddTask, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
