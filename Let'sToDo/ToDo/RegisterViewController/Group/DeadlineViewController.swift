@@ -55,15 +55,7 @@ class DeadlineViewController: UIViewController {
         saveButton.backgroundColor = UIColor.systemBlue
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.layer.cornerRadius = 10
-      //  saveButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-      //  view.addSubview(saveButton)
 
-//        saveButton.snp.makeConstraints { make in
-//            make.top.equalTo(datePicker.snp.bottom).offset(20)
-//            make.centerX.equalToSuperview()
-//            make.width.equalTo(120)
-//            make.height.equalTo(44)
-//        }
     }
 
     private func setupNavigationBar() {
@@ -71,10 +63,6 @@ class DeadlineViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButton
     }
 
-//    @objc private func confirmButtonTapped() {
-//        // 확인 버튼 액션
-//        print("저장버튼 클릭")
-//    }
 
     @objc private func backButtonTapped() {
         let selectedDate = datePicker.date

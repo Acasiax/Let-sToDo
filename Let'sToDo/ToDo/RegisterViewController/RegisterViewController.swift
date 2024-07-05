@@ -57,7 +57,14 @@ class RegisterViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didSelectPriority(_:)), name: .didSelectPriority, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didSelectImage(_:)), name: .didSelectImage, object: nil)
         
-        
+        //램 스키마 버전 확인하는 코드
+        do {
+            let version = try
+            schemaVersionAtURL(realm.configuration.fileURL!)
+            print("램 스키마 버전은: \(version)")
+        } catch {
+            print(error)
+        }
     }
     
     func setupNavigationBar() {
@@ -289,3 +296,5 @@ extension Notification.Name {
 
 
 
+//노티피케이션
+//post보다 addObserver가 항상 먼저 등록이 되어애 정상적으로 실행이 됨!!

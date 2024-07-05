@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,7 +14,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+       //1. 마이그레이션이 꼭 왜 필요할까?
+        //2. 왜 if else로 쓰지 않을까?
+        let config = Realm.Configuration(schemaVersion: 0) {migration, oldShemaVersion in
+        
+            
+//            if oldShemaVersion < 1 {
+//                
+//            }
+//            
+//            if oldShemaVersion < 2 {
+//                migration.renameProperty(onType: <#T##String#>, from: <#T##String#>, to: <#T##String#>)
+//            }
+            
+        }
+        
+        Realm.Configuration.defaultConfiguration = config
+        
         return true
     }
 

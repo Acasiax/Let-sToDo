@@ -116,20 +116,20 @@
 			children = (
 				AA376B9F2C38048800C371E6 /* MainHomeViewController */,
 				AA376B9E2C38046500C371E6 /* RegisterViewController */,
-				AA376B6B2C3413B700C371E6 /* View */,
+				AA376BA02C380D3600C371E6 /* ToDoListViewController */,
+				AA376B6B2C3413B700C371E6 /* Manager */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
 		};
-		AA376B6B2C3413B700C371E6 /* View */ = {
+		AA376B6B2C3413B700C371E6 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				AA376B802C3437E900C371E6 /* TaskManager.swift */,
 				AA376B922C35864D00C371E6 /* Cell */,
-				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
 				AA376B7A2C341B4600C371E6 /* BaseViewController.swift */,
 			);
-			path = View;
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		AA376B892C3567A600C371E6 /* Group */ = {
@@ -167,6 +167,14 @@
 				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
 			);
 			path = MainHomeViewController;
+			sourceTree = "<group>";
+		};
+		AA376BA02C380D3600C371E6 /* ToDoListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
+			);
+			path = ToDoListViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
