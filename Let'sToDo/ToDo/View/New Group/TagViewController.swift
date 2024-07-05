@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Toast
 
 protocol TagDataDelegate {
     func passTagData(_ tag: String)
@@ -92,6 +93,7 @@ class TagViewController: UIViewController {
         let enteredText = textField.text ?? "미작성"
        // print("작성한 태그: \(enteredText)")
         delegate?.passTagData(enteredText)
+       
         navigationController?.popViewController(animated: true)
     }
 }

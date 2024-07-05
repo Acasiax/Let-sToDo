@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import RealmSwift
+import Toast
 
 class RegisterViewController: UIViewController {
   
@@ -212,6 +213,7 @@ class RegisterViewController: UIViewController {
         if let tag = notification.object as? String {
             selectedTag = tag
             print("작성한 태그: \(tag)")
+            
         }
     }
     
@@ -237,6 +239,7 @@ extension RegisterViewController: TagDataDelegate {
         print("전달받은 태그: \(tag)")
         selectedTag = tag
         tagButton.setTitle(tag, for: .normal)
+        view.makeToast("태그가 저장되었어요(임시,아직 램에 저장 안함)")
     }
 }
 

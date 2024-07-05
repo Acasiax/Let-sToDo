@@ -27,6 +27,7 @@
 		AA376B8F2C3567E600C371E6 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B8E2C3567E600C371E6 /* PriorityViewController.swift */; };
 		AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B902C3567FE00C371E6 /* ImageAddViewController.swift */; };
 		AA376B942C35865C00C371E6 /* MainListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B932C35865C00C371E6 /* MainListCell.swift */; };
+		AA376B9D2C37B7F400C371E6 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = AA376B9C2C37B7F400C371E6 /* Toast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -70,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA376B9D2C37B7F400C371E6 /* Toast in Frameworks */,
 				AA376B772C3416BF00C371E6 /* RealmSwift in Frameworks */,
 				AA376B742C34168B00C371E6 /* SnapKit in Frameworks */,
 			);
@@ -171,6 +173,7 @@
 			packageProductDependencies = (
 				AA376B732C34168B00C371E6 /* SnapKit */,
 				AA376B762C3416BF00C371E6 /* RealmSwift */,
+				AA376B9C2C37B7F400C371E6 /* Toast */,
 			);
 			productName = "Let'sToDo";
 			productReference = AA376B532C3412FD00C371E6 /* Let'sToDo.app */;
@@ -203,6 +206,7 @@
 			packageReferences = (
 				AA376B722C34168B00C371E6 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				AA376B752C3416BF00C371E6 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				AA376B9B2C37B7F400C371E6 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = AA376B542C3412FD00C371E6 /* Products */;
 			projectDirPath = "";
@@ -493,6 +497,14 @@
 				version = 10.52.1;
 			};
 		};
+		AA376B9B2C37B7F400C371E6 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -505,6 +517,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AA376B752C3416BF00C371E6 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		AA376B9C2C37B7F400C371E6 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA376B9B2C37B7F400C371E6 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
