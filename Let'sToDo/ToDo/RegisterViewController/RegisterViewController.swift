@@ -86,9 +86,7 @@ class RegisterViewController: UIViewController {
         newTask.taskTag = selectedTag ?? ""
         newTask.taskPriority = selectedPriority ?? ""
         newTask.taskImage = selectedImage
-           
-        
-        
+
         let realm = try! Realm()
         try! realm.write {
             realm.add(newTask)
@@ -97,8 +95,8 @@ class RegisterViewController: UIViewController {
         let toDoListVC = ToDoListViewController()
         showToast?()
         
-        let navController = UINavigationController(rootViewController: toDoListVC)
-        self.present(navController, animated: true, completion: nil)
+
+        self.navigationController?.pushViewController(toDoListVC, animated: true)
         
     }
     

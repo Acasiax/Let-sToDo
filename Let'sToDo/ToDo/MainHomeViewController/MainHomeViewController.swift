@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
 
 class MainHomeViewController: UIViewController {
     
@@ -15,7 +16,6 @@ class MainHomeViewController: UIViewController {
         label.text = "전체"
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textColor = .black
-       // label.textAlignment = .center
         return label
     }()
     
@@ -30,12 +30,20 @@ class MainHomeViewController: UIViewController {
     }()
     
     private var collectionView: UICollectionView!
+    private let realmDb = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
+
     
     func setupViews() {
         view.backgroundColor = .systemBackground
@@ -55,28 +63,26 @@ class MainHomeViewController: UIViewController {
         view.addSubview(titleLabel)
     }
     
-    
     func setupConstraints() {
-          titleLabel.snp.makeConstraints { make in
-              make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-              make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-          }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
 
-          collectionView.snp.makeConstraints { make in
-              make.top.equalTo(titleLabel.snp.bottom).offset(20)
-              make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-              make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-              make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
-          }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
+        }
 
-          newTaskButton.snp.makeConstraints { make in
-              make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-              make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-              make.height.equalTo(50)
-              make.width.equalTo(150)
-          }
-      }
-    
+        newTaskButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(50)
+            make.width.equalTo(150)
+        }
+    }
     
     @objc func registerButtonTapped() {
         let registerVC = RegisterViewController()
@@ -84,9 +90,23 @@ class MainHomeViewController: UIViewController {
         self.present(navController, animated: true, completion: nil)
     }
    
+    private func fetchCount(for filter: String) -> Int {
+        switch filter {
+        case "오늘":
+            return realmDb.objects(Task.self).filter("taskDeadline <= %@", Date()).count
+        case "예정":
+            return realmDb.objects(Task.self).filter("taskDeadline > %@", Date()).count
+        case "전체":
+            return realmDb.objects(Task.self).count
+        case "깃발 표시":
+            return realmDb.objects(Task.self).filter("taskTag == '깃발'").count
+        case "완료됨":
+            return realmDb.objects(Task.self).filter("taskPriority == '완료'").count
+        default:
+            return 0
+        }
+    }
 }
-
-
 
 extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -97,17 +117,23 @@ extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainListCell.identifier, for: indexPath) as! MainListCell
         
+        let count: Int
         switch indexPath.item {
         case 0:
-            cell.configure(title: "오늘", count: "0")
+            count = fetchCount(for: "오늘")
+            cell.configure(title: "오늘", count: "\(count)")
         case 1:
-            cell.configure(title: "예정", count: "0")
+            count = fetchCount(for: "예정")
+            cell.configure(title: "예정", count: "\(count)")
         case 2:
-            cell.configure(title: "전체", count: "1")
+            count = fetchCount(for: "전체")
+            cell.configure(title: "전체", count: "\(count)")
         case 3:
-            cell.configure(title: "깃발 표시", count: "0")
+            count = fetchCount(for: "깃발 표시")
+            cell.configure(title: "깃발 표시", count: "\(count)")
         case 4:
-            cell.configure(title: "완료됨", count: "0")
+            count = fetchCount(for: "완료됨")
+            cell.configure(title: "완료됨", count: "\(count)")
         default:
             break
         }
@@ -115,6 +141,26 @@ extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewData
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let filter: String
+        
+        switch indexPath.item {
+        case 0:
+            filter = "오늘"
+        case 1:
+            filter = "예정"
+        case 2:
+            filter = "전체"
+        case 3:
+            filter = "깃발 표시"
+        case 4:
+            filter = "완료됨"
+        default:
+            return
+        }
+        
+        let toDoListVC = ToDoListViewController()
+        toDoListVC.filter = filter
+        self.navigationController?.pushViewController(toDoListVC, animated: true)
+    }
 }
-
-
