@@ -114,6 +114,8 @@
 		AA376B6A2C3413A700C371E6 /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
+				AA376B9F2C38048800C371E6 /* MainHomeViewController */,
+				AA376B9E2C38046500C371E6 /* RegisterViewController */,
 				AA376B6B2C3413B700C371E6 /* View */,
 			);
 			path = ToDo;
@@ -122,18 +124,15 @@
 		AA376B6B2C3413B700C371E6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AA376B802C3437E900C371E6 /* TaskManager.swift */,
 				AA376B922C35864D00C371E6 /* Cell */,
-				AA376B892C3567A600C371E6 /* New Group */,
-				AA376B6C2C34142700C371E6 /* RegisterViewController.swift */,
-				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
 				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
 				AA376B7A2C341B4600C371E6 /* BaseViewController.swift */,
-				AA376B802C3437E900C371E6 /* TaskManager.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		AA376B892C3567A600C371E6 /* New Group */ = {
+		AA376B892C3567A600C371E6 /* Group */ = {
 			isa = PBXGroup;
 			children = (
 				AA376B8A2C3567B700C371E6 /* DeadlineViewController.swift */,
@@ -141,7 +140,7 @@
 				AA376B8E2C3567E600C371E6 /* PriorityViewController.swift */,
 				AA376B902C3567FE00C371E6 /* ImageAddViewController.swift */,
 			);
-			path = "New Group";
+			path = Group;
 			sourceTree = "<group>";
 		};
 		AA376B922C35864D00C371E6 /* Cell */ = {
@@ -151,6 +150,23 @@
 				AA376B7E2C342C1900C371E6 /* TodoListTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		AA376B9E2C38046500C371E6 /* RegisterViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B6C2C34142700C371E6 /* RegisterViewController.swift */,
+				AA376B892C3567A600C371E6 /* Group */,
+			);
+			path = RegisterViewController;
+			sourceTree = "<group>";
+		};
+		AA376B9F2C38048800C371E6 /* MainHomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
+			);
+			path = MainHomeViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

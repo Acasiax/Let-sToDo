@@ -9,14 +9,10 @@ import UIKit
 import SnapKit
 import Toast
 
-protocol TagDataDelegate {
-    func passTagData(_ tag: String)
-}
-
 
 class TagViewController: UIViewController {
     
-    var delegate: TagDataDelegate?
+    var delegate: DataDelegate?
     
     let showTagButton = UIButton()
     let titleLabel: UILabel = {
@@ -90,21 +86,12 @@ class TagViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
+        
         let enteredText = textField.text ?? "미작성"
-       // print("작성한 태그: \(enteredText)")
-        delegate?.passTagData(enteredText)
-       
+        delegate?.passData(enteredText, type: .tag)
+        view.makeToast("태그가 저장되었어요.")
         navigationController?.popViewController(animated: true)
     }
 }
 
 
-//
-//extension TagViewController: TagDataDelegate {
-//    func passTagData(_ tag: String) {
-//        print("전달받은 태그: \(tag)")
-//        showTagButton.setTitle(tag, for: .normal)
-//    }
-//    
-//    
-//}

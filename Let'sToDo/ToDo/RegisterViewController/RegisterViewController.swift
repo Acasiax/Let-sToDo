@@ -10,9 +10,19 @@ import SnapKit
 import RealmSwift
 import Toast
 
+protocol DataDelegate {
+    func passData(_ data: String, type: DataType)
+}
+
+enum DataType {
+    case tag
+    case priority
+    case deadline
+}
+
+
 class RegisterViewController: UIViewController {
   
-    
     private let titleTextField = UITextField()
     private let memoTextField = UITextField()
     private let deadlineButton = UIButton(type: .system)
@@ -27,6 +37,9 @@ class RegisterViewController: UIViewController {
     var selectedTag: String?
     var selectedPriority: String?
     var selectedImage: Data?
+    
+    
+    var showToast: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +83,7 @@ class RegisterViewController: UIViewController {
         newTask.taskTag = selectedTag ?? ""
         newTask.taskPriority = selectedPriority ?? ""
         newTask.taskImage = selectedImage
+           
         
         
         let realm = try! Realm()
@@ -78,8 +92,11 @@ class RegisterViewController: UIViewController {
         }
         
         let toDoListVC = ToDoListViewController()
+        showToast?()
+        
         let navController = UINavigationController(rootViewController: toDoListVC)
         self.present(navController, animated: true, completion: nil)
+        
     }
     
     func setupViews() {
@@ -180,6 +197,7 @@ class RegisterViewController: UIViewController {
     
     @objc func deadlineButtonTapped() {
         let deadlineVC = DeadlineViewController()
+        deadlineVC.delegate = self
         self.navigationController?.pushViewController(deadlineVC, animated: true)
     }
     
@@ -191,6 +209,7 @@ class RegisterViewController: UIViewController {
     
     @objc func priorityButtonTapped() {
         let priorityVC = PriorityViewController()
+        priorityVC.delegate = self
         self.navigationController?.pushViewController(priorityVC, animated: true)
     }
     
@@ -234,14 +253,30 @@ class RegisterViewController: UIViewController {
 
 
 // 확장 부분
-extension RegisterViewController: TagDataDelegate {
-    func passTagData(_ tag: String) {
-        print("전달받은 태그: \(tag)")
-        selectedTag = tag
-        tagButton.setTitle(tag, for: .normal)
-        view.makeToast("태그가 저장되었어요(임시,아직 램에 저장 안함)")
+extension RegisterViewController: DataDelegate {
+    func passData(_ data: String, type: DataType) {
+        switch type {
+        case .deadline:
+            print("전달받은 마감일: \(data)")
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            if let date = dateFormatter.date(from: data) {
+                selectedDeadline = date
+                deadlineButton.setTitle("내가 선택한 마감일: \(data)", for: .normal)
+            }
+        case .tag:
+            print("전달받은 태그: \(data)")
+            selectedTag = data
+            tagButton.setTitle("내가 선택한 태그: \(data)", for: .normal)
+        case .priority:
+            print("전달받은 우선순위: \(data)")
+            selectedPriority = data
+            priorityButton.setTitle("내가 선택한 우선순위: \(data)", for: .normal)
+        }
     }
 }
+
 
 
 extension Notification.Name {

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class PriorityViewController: UIViewController {
-
+    var delegate: DataDelegate?
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "우선순위를 선택하세요"
@@ -69,6 +69,8 @@ class PriorityViewController: UIViewController {
     @objc func backButtonTapped() {
         let selectedSegmentTitle = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) ?? "Unknown"
         print("선택한: \(selectedSegmentTitle)")
+        delegate?.passData(selectedSegmentTitle, type: .priority)
         navigationController?.popViewController(animated: true)
+        
     }
 }

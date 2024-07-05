@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 class DeadlineViewController: UIViewController {
-
+    var delegate: DataDelegate?
+    
     private let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
@@ -54,15 +55,15 @@ class DeadlineViewController: UIViewController {
         saveButton.backgroundColor = UIColor.systemBlue
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.layer.cornerRadius = 10
-        saveButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-        view.addSubview(saveButton)
+      //  saveButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+      //  view.addSubview(saveButton)
 
-        saveButton.snp.makeConstraints { make in
-            make.top.equalTo(datePicker.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(120)
-            make.height.equalTo(44)
-        }
+//        saveButton.snp.makeConstraints { make in
+//            make.top.equalTo(datePicker.snp.bottom).offset(20)
+//            make.centerX.equalToSuperview()
+//            make.width.equalTo(120)
+//            make.height.equalTo(44)
+//        }
     }
 
     private func setupNavigationBar() {
@@ -70,10 +71,10 @@ class DeadlineViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButton
     }
 
-    @objc private func confirmButtonTapped() {
-        // 확인 버튼 액션
-        print("저장버튼 클릭")
-    }
+//    @objc private func confirmButtonTapped() {
+//        // 확인 버튼 액션
+//        print("저장버튼 클릭")
+//    }
 
     @objc private func backButtonTapped() {
         let selectedDate = datePicker.date
@@ -81,6 +82,7 @@ class DeadlineViewController: UIViewController {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         let dateString = dateFormatter.string(from: selectedDate)
+        delegate?.passData(dateString, type: .deadline)
         print("선택한 마감일: \(dateString)")
         NotificationCenter.default.post(name: .didSelectDeadline, object: selectedDate)
         navigationController?.popViewController(animated: true)
