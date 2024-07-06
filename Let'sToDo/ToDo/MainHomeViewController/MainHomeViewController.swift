@@ -62,6 +62,8 @@ final class MainHomeViewController: BaseViewController {
         configureView()
         setupHierarchy()
         setupConstraints()
+        print("램 파일 경로-> \(Realm.Configuration.defaultConfiguration.fileURL!)")
+
     }
 
     override func viewWillAppear(_ animated: Bool) {

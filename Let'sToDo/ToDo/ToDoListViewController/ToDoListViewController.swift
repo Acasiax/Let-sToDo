@@ -137,17 +137,17 @@ class ToDoListViewController: UIViewController {
 }
 
 extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return TodoList.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TodoListTableViewCell.identifier, for: indexPath) as! TodoListTableViewCell
         let todotask = TodoList[indexPath.row]
-
+        
         configureCell(cell, with: todotask)
-
+        
         return cell
     }
     
@@ -160,7 +160,27 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
-
+    
+    //    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    //        let detailAction = UIContextualAction(style: .normal, title: "취소") { action, view, success in
+    //            success(true)
+    //        }
+    //        detailAction.backgroundColor = .systemGray
+    //
+    //        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
+    //            self.dbManager.remove(self.TodoList[indexPath.row])
+    //
+    //
+    //            success(true)
+    //            tableView.reloadData()
+    //        }
+    //        deleteAction.backgroundColor = .red
+    //
+    //        return UISwipeActionsConfiguration(actions: [deleteAction, detailAction])
+    //    }
+    //}
+    
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let detailAction = UIContextualAction(style: .normal, title: "취소") { action, view, success in
             success(true)
@@ -168,7 +188,16 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
         detailAction.backgroundColor = .systemGray
 
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
-            self.dbManager.remove(self.TodoList[indexPath.row])
+            let taskToDelete = self.TodoList[indexPath.row]
+            
+            // 이미지 파일 삭제
+            if let imageName = taskToDelete.taskImagePath {
+                self.removeImageFromDocument(filename: imageName)
+            }
+            
+            // 데이터베이스에서 항목 삭제
+            self.dbManager.remove(taskToDelete)
+            
             success(true)
             tableView.reloadData()
         }
@@ -176,5 +205,6 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
 
         return UISwipeActionsConfiguration(actions: [deleteAction, detailAction])
     }
-}
 
+
+}

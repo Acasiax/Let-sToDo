@@ -102,12 +102,29 @@ class DetailTodoViewController: UIViewController {
         priorityLabel.text = "우선순위: \(task.taskPriority)"
         tagLabel.text = "태그: \(task.taskTag)"
         
-        if let imageData = task.taskImage {
-            imageView.image = UIImage(data: imageData)
+      //  if let imageData = task.taskImagePath {
+          //  imageView.image = UIImage(data: imageData)
+        if let imagePath = task.taskImagePath {
+            imageView.image = loadImageFromDocument(filename: imagePath)
         } else {
             imageView.image = nil
         }
     }
+    
+    func loadImageFromDocument(filename: String) -> UIImage? {
+        guard let documentDirectory = FileManager.default.urls(
+               for: .documentDirectory,
+               in: .userDomainMask).first else { return nil }
+        
+        let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
+        
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            return UIImage(contentsOfFile: fileURL.path)
+        } else {
+            return nil
+        }
+    }
+
     
     private func formatDate(_ date: Date?) -> String {
         guard let date = date else { return "No deadline" }

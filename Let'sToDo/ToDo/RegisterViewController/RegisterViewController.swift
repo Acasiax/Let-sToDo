@@ -62,30 +62,60 @@ class RegisterViewController: BaseViewController {
         dismiss(animated: true)
     }
 
+//    @objc private func saveAction() {
+//        let newTask = ToDoList()
+//        newTask.taskTitle = titleTextField.text ?? ""
+//        newTask.taskContent = memoTextField.text
+//        newTask.taskDeadline = selectedDeadline
+//        newTask.taskTag = selectedTag ?? ""
+//        newTask.taskPriority = selectedPriority ?? ""
+//        newTask.taskImage = selectedImage
+//
+//        do {
+//            let realm = try Realm()
+//            try realm.write {
+//                realm.add(newTask)
+//            }
+//        } catch {
+//            print("Failed to write to realm: \(error)")
+//            self.view.makeToast("Error saving task")
+//            return
+//        }
+//
+//        delegate?.didAddNewTask()
+//        dismiss(animated: true)
+//    }
+
+    
     @objc private func saveAction() {
-        let newTask = ToDoList()
-        newTask.taskTitle = titleTextField.text ?? ""
-        newTask.taskContent = memoTextField.text
-        newTask.taskDeadline = selectedDeadline
-        newTask.taskTag = selectedTag ?? ""
-        newTask.taskPriority = selectedPriority ?? ""
-        newTask.taskImage = selectedImage
+            let newTask = ToDoList()
+            newTask.taskTitle = titleTextField.text ?? ""
+            newTask.taskContent = memoTextField.text
+            newTask.taskDeadline = selectedDeadline
+            newTask.taskTag = selectedTag ?? ""
+            newTask.taskPriority = selectedPriority ?? ""
 
-        do {
-            let realm = try Realm()
-            try realm.write {
-                realm.add(newTask)
+            if let selectedImage = selectedImage {
+                let filename = UUID().uuidString
+                saveImageToDocument(image: UIImage(data: selectedImage)!, filename: filename)
+                newTask.taskImagePath = filename // 파일 이름을 저장
             }
-        } catch {
-            print("Failed to write to realm: \(error)")
-            self.view.makeToast("Error saving task")
-            return
+
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    realm.add(newTask)
+                }
+            } catch {
+                print("Failed to write to realm: \(error)")
+                self.view.makeToast("Error saving task")
+                return
+            }
+
+            delegate?.didAddNewTask()
+            dismiss(animated: true)
         }
-
-        delegate?.didAddNewTask()
-        dismiss(animated: true)
-    }
-
+    
     override func setupHierarchy() {
         super.setupHierarchy()
 

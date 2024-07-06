@@ -30,8 +30,9 @@ class ToDoList: Object {
     @Persisted var taskDeadline: Date?
     @Persisted var taskPriority: String = ""
     @Persisted var taskTag: String = ""
-    @Persisted var taskImage: Data?
-    @Persisted var detail88: List<DetailTodo> // 여러 개의 DetailTodo 
+   // @Persisted var taskImage: Data?
+    @Persisted var taskImagePath: String?
+    @Persisted var detail88: List<DetailTodo> // 여러 개의 DetailTodo
     
     override static func primaryKey() -> String? {
         return "taskId"
@@ -44,7 +45,7 @@ class ToDoList: Object {
         self.taskDeadline = taskDeadline
         self.taskPriority = taskPriority
         self.taskTag = taskTag
-        self.taskImage = taskImage
+        self.taskImagePath = taskImagePath
     }
 }
 
