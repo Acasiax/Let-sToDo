@@ -18,6 +18,9 @@ enum DataType {
     case deadline
 }
 
+protocol RegisterViewControllerDelegate: AnyObject {
+    func didAddNewTask() //등록한 추가를 바로 main뷰에 딜리게이트로 반영
+}
 
 class ToDoList: Object {
     @Persisted var taskId: String = UUID().uuidString

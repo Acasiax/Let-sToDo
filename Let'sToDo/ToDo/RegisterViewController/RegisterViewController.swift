@@ -9,66 +9,60 @@ import UIKit
 import SnapKit
 import RealmSwift
 import Toast
+import PhotosUI
 
+class RegisterViewController: BaseViewController {
 
-class RegisterViewController: UIViewController {
-  
     private let titleTextField = UITextField()
     private let memoTextField = UITextField()
     private let deadlineButton = UIButton(type: .system)
     private let tagButton = UIButton(type: .system)
     private let priorityButton = UIButton(type: .system)
     private let imageAddButton = UIButton(type: .system)
-    let realm = try! Realm()
-    
     private var saveButton: UIBarButtonItem!
-    
+
     var selectedDeadline: Date?
     var selectedTag: String?
     var selectedPriority: String?
     var selectedImage: Data?
-    
-    
-    var showToast: (() -> Void)?
-    
+
+    weak var delegate: RegisterViewControllerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(realm.configuration.fileURL)
-        
+
         setupNavigationBar()
         setupViews()
-        setupConstraints()
         setupTextFieldObserver()
         setupButtonActions()
-        
 
-        //램 스키마 버전 확인하는 코드
-        do {
-            let version = try
-            schemaVersionAtURL(realm.configuration.fileURL!)
-            print("램 스키마 버전은: \(version)")
-        } catch {
-            print(error)
+        // Realm 스키마 버전 확인하는 코드
+        if let fileURL = Realm.Configuration.defaultConfiguration.fileURL {
+            do {
+                let version = try schemaVersionAtURL(fileURL)
+                print("Realm 스키마 버전은: \(version)")
+            } catch {
+                print(error)
+            }
         }
     }
-    
-    func setupNavigationBar() {
+
+    private func setupNavigationBar() {
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelAction))
         navigationItem.leftBarButtonItem = cancelButton
-        
+
         saveButton = UIBarButtonItem(title: "추가", style: .done, target: self, action: #selector(saveAction))
         navigationItem.rightBarButtonItem = saveButton
         saveButton.isEnabled = false // 초기 상태에서 비활성화
-        
+
         navigationItem.title = "새로운 할 일"
     }
-    
-    @objc func cancelAction() {
+
+    @objc private func cancelAction() {
         dismiss(animated: true)
     }
-    
-    @objc func saveAction() {
+
+    @objc private func saveAction() {
         let newTask = ToDoList()
         newTask.taskTitle = titleTextField.text ?? ""
         newTask.taskContent = memoTextField.text
@@ -77,30 +71,24 @@ class RegisterViewController: UIViewController {
         newTask.taskPriority = selectedPriority ?? ""
         newTask.taskImage = selectedImage
 
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(newTask)
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(newTask)
+            }
+        } catch {
+            print("Failed to write to realm: \(error)")
+            self.view.makeToast("Error saving task")
+            return
         }
-        
-        let toDoListVC = ToDoListViewController()
-        showToast?()
-        
 
-        self.navigationController?.pushViewController(toDoListVC, animated: true)
-        
+        delegate?.didAddNewTask()
+        dismiss(animated: true)
     }
-    
-    func setupViews() {
-        view.backgroundColor = .systemBackground
-        
-        configureTextField(titleTextField, placeholder: "제목")
-        configureTextField(memoTextField, placeholder: "메모")
-        
-        setupButton(deadlineButton, title: "마감일")
-        setupButton(tagButton, title: "태그")
-        setupButton(priorityButton, title: "우선 순위")
-        setupButton(imageAddButton, title: "이미지 추가")
-        
+
+    override func setupHierarchy() {
+        super.setupHierarchy()
+
         view.addSubview(titleTextField)
         view.addSubview(memoTextField)
         view.addSubview(deadlineButton)
@@ -108,16 +96,70 @@ class RegisterViewController: UIViewController {
         view.addSubview(priorityButton)
         view.addSubview(imageAddButton)
     }
-    
-    func configureTextField(_ textField: UITextField, placeholder: String) {
+
+    override func setupConstraints() {
+        super.setupConstraints()
+
+        let padding: CGFloat = 16
+
+        titleTextField.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(padding)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
+            make.height.equalTo(50)
+        }
+
+        memoTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleTextField.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
+            make.height.equalTo(130)
+        }
+
+        deadlineButton.snp.makeConstraints { make in
+            make.top.equalTo(memoTextField.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
+            make.height.equalTo(44)
+        }
+
+        tagButton.snp.makeConstraints { make in
+            make.top.equalTo(deadlineButton.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
+            make.height.equalTo(44)
+        }
+
+        priorityButton.snp.makeConstraints { make in
+            make.top.equalTo(tagButton.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
+            make.height.equalTo(44)
+        }
+
+        imageAddButton.snp.makeConstraints { make in
+            make.top.equalTo(priorityButton.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
+            make.height.equalTo(44)
+        }
+    }
+
+    private func setupViews() {
+        view.backgroundColor = .systemBackground
+
+        configureTextField(titleTextField, placeholder: "제목")
+        configureTextField(memoTextField, placeholder: "메모")
+
+        setupButton(deadlineButton, title: "마감일")
+        setupButton(tagButton, title: "태그")
+        setupButton(priorityButton, title: "우선 순위")
+        setupButton(imageAddButton, title: "이미지 추가")
+    }
+
+    private func configureTextField(_ textField: UITextField, placeholder: String) {
         textField.placeholder = placeholder
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .secondarySystemBackground
         textField.textColor = .label
         textField.clearButtonMode = .whileEditing
     }
-    
-    func setupButton(_ button: UIButton, title: String) {
+
+    private func setupButton(_ button: UIButton, title: String) {
         button.setTitle(title, for: .normal)
         button.backgroundColor = .darkGray
         button.layer.cornerRadius = 10
@@ -125,94 +167,48 @@ class RegisterViewController: UIViewController {
         button.contentHorizontalAlignment = .left
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     }
-    
-    func setupConstraints() {
-        let padding: CGFloat = 16
-        
-        titleTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(50)
-        }
-        
-        memoTextField.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(130)
-        }
-        
-        deadlineButton.snp.makeConstraints { make in
-            make.top.equalTo(memoTextField.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-        
-        tagButton.snp.makeConstraints { make in
-            make.top.equalTo(deadlineButton.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-        
-        priorityButton.snp.makeConstraints { make in
-            make.top.equalTo(tagButton.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-        
-        imageAddButton.snp.makeConstraints { make in
-            make.top.equalTo(priorityButton.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-    }
-    
-    func setupTextFieldObserver() {
+
+    private func setupTextFieldObserver() {
         titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
-    
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        if let text = titleTextField.text, !text.isEmpty {
-            saveButton.isEnabled = true
-        } else {
-            saveButton.isEnabled = false
-        }
+
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        saveButton.isEnabled = !(titleTextField.text?.isEmpty ?? true)
     }
-    
-    
-    func setupButtonActions() {
+
+    private func setupButtonActions() {
         deadlineButton.addTarget(self, action: #selector(deadlineButtonTapped), for: .touchUpInside)
         tagButton.addTarget(self, action: #selector(tagButtonTapped), for: .touchUpInside)
         priorityButton.addTarget(self, action: #selector(priorityButtonTapped), for: .touchUpInside)
         imageAddButton.addTarget(self, action: #selector(imageAddButtonTapped), for: .touchUpInside)
     }
-    
-    @objc func deadlineButtonTapped() {
+
+    @objc private func deadlineButtonTapped() {
         let deadlineVC = DeadlineViewController()
         deadlineVC.delegate = self
         self.navigationController?.pushViewController(deadlineVC, animated: true)
     }
-    
-    @objc func tagButtonTapped() {
+
+    @objc private func tagButtonTapped() {
         let tagVC = TagViewController()
         tagVC.delegate = self
         self.navigationController?.pushViewController(tagVC, animated: true)
     }
-    
-    @objc func priorityButtonTapped() {
+
+    @objc private func priorityButtonTapped() {
         let priorityVC = PriorityViewController()
         priorityVC.delegate = self
         self.navigationController?.pushViewController(priorityVC, animated: true)
     }
-    
-    @objc func imageAddButtonTapped() {
-        let imageAddVC = ImageAddViewController()
-        self.navigationController?.pushViewController(imageAddVC, animated: true)
+
+    @objc private func imageAddButtonTapped() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true)
     }
-    
 }
 
-
-// 확장 부분
 extension RegisterViewController: DataDelegate {
     func passData(_ data: String, type: DataType) {
         switch type {
@@ -237,8 +233,41 @@ extension RegisterViewController: DataDelegate {
     }
 }
 
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.editedImage] as? UIImage {
+            selectedImage = image.jpegData(compressionQuality: 0.8)
+            imageAddButton.setTitle("이미지 선택 완료", for: .normal)
+        } else if let image = info[.originalImage] as? UIImage {
+            selectedImage = image.jpegData(compressionQuality: 0.8)
+            imageAddButton.setTitle("이미지 선택 완료", for: .normal)
+        }
+        dismiss(animated: true)
+    }
+}
+
+extension RegisterViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                DispatchQueue.main.async {
+                    if let image = image as? UIImage {
+                        self.selectedImage = image.jpegData(compressionQuality: 0.8)
+                        self.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
+                    }
+                }
+            }
+        }
+        dismiss(animated: true)
+    }
+}
 
 
 //노티피케이션
 //post보다 addObserver가 항상 먼저 등록이 되어애 정상적으로 실행이 됨!!
+
 
