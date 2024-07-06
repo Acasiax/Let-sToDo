@@ -10,16 +10,6 @@ import SnapKit
 import RealmSwift
 import Toast
 
-protocol DataDelegate {
-    func passData(_ data: String, type: DataType)
-}
-
-enum DataType {
-    case tag
-    case priority
-    case deadline
-}
-
 
 class RegisterViewController: UIViewController {
   
@@ -251,3 +241,4 @@ extension RegisterViewController: DataDelegate {
 
 //노티피케이션
 //post보다 addObserver가 항상 먼저 등록이 되어애 정상적으로 실행이 됨!!
+

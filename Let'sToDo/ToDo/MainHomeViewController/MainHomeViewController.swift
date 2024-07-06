@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-class MainHomeViewController: UIViewController {
+class MainHomeViewController: BaseViewController {
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "전체"
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
@@ -29,52 +29,59 @@ class MainHomeViewController: UIViewController {
         return button
     }()
     
-    private var collectionView: UICollectionView!
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 170, height: 80)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(MainListCell.self, forCellWithReuseIdentifier: MainListCell.identifier)
+        return collectionView
+    }()
+    
     private let realmDb = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        configureView()
+        setupHierarchy()
         setupConstraints()
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+                  make.top.equalTo(titleLabel.snp.bottom).offset(20)
+                  make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+                  make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+                  make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
+              }
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
     }
-
     
-    func setupViews() {
+    override func configureView() {
         view.backgroundColor = .systemBackground
-        view.addSubview(newTaskButton)
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 170, height: 80)
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(MainListCell.self, forCellWithReuseIdentifier: MainListCell.identifier)
-        
-        view.addSubview(collectionView)
-        view.addSubview(titleLabel)
     }
     
-    func setupConstraints() {
+    override func setupHierarchy() {
+        view.addSubview(titleLabel)
+        view.addSubview(newTaskButton)
+        
+    }
+    
+    
+    override func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
 
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
-        }
+    
 
         newTaskButton.snp.makeConstraints { make in
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)

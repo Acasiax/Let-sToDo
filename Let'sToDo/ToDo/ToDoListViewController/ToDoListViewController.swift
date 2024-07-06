@@ -177,3 +177,4 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [deleteAction, detailAction])
     }
 }
+

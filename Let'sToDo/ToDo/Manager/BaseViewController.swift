@@ -16,15 +16,16 @@ class BaseViewController: UIViewController {
         configureView()
        
     }
+    
     func setupHierarchy() {
-        
+        //서브뷰 추가
     }
     
     func setupConstraints() {
-        
+        //제약 조건 추가
     }
     
     func configureView() {
-        
+        //설정 추가
     }
 }

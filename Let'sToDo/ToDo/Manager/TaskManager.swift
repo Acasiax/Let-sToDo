@@ -8,6 +8,17 @@
 import UIKit
 import RealmSwift
 
+protocol DataDelegate {
+    func passData(_ data: String, type: DataType)
+}
+
+enum DataType {
+    case tag
+    case priority
+    case deadline
+}
+
+
 class ToDoList: Object {
     @Persisted var taskId: String = UUID().uuidString
   //  @Persisted(primaryKey: true) var taskId: ObjectId // 고유 ID
@@ -17,7 +28,7 @@ class ToDoList: Object {
     @Persisted var taskPriority: String = ""
     @Persisted var taskTag: String = ""
     @Persisted var taskImage: Data?
-    @Persisted var detail: List<DetailTodo> // 여러 개의 DetailTodo 
+    @Persisted var detail88: List<DetailTodo> // 여러 개의 DetailTodo 
     
     override static func primaryKey() -> String? {
         return "taskId"
@@ -61,3 +72,4 @@ class DatabaseManager {
         }
     }
 }
+
