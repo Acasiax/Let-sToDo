@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-class MainHomeViewController: BaseViewController {
+final class MainHomeViewController: BaseViewController {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
