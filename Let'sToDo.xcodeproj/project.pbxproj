@@ -30,6 +30,7 @@
 		AA376B9D2C37B7F400C371E6 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = AA376B9C2C37B7F400C371E6 /* Toast */; };
 		AA376BA22C38E59B00C371E6 /* DetailTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */; };
 		AA376BA42C39542400C371E6 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA32C39542400C371E6 /* FileManager.swift */; };
+		AA376BA62C399BCF00C371E6 /* RepositoryPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +69,7 @@
 		AA376B932C35865C00C371E6 /* MainListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListCell.swift; sourceTree = "<group>"; };
 		AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTodoViewController.swift; sourceTree = "<group>"; };
 		AA376BA32C39542400C371E6 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryPattern.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				AA376BA32C39542400C371E6 /* FileManager.swift */,
 				AA376B922C35864D00C371E6 /* Cell */,
 				AA376B7A2C341B4600C371E6 /* BaseViewController.swift */,
+				AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				AA376BA22C38E59B00C371E6 /* DetailTodoViewController.swift in Sources */,
 				AA376B8D2C3567CF00C371E6 /* TagViewController.swift in Sources */,
 				AA376B8B2C3567B700C371E6 /* DeadlineViewController.swift in Sources */,
+				AA376BA62C399BCF00C371E6 /* RepositoryPattern.swift in Sources */,
 				AA376B8F2C3567E600C371E6 /* PriorityViewController.swift in Sources */,
 				AA376B7B2C341B4600C371E6 /* BaseViewController.swift in Sources */,
 				AA376B592C3412FD00C371E6 /* SceneDelegate.swift in Sources */,
