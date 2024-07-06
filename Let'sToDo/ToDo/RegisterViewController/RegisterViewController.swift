@@ -79,7 +79,7 @@ class RegisterViewController: UIViewController {
     }
     
     @objc func saveAction() {
-        let newTask = Task()
+        let newTask = ToDoList()
         newTask.taskTitle = titleTextField.text ?? ""
         newTask.taskContent = memoTextField.text
         newTask.taskDeadline = selectedDeadline

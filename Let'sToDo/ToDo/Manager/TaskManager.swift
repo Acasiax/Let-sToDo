@@ -8,14 +8,16 @@
 import UIKit
 import RealmSwift
 
-class Task: Object {
+class ToDoList: Object {
     @Persisted var taskId: String = UUID().uuidString
+  //  @Persisted(primaryKey: true) var taskId: ObjectId // 고유 ID
     @Persisted var taskTitle: String = ""
     @Persisted var taskContent: String?
     @Persisted var taskDeadline: Date?
     @Persisted var taskPriority: String = ""
     @Persisted var taskTag: String = ""
     @Persisted var taskImage: Data?
+    @Persisted var detail: List<DetailTodo> // 여러 개의 DetailTodo 
     
     override static func primaryKey() -> String? {
         return "taskId"
@@ -32,10 +34,28 @@ class Task: Object {
     }
 }
 
+
+class DetailTodo: Object {
+    @Persisted(primaryKey: true) var id: ObjectId // 고유 ID
+    @Persisted var todo: String // 세부 할 일 내용
+    @Persisted var deadline: Date // 마감 날짜
+    @Persisted var regDate: Date // 등록 날짜
+
+    // 초기화 메서드
+    convenience init(todo: String, deadline: Date) {
+        self.init()
+        self.todo = todo
+        self.deadline = deadline
+        self.regDate = Date()
+    }
+}
+
+
+
 class DatabaseManager {
     let database = try! Realm()
     
-    func remove(_ task: Task) {
+    func remove(_ task: ToDoList) {
         try! database.write {
             database.delete(task)
         }

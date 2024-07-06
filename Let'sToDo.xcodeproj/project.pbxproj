@@ -114,10 +114,10 @@
 		AA376B6A2C3413A700C371E6 /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
+				AA376B6B2C3413B700C371E6 /* Manager */,
 				AA376B9F2C38048800C371E6 /* MainHomeViewController */,
 				AA376B9E2C38046500C371E6 /* RegisterViewController */,
 				AA376BA02C380D3600C371E6 /* ToDoListViewController */,
-				AA376B6B2C3413B700C371E6 /* Manager */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";

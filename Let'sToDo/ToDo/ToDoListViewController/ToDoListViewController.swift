@@ -12,7 +12,7 @@ import Toast
 
 class ToDoListViewController: UIViewController {
     let dbManager = DatabaseManager()
-    var TodoList: Results<Task>!
+    var TodoList: Results<ToDoList>!
     let titleLbl = UILabel()
     let taskTableView = UITableView()
     let realmDb = try! Realm()
@@ -38,20 +38,20 @@ class ToDoListViewController: UIViewController {
         if let filter = filter {
             switch filter {
             case "오늘":
-                TodoList = realmDb.objects(Task.self).filter("taskDeadline <= %@", Date())
+                TodoList = realmDb.objects(ToDoList.self).filter("taskDeadline <= %@", Date())
             case "예정":
-                TodoList = realmDb.objects(Task.self).filter("taskDeadline > %@", Date())
+                TodoList = realmDb.objects(ToDoList.self).filter("taskDeadline > %@", Date())
             case "전체":
-                TodoList = realmDb.objects(Task.self)
+                TodoList = realmDb.objects(ToDoList.self)
             case "깃발 표시":
-                TodoList = realmDb.objects(Task.self).filter("taskTag == '깃발'")
+                TodoList = realmDb.objects(ToDoList.self).filter("taskTag == '깃발'")
             case "완료됨":
-                TodoList = realmDb.objects(Task.self).filter("taskPriority == '완료'")
+                TodoList = realmDb.objects(ToDoList.self).filter("taskPriority == '완료'")
             default:
-                TodoList = realmDb.objects(Task.self)
+                TodoList = realmDb.objects(ToDoList.self)
             }
         } else {
-            TodoList = realmDb.objects(Task.self)
+            TodoList = realmDb.objects(ToDoList.self)
         }
         taskTableView.reloadData()
     }
@@ -74,10 +74,11 @@ class ToDoListViewController: UIViewController {
         }
     }
     
-    private func configureCell(_ cell: TodoListTableViewCell, with task: Task) {
+    private func configureCell(_ cell: TodoListTableViewCell, with task: ToDoList) {
         cell.titleLB.text = task.taskTitle
         cell.contentLB.text = task.taskContent
         cell.taskId = task.taskId
+       // cell.taskId = task.taskId.stringValue
         cell.dateLB.text = formatDate(task.taskDeadline)
         cell.tagLB.text = formatTag(task.taskTag)
         cell.checkCircle.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -113,9 +114,9 @@ class ToDoListViewController: UIViewController {
     private func createSortAction(title: String, keyPath: String, ascending: Bool, filter: String? = nil) -> UIAction {
         return UIAction(title: title) { _ in
             if let filter = filter {
-                self.TodoList = self.realmDb.objects(Task.self).filter(filter).sorted(byKeyPath: keyPath, ascending: ascending)
+                self.TodoList = self.realmDb.objects(ToDoList.self).filter(filter).sorted(byKeyPath: keyPath, ascending: ascending)
             } else {
-                self.TodoList = self.realmDb.objects(Task.self).sorted(byKeyPath: keyPath, ascending: ascending)
+                self.TodoList = self.realmDb.objects(ToDoList.self).sorted(byKeyPath: keyPath, ascending: ascending)
             }
             self.taskTableView.reloadData()
         }

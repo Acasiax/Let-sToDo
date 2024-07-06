@@ -93,15 +93,15 @@ class MainHomeViewController: UIViewController {
     private func fetchCount(for filter: String) -> Int {
         switch filter {
         case "오늘":
-            return realmDb.objects(Task.self).filter("taskDeadline <= %@", Date()).count
+            return realmDb.objects(ToDoList.self).filter("taskDeadline <= %@", Date()).count
         case "예정":
-            return realmDb.objects(Task.self).filter("taskDeadline > %@", Date()).count
+            return realmDb.objects(ToDoList.self).filter("taskDeadline > %@", Date()).count
         case "전체":
-            return realmDb.objects(Task.self).count
+            return realmDb.objects(ToDoList.self).count
         case "깃발 표시":
-            return realmDb.objects(Task.self).filter("taskTag == '깃발'").count
+            return realmDb.objects(ToDoList.self).filter("taskTag == '깃발'").count
         case "완료됨":
-            return realmDb.objects(Task.self).filter("taskPriority == '완료'").count
+            return realmDb.objects(ToDoList.self).filter("taskPriority == '완료'").count
         default:
             return 0
         }
