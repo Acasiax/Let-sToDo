@@ -28,6 +28,7 @@
 		AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B902C3567FE00C371E6 /* ImageAddViewController.swift */; };
 		AA376B942C35865C00C371E6 /* MainListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B932C35865C00C371E6 /* MainListCell.swift */; };
 		AA376B9D2C37B7F400C371E6 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = AA376B9C2C37B7F400C371E6 /* Toast */; };
+		AA376BA22C38E59B00C371E6 /* DetailTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -64,6 +65,7 @@
 		AA376B8E2C3567E600C371E6 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
 		AA376B902C3567FE00C371E6 /* ImageAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAddViewController.swift; sourceTree = "<group>"; };
 		AA376B932C35865C00C371E6 /* MainListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListCell.swift; sourceTree = "<group>"; };
+		AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTodoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
+				AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */,
 			);
 			path = ToDoListViewController;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				AA376B5B2C3412FD00C371E6 /* ViewController.swift in Sources */,
 				AA376B572C3412FD00C371E6 /* AppDelegate.swift in Sources */,
 				AA376B712C34148600C371E6 /* ToDoListViewController.swift in Sources */,
+				AA376BA22C38E59B00C371E6 /* DetailTodoViewController.swift in Sources */,
 				AA376B8D2C3567CF00C371E6 /* TagViewController.swift in Sources */,
 				AA376B8B2C3567B700C371E6 /* DeadlineViewController.swift in Sources */,
 				AA376B8F2C3567E600C371E6 /* PriorityViewController.swift in Sources */,

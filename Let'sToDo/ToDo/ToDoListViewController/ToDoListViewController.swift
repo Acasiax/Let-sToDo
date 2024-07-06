@@ -150,10 +150,16 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
 
         return cell
     }
-
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       print("클릭했슈")
+        print("클릭했슈")
+        let detailVC = DetailTodoViewController()
+        detailVC.mainTask = TodoList[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
     }
+    
+    
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let detailAction = UIContextualAction(style: .normal, title: "취소") { action, view, success in
