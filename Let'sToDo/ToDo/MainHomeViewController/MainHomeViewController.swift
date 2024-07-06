@@ -45,7 +45,7 @@ final class MainHomeViewController: BaseViewController {
 
     private let realmDb = try! Realm()
 
-    private enum Filter: String, CaseIterable {
+    enum Filter: String, CaseIterable {
         case today = "오늘"
         case upcoming = "예정"
         case all = "전체"

@@ -133,9 +133,9 @@
 			children = (
 				AA376B802C3437E900C371E6 /* TaskManager.swift */,
 				AA376BA32C39542400C371E6 /* FileManager.swift */,
+				AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */,
 				AA376B922C35864D00C371E6 /* Cell */,
 				AA376B7A2C341B4600C371E6 /* BaseViewController.swift */,
-				AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
