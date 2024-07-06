@@ -151,5 +151,6 @@ extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewData
 extension MainHomeViewController: RegisterViewControllerDelegate {
     func didAddNewTask() {
         collectionView.reloadData()
+        self.view.makeToast("새로운 일정이 저장되었습니다.")
     }
 }
