@@ -99,3 +99,30 @@ final class ToDoListRepository {
     }
     
 }
+
+
+/*
+ 데이터 업데이트
+ Results<ToDoList>는 Realm 객체 컬렉션 타입으로, 실시간 갱신을 지원하여 데이터베이스가 변경될 때 자동으로 업데이트됨.반면, [ToDoList]는 일반 배열로, 데이터베이스 변경 시 자동으로 업데이트되지 않습니다. 따라서 배열을 사용할 경우 데이터가 변경될 때마다 수동으로 업데이트를 해줘야 함!.
+ 
+ //하나의 아이템 값 수정
+ try! realm.write {
+     realm.create(ToDoList.self, value: ["id": item.id, "money": 1000000], update: .modified)
+ }
+
+ 
+ //전체 아이템 값 수정
+ let result = realm.objects(ToDoList.self)
+ try! realm.write {
+     result.setValue(true, forKey: "isLike")
+ }
+
+ 
+ //필터링
+ let filteredList = realm.objects(ToDoList.self).where {
+     $0.title.contains(searchText)
+ }
+ list = filteredList
+ tableView.reloadData()
+
+*/
