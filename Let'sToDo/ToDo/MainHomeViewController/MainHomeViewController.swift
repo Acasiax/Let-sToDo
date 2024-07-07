@@ -56,7 +56,8 @@ final class MainHomeViewController: BaseViewController {
             return self.rawValue
         }
     }
-
+    private let toDoListRepository = ToDoListRepository()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -110,18 +111,7 @@ final class MainHomeViewController: BaseViewController {
     }
 
     private func fetchCount(for filter: Filter) -> Int {
-        switch filter {
-        case .today:
-            return realmDb.objects(ToDoList.self).filter("taskDeadline <= %@", Date()).count
-        case .upcoming:
-            return realmDb.objects(ToDoList.self).filter("taskDeadline > %@", Date()).count
-        case .all:
-            return realmDb.objects(ToDoList.self).count
-        case .flagged:
-            return realmDb.objects(ToDoList.self).filter("taskTag == '깃발'").count
-        case .completed:
-            return realmDb.objects(ToDoList.self).filter("taskPriority == '완료'").count
-        }
+        return toDoListRepository.fetchCount(for: filter)
     }
 }
 

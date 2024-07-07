@@ -12,7 +12,9 @@ import Toast
 
 class ToDoListViewController: UIViewController {
     let dbManager = DatabaseManager()
-    var TodoList: Results<ToDoList>!
+    private let toDoListRepository = ToDoListRepository()
+   // var TodoList: Results<ToDoList>!
+    var TodoList: [ToDoList] = []
     let titleLbl = UILabel()
     let taskTableView = UITableView()
     let realmDb = try! Realm()
@@ -35,24 +37,8 @@ class ToDoListViewController: UIViewController {
     }
     
     @objc func refreshTaskList() {
-        if let filter = filter {
-            switch filter {
-            case "오늘":
-                TodoList = realmDb.objects(ToDoList.self).filter("taskDeadline <= %@", Date())
-            case "예정":
-                TodoList = realmDb.objects(ToDoList.self).filter("taskDeadline > %@", Date())
-            case "전체":
-                TodoList = realmDb.objects(ToDoList.self)
-            case "깃발 표시":
-                TodoList = realmDb.objects(ToDoList.self).filter("taskTag == '깃발'")
-            case "완료됨":
-                TodoList = realmDb.objects(ToDoList.self).filter("taskPriority == '완료'")
-            default:
-                TodoList = realmDb.objects(ToDoList.self)
-            }
-        } else {
-            TodoList = realmDb.objects(ToDoList.self)
-        }
+        TodoList = toDoListRepository.readItems(with: filter)
+
         taskTableView.reloadData()
     }
     
@@ -110,18 +96,18 @@ class ToDoListViewController: UIViewController {
         let sortMenu = UIMenu(title: "정렬 옵션", children: [sortByDeadline, sortByTitle, sortByPriority])
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle.fill"), menu: sortMenu)
     }
-
+    
     private func createSortAction(title: String, keyPath: String, ascending: Bool, filter: String? = nil) -> UIAction {
-        return UIAction(title: title) { _ in
-            if let filter = filter {
-                self.TodoList = self.realmDb.objects(ToDoList.self).filter(filter).sorted(byKeyPath: keyPath, ascending: ascending)
-            } else {
-                self.TodoList = self.realmDb.objects(ToDoList.self).sorted(byKeyPath: keyPath, ascending: ascending)
-            }
-            self.taskTableView.reloadData()
-        }
-    }
-
+           return UIAction(title: title) { _ in
+               if let filter = filter {
+                   self.TodoList = self.toDoListRepository.readItemsSortedAndFiltered(by: keyPath, ascending: ascending, filter: filter)
+               } else {
+                   self.TodoList = self.toDoListRepository.readItemsSorted(by: keyPath, ascending: ascending)
+               }
+               self.taskTableView.reloadData()
+           }
+       }
+    
     private func setupTitleLabel() {
         titleLbl.text = "전체"
         titleLbl.font = .systemFont(ofSize: 25, weight: .heavy)
@@ -158,29 +144,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
         detailVC.mainTask = TodoList[indexPath.row]
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
-    
-    
-    //    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    //        let detailAction = UIContextualAction(style: .normal, title: "취소") { action, view, success in
-    //            success(true)
-    //        }
-    //        detailAction.backgroundColor = .systemGray
-    //
-    //        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
-    //            self.dbManager.remove(self.TodoList[indexPath.row])
-    //
-    //
-    //            success(true)
-    //            tableView.reloadData()
-    //        }
-    //        deleteAction.backgroundColor = .red
-    //
-    //        return UISwipeActionsConfiguration(actions: [deleteAction, detailAction])
-    //    }
-    //}
-    
-    
+        
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let detailAction = UIContextualAction(style: .normal, title: "취소") { action, view, success in
             success(true)

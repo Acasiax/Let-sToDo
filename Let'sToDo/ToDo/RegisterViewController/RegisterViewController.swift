@@ -12,7 +12,8 @@ import Toast
 import PhotosUI
 
 class RegisterViewController: BaseViewController {
-
+    private let toDoListRepository = ToDoListRepository()
+    
     private let titleTextField = UITextField()
     private let memoTextField = UITextField()
     private let deadlineButton = UIButton(type: .system)
@@ -61,32 +62,7 @@ class RegisterViewController: BaseViewController {
     @objc private func cancelAction() {
         dismiss(animated: true)
     }
-
-//    @objc private func saveAction() {
-//        let newTask = ToDoList()
-//        newTask.taskTitle = titleTextField.text ?? ""
-//        newTask.taskContent = memoTextField.text
-//        newTask.taskDeadline = selectedDeadline
-//        newTask.taskTag = selectedTag ?? ""
-//        newTask.taskPriority = selectedPriority ?? ""
-//        newTask.taskImage = selectedImage
-//
-//        do {
-//            let realm = try Realm()
-//            try realm.write {
-//                realm.add(newTask)
-//            }
-//        } catch {
-//            print("Failed to write to realm: \(error)")
-//            self.view.makeToast("Error saving task")
-//            return
-//        }
-//
-//        delegate?.didAddNewTask()
-//        dismiss(animated: true)
-//    }
-
-    
+   
     @objc private func saveAction() {
             let newTask = ToDoList()
             newTask.taskTitle = titleTextField.text ?? ""
@@ -100,20 +76,11 @@ class RegisterViewController: BaseViewController {
                 saveImageToDocument(image: UIImage(data: selectedImage)!, filename: filename)
                 newTask.taskImagePath = filename // 파일 이름을 저장
             }
-
-            do {
-                let realm = try Realm()
-                try realm.write {
-                    realm.add(newTask)
-                }
-            } catch {
-                print("Failed to write to realm: \(error)")
-                self.view.makeToast("Error saving task")
-                return
-            }
-
-            delegate?.didAddNewTask()
-            dismiss(animated: true)
+        
+        toDoListRepository.createItem(newTask)
+        delegate?.didAddNewTask()
+        dismiss(animated: true)
+        
         }
     
     override func setupHierarchy() {
