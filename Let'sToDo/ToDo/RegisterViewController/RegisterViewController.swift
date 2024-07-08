@@ -42,7 +42,7 @@ class RegisterViewController: BaseViewController {
     var selectedPriority: String?
     var selectedImage: Data?
     var selectedFolder: String?
-
+    var folder: Folder? 
     weak var delegate: RegisterViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -107,7 +107,23 @@ class RegisterViewController: BaseViewController {
             newTask.taskImagePath = filename // 파일 이름을 저장
         }
     
-        toDoListRepository.createItem(newTask)
+        // 폴더 초기화 로직 추가
+          let folderName = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
+          if let existingFolder = toDoListRepository.readFolder(named: folderName) {
+              folder = existingFolder
+          } else {
+              let newFolder = Folder()
+              newFolder.FolderName = folderName
+              toDoListRepository.createFolder(newFolder)
+              folder = newFolder
+          }
+
+          guard let folder = folder else {
+              print("폴더가 설정되지 않았습니다.")
+              return
+          }
+
+          toDoListRepository.createItem(newTask, folder: folder)
         delegate?.didAddNewTask()
         dismiss(animated: true)
     }

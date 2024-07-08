@@ -13,12 +13,36 @@ import RealmSwift
 final class ToDoListRepository {
     private let realm = try! Realm()
     
+    // 폴더 읽기 메서드 추가
+    func readFolder(named name: String) -> Folder? {
+        return realm.objects(Folder.self).filter("FolderName == %@", name).first
+    }
+    
+    // 폴더를 필터를 사용하여 읽어오는 메서드 추가
+    func readFolders(with filter: String?) -> [Folder] {
+        if let filter = filter {
+            return Array(realm.objects(Folder.self).filter("FolderName == %@", filter))
+        } else {
+            return Array(realm.objects(Folder.self))
+        }
+    }
+    
+    // 모든 폴더를 읽어오는 메서드 추가
+    func readAllFolders() -> [Folder] {
+        return Array(realm.objects(Folder.self))
+    }
+    
+    // 폴더를 정렬하여 읽어오는 메서드 추가
+    func readFoldersSorted(by keyPath: String, ascending: Bool) -> [Folder] {
+        return Array(realm.objects(Folder.self).sorted(byKeyPath: keyPath, ascending: ascending))
+    }
+
     // 데이터를 생성하는 메서드
     // - 데이터 객체를 매개변수로 받아서 Realm 데이터베이스에 추가
-    func createItem(_ data: ToDoList) {
+    func createItem(_ data: ToDoList, folder: Folder) {
         do {
             try realm.write {
-                realm.add(data)
+                folder.detail88.append(data)
                 print("saved!")  // 저장 성공 메시지 출력
             }
         } catch {
@@ -26,18 +50,17 @@ final class ToDoListRepository {
         }
     }
     
+    // 폴더를 생성하는 메서드
     func createFolder(_ folder: Folder) {
-           do {
-               try realm.write {
-                   realm.add(folder)
-                   print("폴더 저장됨: \(folder.FolderName)")
-               }
-           } catch {
-               print("폴더 저장 실패: \(error)")
-           }
-       }
-
-    
+        do {
+            try realm.write {
+                realm.add(folder)
+                print("폴더 저장됨: \(folder.FolderName)")
+            }
+        } catch {
+            print("폴더 저장 실패: \(error)")
+        }
+    }
     
     // 모든 항목을 읽어오는 메서드
     // - taskTitle 기준으로 오름차순 정렬하여 반환
@@ -150,8 +173,8 @@ final class ToDoListRepository {
             return Array(realm.objects(ToDoList.self))
         }
     }
-
 }
+
 
 
 /*

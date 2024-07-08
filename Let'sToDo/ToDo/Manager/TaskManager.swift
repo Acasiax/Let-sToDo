@@ -68,14 +68,20 @@ class ToDoList: Object {
 
 
 
-
-
 class DatabaseManager {
     let database = try! Realm()
     
     func remove(_ task: ToDoList) {
         try! database.write {
             database.delete(task)
+        }
+    }
+    
+    func remove(_ folder: Folder) {
+        try! database.write {
+            // 폴더 내의 모든 ToDoList 항목도 함께 삭제
+            database.delete(folder.detail88)
+            database.delete(folder)
         }
     }
 }
