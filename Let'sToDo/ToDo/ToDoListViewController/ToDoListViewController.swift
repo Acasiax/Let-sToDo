@@ -22,6 +22,7 @@ class ToDoListViewController: UIViewController {
     var filter: String?
     var folderFilter: String?
     
+    var folder: Folder? //선택한 폴더 정보를 저장할 변수!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,12 +32,27 @@ class ToDoListViewController: UIViewController {
         applyConstraints()
         configureView()
         taskTableView.rowHeight = UITableView.automaticDimension
+        
+    
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshTaskList()
-    }
+           super.viewWillAppear(animated)
+        if let folderFilter = folderFilter {
+                 print("폴더 필터가 설정됨: \(folderFilter)")
+                 navigationItem.title = folderFilter
+                 TodoList = toDoListRepository.readFolderItems(with: folderFilter)
+             } else if let filter = filter {
+                 navigationItem.title = filter
+                 TodoList = toDoListRepository.readItems(with: filter)
+             } else {
+                 navigationItem.title = "전체"
+                 TodoList = toDoListRepository.readAllItems()
+             }
+             
+           refreshTaskList()
+       }
     
     @objc func refreshTaskList() {
         if let folderFilter = folderFilter {
@@ -148,6 +164,13 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
         print("클릭했슈")
         let detailVC = DetailTodoViewController()
         detailVC.mainTask = TodoList[indexPath.row]
+        
+     //   let folders = Array(realmDb.objects(Folder.self)) // 모든 폴더를 가져옴
+//        if let selectedFolder = folder {
+//                detailVC.folderCategoryName = selectedFolder.FolderName
+//            }
+//        
+//        print("값은\(detailVC.folderCategoryName)")
         navigationController?.pushViewController(detailVC, animated: true)
     }
         

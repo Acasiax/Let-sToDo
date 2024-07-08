@@ -59,7 +59,8 @@ final class MainHomeViewController: BaseViewController {
     
     private let realmDb = try! Realm()
     
-   
+    var folder: Folder?
+   // var list:
     
     enum Filter: String, CaseIterable {
         case today = "오늘"
@@ -198,8 +199,22 @@ extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewData
             // 폴더 선택 시 동작 설정
             let folderFilter = FolderFilter.allCases[indexPath.item]
 
+            //let folders = Array(realmDb.objects(Folder.self)) // 모든 폴더를 가져옴
+         //   let selectedFolder = folders.first { $0.FolderName == folderFilter.title } // 선택한 폴더 정보
+            
+         //   print("선택된 폴더 필터: \(folderFilter.title)")
+            
+//            if let folder = selectedFolder {
+//                        print("Selected Folder: \(folder.FolderName)")
+//                    } else {
+//                        print("Selected Folder is nil")
+//                    }
+//
+//            
+            
             let toDoListVC = ToDoListViewController()
             toDoListVC.folderFilter = folderFilter.title
+           // toDoListVC.folder = selectedFolder //선택한 폴더 정보를 전달!
             self.navigationController?.pushViewController(toDoListVC, animated: true)
         }
     }

@@ -26,6 +26,19 @@ final class ToDoListRepository {
         }
     }
     
+    func createFolder(_ folder: Folder) {
+           do {
+               try realm.write {
+                   realm.add(folder)
+                   print("폴더 저장됨: \(folder.FolderName)")
+               }
+           } catch {
+               print("폴더 저장 실패: \(error)")
+           }
+       }
+
+    
+    
     // 모든 항목을 읽어오는 메서드
     // - taskTitle 기준으로 오름차순 정렬하여 반환
     func readAllItems() -> [ToDoList] {

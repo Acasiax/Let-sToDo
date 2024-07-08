@@ -13,6 +13,7 @@ import Toast
 class DetailTodoViewController: UIViewController {
 
     var mainTask: ToDoList? // ToDoList 객체를 저장하는 변수
+    var folderCategoryName: String?
     let titleLabel = UILabel()
     let contentLabel = UILabel()
     let deadlineLabel = UILabel()
@@ -26,6 +27,10 @@ class DetailTodoViewController: UIViewController {
         setupUI()
         applyConstraints()
         configureView()
+        if let folderCategoryName = folderCategoryName {
+                  navigationItem.title = folderCategoryName
+            print("선택된 폴더 필터: \(folderCategoryName)")
+              }
     }
     
     private func setupUI() {
