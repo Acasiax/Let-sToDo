@@ -10,7 +10,7 @@ import SnapKit
 import RealmSwift
 
 final class MainHomeViewController: BaseViewController {
-
+   
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "전체"
@@ -58,7 +58,9 @@ final class MainHomeViewController: BaseViewController {
     }()
     
     private let realmDb = try! Realm()
-
+    
+   
+    
     enum Filter: String, CaseIterable {
         case today = "오늘"
         case upcoming = "예정"
@@ -197,7 +199,7 @@ extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewData
             let folderFilter = FolderFilter.allCases[indexPath.item]
 
             let toDoListVC = ToDoListViewController()
-            toDoListVC.filter = folderFilter.title
+            toDoListVC.folderFilter = folderFilter.title
             self.navigationController?.pushViewController(toDoListVC, animated: true)
         }
     }

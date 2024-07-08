@@ -38,8 +38,8 @@ class ToDoList: Object {
     @Persisted var taskImagePath: String?
     @Persisted var taskCategory: String = ""
     
-  //  @Persisted(originProperty: "detail88")
-  //  var main: LinkingObjects<Folder> //참고용 데이터이지 실제로 저장하는 거는 아님 //역관계 확인 //단순히 명세만 해주는 거라서 변경이 된게 아니기 때문에 마이그레이션 안해도 됨
+    @Persisted(originProperty: "detail88")
+    var main: LinkingObjects<Folder> //참고용 데이터이지 실제로 저장하는 거는 아님 //역관계 확인 //단순히 명세만 해주는 거라서 변경이 된게 아니기 때문에 마이그레이션 안해도 됨
     
     override static func primaryKey() -> String? {
         return "taskId"

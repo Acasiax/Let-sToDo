@@ -20,6 +20,8 @@ class ToDoListViewController: UIViewController {
     let realmDb = try! Realm()
     
     var filter: String?
+    var folderFilter: String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,11 @@ class ToDoListViewController: UIViewController {
     }
     
     @objc func refreshTaskList() {
-        TodoList = toDoListRepository.readItems(with: filter)
+        if let folderFilter = folderFilter {
+                    TodoList = toDoListRepository.readFolderItems(with: folderFilter)
+                } else {
+                    TodoList = toDoListRepository.readItems(with: filter)
+                }
 
         taskTableView.reloadData()
     }
