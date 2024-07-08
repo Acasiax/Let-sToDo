@@ -27,10 +27,7 @@ class DetailTodoViewController: UIViewController {
         setupUI()
         applyConstraints()
         configureView()
-        if let folderCategoryName = folderCategoryName {
-                  navigationItem.title = folderCategoryName
-            print("선택된 폴더 필터: \(folderCategoryName)")
-              }
+        navigationItem.title = folderCategoryName
     }
     
     private func setupUI() {

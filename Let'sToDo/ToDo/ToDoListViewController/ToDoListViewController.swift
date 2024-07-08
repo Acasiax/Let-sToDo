@@ -164,13 +164,26 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
         print("클릭했슈")
         let detailVC = DetailTodoViewController()
         detailVC.mainTask = TodoList[indexPath.row]
+
         
-     //   let folders = Array(realmDb.objects(Folder.self)) // 모든 폴더를 가져옴
-//        if let selectedFolder = folder {
-//                detailVC.folderCategoryName = selectedFolder.FolderName
+        if let folder = folder {
+            detailVC.folderCategoryName = folder.FolderName
+            } else if let folderFilter = folderFilter {
+                detailVC.folderCategoryName = folderFilter
+            } else if let filter = filter {
+                detailVC.folderCategoryName = filter
+            } else {
+                detailVC.folderCategoryName = "전체"
+            }
+        
+//        if let folderFilter = folderFilter {
+//                detailVC.folderCategoryName = folderFilter
+//            } else if let filter = filter {
+//                detailVC.folderCategoryName = filter
+//            } else {
+//                detailVC.folderCategoryName = "전체"
 //            }
 //        
-//        print("값은\(detailVC.folderCategoryName)")
         navigationController?.pushViewController(detailVC, animated: true)
     }
         
