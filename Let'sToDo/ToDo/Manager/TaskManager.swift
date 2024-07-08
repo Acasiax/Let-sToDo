@@ -8,31 +8,37 @@
 import UIKit
 import RealmSwift
 
-protocol DataDelegate {
-    func passData(_ data: String, type: DataType)
-}
 
-enum DataType {
-    case tag
-    case priority
-    case deadline
-}
+class Folder: Object {
+    @Persisted(primaryKey: true) var id: ObjectId // 고유 ID
+    @Persisted var FolderName: String // 세부 할 일 내용
+    @Persisted var deadline: Date // 마감 날짜
+    @Persisted var regDate: Date // 등록 날짜
 
-protocol RegisterViewControllerDelegate: AnyObject {
-    func didAddNewTask() //등록한 추가를 바로 main뷰에 딜리게이트로 반영
+    @Persisted var detail88: List<Folder> // 여러 개의 DetailTodo
+    
+    
+    // 초기화 메서드
+    convenience init(todo: String, deadline: Date) {
+        self.init()
+        self.FolderName = todo
+        self.deadline = deadline
+        self.regDate = Date()
+    }
 }
 
 class ToDoList: Object {
-    @Persisted var taskId: String = UUID().uuidString
-  //  @Persisted(primaryKey: true) var taskId: ObjectId // 고유 ID
+  //  @Persisted var taskId: String = UUID().uuidString
+    @Persisted(primaryKey: true) var taskId: ObjectId // 고유 ID
     @Persisted var taskTitle: String = ""
     @Persisted var taskContent: String?
     @Persisted var taskDeadline: Date?
     @Persisted var taskPriority: String = ""
     @Persisted var taskTag: String = ""
-   // @Persisted var taskImage: Data?
     @Persisted var taskImagePath: String?
-    @Persisted var detail88: List<DetailTodo> // 여러 개의 DetailTodo
+    
+  //  @Persisted(originProperty: "detail88")
+  //  var main: LinkingObjects<Folder> //참고용 데이터이지 실제로 저장하는 거는 아님 //역관계 확인 //단순히 명세만 해주는 거라서 변경이 된게 아니기 때문에 마이그레이션 안해도 됨
     
     override static func primaryKey() -> String? {
         return "taskId"
@@ -50,20 +56,6 @@ class ToDoList: Object {
 }
 
 
-class DetailTodo: Object {
-    @Persisted(primaryKey: true) var id: ObjectId // 고유 ID
-    @Persisted var todo: String // 세부 할 일 내용
-    @Persisted var deadline: Date // 마감 날짜
-    @Persisted var regDate: Date // 등록 날짜
-
-    // 초기화 메서드
-    convenience init(todo: String, deadline: Date) {
-        self.init()
-        self.todo = todo
-        self.deadline = deadline
-        self.regDate = Date()
-    }
-}
 
 
 

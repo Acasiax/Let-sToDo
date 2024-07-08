@@ -63,7 +63,7 @@ class ToDoListViewController: UIViewController {
     private func configureCell(_ cell: TodoListTableViewCell, with task: ToDoList) {
         cell.titleLB.text = task.taskTitle
         cell.contentLB.text = task.taskContent
-        cell.taskId = task.taskId
+        cell.taskId = task.taskId.stringValue
        // cell.taskId = task.taskId.stringValue
         cell.dateLB.text = formatDate(task.taskDeadline)
         cell.tagLB.text = formatTag(task.taskTag)
