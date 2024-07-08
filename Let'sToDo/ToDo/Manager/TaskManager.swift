@@ -8,14 +8,23 @@
 import UIKit
 import RealmSwift
 
+class Memo: EmbeddedObject {
+    @Persisted var content: String
+    @Persisted var regDate: Date
+    @Persisted var editDate: Date
+}
+
 
 class Folder: Object {
     @Persisted(primaryKey: true) var id: ObjectId // 고유 ID
     @Persisted var FolderName: String // 세부 할 일 내용
     @Persisted var optionDescription: String
     @Persisted var regDate: Date // 등록 날짜
-
+    // 1:n to many relationship
     @Persisted var detail88: List<ToDoList> // 여러 개의 DetailTodo
+    
+    //to one relationship
+    @Persisted var meno: Memo?
     
     
     // 초기화 메서드
