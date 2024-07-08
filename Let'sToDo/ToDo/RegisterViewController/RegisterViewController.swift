@@ -48,6 +48,18 @@ class RegisterViewController: BaseViewController {
         }
     }
 
+    override func setupHierarchy() {
+        super.setupHierarchy()
+
+        view.addSubview(titleTextField)
+        view.addSubview(memoTextField)
+        view.addSubview(deadlineButton)
+        view.addSubview(tagButton)
+        view.addSubview(priorityButton)
+        view.addSubview(imageAddButton)
+    }
+
+    
     private func setupNavigationBar() {
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelAction))
         navigationItem.leftBarButtonItem = cancelButton
@@ -83,17 +95,6 @@ class RegisterViewController: BaseViewController {
         
         }
     
-    override func setupHierarchy() {
-        super.setupHierarchy()
-
-        view.addSubview(titleTextField)
-        view.addSubview(memoTextField)
-        view.addSubview(deadlineButton)
-        view.addSubview(tagButton)
-        view.addSubview(priorityButton)
-        view.addSubview(imageAddButton)
-    }
-
     override func setupConstraints() {
         super.setupConstraints()
 
