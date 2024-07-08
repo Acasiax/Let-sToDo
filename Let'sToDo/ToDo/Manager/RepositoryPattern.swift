@@ -34,16 +34,16 @@ final class ToDoListRepository {
     }
     
     // 정렬된 항목들을 읽어오는 메서드
-        func readItemsSorted(by keyPath: String, ascending: Bool) -> [ToDoList] {
-            let result = realm.objects(ToDoList.self).sorted(byKeyPath: keyPath, ascending: ascending)
-            return Array(result)
-        }
+    func readItemsSorted(by keyPath: String, ascending: Bool) -> [ToDoList] {
+        let result = realm.objects(ToDoList.self).sorted(byKeyPath: keyPath, ascending: ascending)
+        return Array(result)
+    }
 
-        // 필터와 정렬 조건을 사용하여 항목들을 읽어오는 메서드
-        func readItemsSortedAndFiltered(by keyPath: String, ascending: Bool, filter: String) -> [ToDoList] {
-            let result = realm.objects(ToDoList.self).filter(filter).sorted(byKeyPath: keyPath, ascending: ascending)
-            return Array(result)
-        }
+    // 필터와 정렬 조건을 사용하여 항목들을 읽어오는 메서드
+    func readItemsSortedAndFiltered(by keyPath: String, ascending: Bool, filter: String) -> [ToDoList] {
+        let result = realm.objects(ToDoList.self).filter(filter).sorted(byKeyPath: keyPath, ascending: ascending)
+        return Array(result)
+    }
     
     // 항목을 삭제하는 메서드
     // - 데이터 객체를 매개변수로 받아서 Realm 데이터베이스에서 삭제
@@ -58,7 +58,7 @@ final class ToDoListRepository {
         }
     }
     
-    // 특정 필터에 따른 항목 수를 가져오는 메서드 //메인뷰
+    // 특정 필터에 따른 항목 수를 가져오는 메서드
     // - 필터 조건에 따라 항목 수를 반환
     func fetchCount(for filter: MainHomeViewController.Filter) -> Int {
         switch filter {
@@ -75,7 +75,24 @@ final class ToDoListRepository {
         }
     }
     
-    // 필터를 사용하여 항목을 읽어오는 메서드 //투두뷰
+    // 특정 폴더 필터에 따른 항목 수를 가져오는 메서드
+    // - 필터 조건에 따라 항목 수를 반환
+    func fetchFolderCount(for filter: MainHomeViewController.FolderFilter) -> Int {
+        switch filter {
+        case .travel:
+            return realm.objects(ToDoList.self).filter("taskCategory == '여행'").count
+        case .healthCare:
+            return realm.objects(ToDoList.self).filter("taskCategory == '건강관리'").count
+        case .all:
+            return realm.objects(ToDoList.self).count
+        case .financeManagement:
+            return realm.objects(ToDoList.self).filter("taskCategory == '재정관리'").count
+        case .selfDevelopment:
+            return realm.objects(ToDoList.self).filter("taskCategory == '자기계발'").count
+        }
+    }
+    
+    // 필터를 사용하여 항목을 읽어오는 메서드
     // - 필터 조건에 따라 다른 항목들을 반환
     func readItems(with filter: String?) -> [ToDoList] {
         if let filter = filter {
@@ -97,7 +114,30 @@ final class ToDoListRepository {
             return Array(realm.objects(ToDoList.self))
         }
     }
-    
+
+    // 폴더 필터를 사용하여 항목을 읽어오는 메서드
+    // - 폴더 필터 조건에 따라 다른 항목들을 반환
+    func readFolderItems(with filter: String?) -> [ToDoList] {
+        if let filter = filter {
+            switch filter {
+            case "여행":
+                return Array(realm.objects(ToDoList.self).filter("taskCategory == '여행'"))
+            case "건강관리":
+                return Array(realm.objects(ToDoList.self).filter("taskCategory == '건강관리'"))
+            case "전체":
+                return Array(realm.objects(ToDoList.self))
+            case "재정관리":
+                return Array(realm.objects(ToDoList.self).filter("taskCategory == '재정관리'"))
+            case "자기계발":
+                return Array(realm.objects(ToDoList.self).filter("taskCategory == '자기계발'"))
+            default:
+                return Array(realm.objects(ToDoList.self))
+            }
+        } else {
+            return Array(realm.objects(ToDoList.self))
+        }
+    }
+
 }
 
 

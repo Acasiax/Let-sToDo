@@ -43,6 +43,20 @@ final class MainHomeViewController: BaseViewController {
         return collectionView
     }()
 
+    private lazy var folderCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 170, height: 80)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(MainFolderListCell.self, forCellWithReuseIdentifier: MainFolderListCell.identifier)
+        return collectionView
+    }()
+    
     private let realmDb = try! Realm()
 
     enum Filter: String, CaseIterable {
@@ -56,6 +70,20 @@ final class MainHomeViewController: BaseViewController {
             return self.rawValue
         }
     }
+    
+    enum FolderFilter: String, CaseIterable {
+        case travel = "여행"
+        case healthCare = "건강관리"
+        case all = "전체"
+        case financeManagement = "재정관리"
+        case selfDevelopment = "자기계발"
+
+        var title: String {
+            return self.rawValue
+        }
+    }
+
+    
     private let toDoListRepository = ToDoListRepository()
     
     override func viewDidLoad() {
@@ -64,12 +92,12 @@ final class MainHomeViewController: BaseViewController {
         setupHierarchy()
         setupConstraints()
         print("램 파일 경로-> \(Realm.Configuration.defaultConfiguration.fileURL!)")
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
+        folderCollectionView.reloadData()
     }
 
     override func configureView() {
@@ -80,6 +108,7 @@ final class MainHomeViewController: BaseViewController {
         view.addSubview(titleLabel)
         view.addSubview(newTaskButton)
         view.addSubview(collectionView)
+        view.addSubview(folderCollectionView)
     }
 
     override func setupConstraints() {
@@ -99,6 +128,13 @@ final class MainHomeViewController: BaseViewController {
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(view.frame.height * 0.4)
+        }
+        
+        folderCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(5)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
             make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
         }
     }
@@ -113,36 +149,64 @@ final class MainHomeViewController: BaseViewController {
     private func fetchCount(for filter: Filter) -> Int {
         return toDoListRepository.fetchCount(for: filter)
     }
+    
+    private func fetchFolderCount(for folderFilter: FolderFilter) -> Int {
+        return toDoListRepository.fetchFolderCount(for: folderFilter)
+    }
 }
 
 extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Filter.allCases.count
+        if collectionView == self.collectionView {
+            return Filter.allCases.count
+        } else {
+            return FolderFilter.allCases.count
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainListCell.identifier, for: indexPath) as! MainListCell
+        if collectionView == self.collectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainListCell.identifier, for: indexPath) as! MainListCell
 
-        let filter = Filter.allCases[indexPath.item]
-        let count = fetchCount(for: filter)
-        cell.configure(title: filter.title, count: "\(count)")
+            let filter = Filter.allCases[indexPath.item]
+            let count = fetchCount(for: filter)
+            cell.configure(title: filter.title, count: "\(count)")
 
-        return cell
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainFolderListCell.identifier, for: indexPath) as! MainFolderListCell
+
+            let folderFilter = FolderFilter.allCases[indexPath.item]
+            let count = fetchFolderCount(for: folderFilter)
+            cell.configure(title: folderFilter.title, count: "\(count)")
+
+            return cell
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let filter = Filter.allCases[indexPath.item]
+        if collectionView == self.collectionView {
+            let filter = Filter.allCases[indexPath.item]
 
-        let toDoListVC = ToDoListViewController()
-        toDoListVC.filter = filter.title
-        self.navigationController?.pushViewController(toDoListVC, animated: true)
+            let toDoListVC = ToDoListViewController()
+            toDoListVC.filter = filter.title
+            self.navigationController?.pushViewController(toDoListVC, animated: true)
+        } else {
+            // 폴더 선택 시 동작 설정
+            let folderFilter = FolderFilter.allCases[indexPath.item]
+
+            let toDoListVC = ToDoListViewController()
+            toDoListVC.filter = folderFilter.title
+            self.navigationController?.pushViewController(toDoListVC, animated: true)
+        }
     }
 }
 
 extension MainHomeViewController: RegisterViewControllerDelegate {
     func didAddNewTask() {
         collectionView.reloadData()
+        folderCollectionView.reloadData()
         self.view.makeToast("새로운 일정이 저장되었습니다.")
     }
 }

@@ -11,6 +11,20 @@ import RealmSwift
 import Toast
 import PhotosUI
 
+
+enum FolderFilter: String, CaseIterable {
+    case travel = "여행"
+    case healthCare = "건강관리"
+    case all = "전체"
+    case financeManagement = "재정관리"
+    case selfDevelopment = "자기계발"
+
+    var title: String {
+        return self.rawValue
+    }
+}
+
+
 class RegisterViewController: BaseViewController {
     private let toDoListRepository = ToDoListRepository()
     
@@ -20,12 +34,14 @@ class RegisterViewController: BaseViewController {
     private let tagButton = UIButton(type: .system)
     private let priorityButton = UIButton(type: .system)
     private let imageAddButton = UIButton(type: .system)
+    private let folderSegmentedControl = UISegmentedControl(items: ["여행", "건강관리", "전체", "재정관리", "자기계발"])
     private var saveButton: UIBarButtonItem!
 
     var selectedDeadline: Date?
     var selectedTag: String?
     var selectedPriority: String?
     var selectedImage: Data?
+    var selectedFolder: String?
 
     weak var delegate: RegisterViewControllerDelegate?
 
@@ -57,9 +73,9 @@ class RegisterViewController: BaseViewController {
         view.addSubview(tagButton)
         view.addSubview(priorityButton)
         view.addSubview(imageAddButton)
+        view.addSubview(folderSegmentedControl)
     }
 
-    
     private func setupNavigationBar() {
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelAction))
         navigationItem.leftBarButtonItem = cancelButton
@@ -75,25 +91,26 @@ class RegisterViewController: BaseViewController {
         dismiss(animated: true)
     }
    
+    //🧯
     @objc private func saveAction() {
-            let newTask = ToDoList()
-            newTask.taskTitle = titleTextField.text ?? ""
-            newTask.taskContent = memoTextField.text
-            newTask.taskDeadline = selectedDeadline
-            newTask.taskTag = selectedTag ?? ""
-            newTask.taskPriority = selectedPriority ?? ""
+        let newTask = ToDoList()
+        newTask.taskTitle = titleTextField.text ?? ""
+        newTask.taskContent = memoTextField.text
+        newTask.taskDeadline = selectedDeadline
+        newTask.taskTag = selectedTag ?? ""
+        newTask.taskPriority = selectedPriority ?? ""
+        newTask.taskCategory = selectedFolder ?? ""
 
-            if let selectedImage = selectedImage {
-                let filename = UUID().uuidString
-                saveImageToDocument(image: UIImage(data: selectedImage)!, filename: filename)
-                newTask.taskImagePath = filename // 파일 이름을 저장
-            }
-        
+        if let selectedImage = selectedImage {
+            let filename = UUID().uuidString
+            saveImageToDocument(image: UIImage(data: selectedImage)!, filename: filename)
+            newTask.taskImagePath = filename // 파일 이름을 저장
+        }
+    
         toDoListRepository.createItem(newTask)
         delegate?.didAddNewTask()
         dismiss(animated: true)
-        
-        }
+    }
     
     override func setupConstraints() {
         super.setupConstraints()
@@ -135,6 +152,12 @@ class RegisterViewController: BaseViewController {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
             make.height.equalTo(44)
         }
+        
+        folderSegmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(imageAddButton.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
+            make.height.equalTo(44)
+        }
     }
 
     private func setupViews() {
@@ -147,6 +170,10 @@ class RegisterViewController: BaseViewController {
         setupButton(tagButton, title: "태그")
         setupButton(priorityButton, title: "우선 순위")
         setupButton(imageAddButton, title: "이미지 추가")
+        
+        folderSegmentedControl.selectedSegmentIndex = 0 // 기본 선택
+        folderSegmentedControl.addTarget(self, action: #selector(folderSegmentedControlChanged), for: .valueChanged)
+        selectedFolder = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title // 기본 선택 폴더
     }
 
     private func configureTextField(_ textField: UITextField, placeholder: String) {
@@ -204,6 +231,11 @@ class RegisterViewController: BaseViewController {
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true)
+    }
+    
+    @objc private func folderSegmentedControlChanged(_ sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+        selectedFolder = FolderFilter.allCases[selectedIndex].title
     }
 }
 
@@ -263,6 +295,7 @@ extension RegisterViewController: PHPickerViewControllerDelegate {
         dismiss(animated: true)
     }
 }
+
 
 
 //노티피케이션
