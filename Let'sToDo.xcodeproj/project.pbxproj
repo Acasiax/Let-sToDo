@@ -31,6 +31,7 @@
 		AA376BA22C38E59B00C371E6 /* DetailTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */; };
 		AA376BA42C39542400C371E6 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA32C39542400C371E6 /* FileManager.swift */; };
 		AA376BA62C399BCF00C371E6 /* RepositoryPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */; };
+		AA6BD31B2C3D637900107AF6 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD31A2C3D637900107AF6 /* Observable.swift */; };
 		AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB94B262C3BEC10005E56D2 /* Protocol+.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTodoViewController.swift; sourceTree = "<group>"; };
 		AA376BA32C39542400C371E6 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryPattern.swift; sourceTree = "<group>"; };
+		AA6BD31A2C3D637900107AF6 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		AAB94B262C3BEC10005E56D2 /* Protocol+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocol+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +124,7 @@
 		AA376B6A2C3413A700C371E6 /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
+				AA6BD3192C3D637000107AF6 /* Observable */,
 				AA376B6B2C3413B700C371E6 /* Manager */,
 				AA376B9F2C38048800C371E6 /* MainHomeViewController */,
 				AA376B9E2C38046500C371E6 /* RegisterViewController */,
@@ -187,6 +190,14 @@
 				AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */,
 			);
 			path = ToDoListViewController;
+			sourceTree = "<group>";
+		};
+		AA6BD3192C3D637000107AF6 /* Observable */ = {
+			isa = PBXGroup;
+			children = (
+				AA6BD31A2C3D637900107AF6 /* Observable.swift */,
+			);
+			path = Observable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA6BD31B2C3D637900107AF6 /* Observable.swift in Sources */,
 				AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */,
 				AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */,
 				AA376B812C3437E900C371E6 /* TaskManager.swift in Sources */,
