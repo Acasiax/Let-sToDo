@@ -48,7 +48,6 @@ class RegisterViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupNavigationBar()
         setupViews()
         setupTextFieldObserver()

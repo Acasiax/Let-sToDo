@@ -11,7 +11,7 @@ import RealmSwift
 // Repository 패턴
 // - 대체로 사용하는 '테이블+Repository'를 이름으로
 final class ToDoListRepository {
-    private let realm = try! Realm()
+     let realm = try! Realm()
     
     // 폴더 읽기 메서드 추가
     func readFolder(named name: String) -> Folder? {

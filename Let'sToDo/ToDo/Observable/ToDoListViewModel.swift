@@ -9,7 +9,7 @@ import RealmSwift
 
 class ToDoListViewModel {
     var tasks: Observable<[ToDoList]> = Observable([])
-    private let repository = ToDoListRepository()
+    let repository = ToDoListRepository()
 
     init() {
         fetchAllTasks()
