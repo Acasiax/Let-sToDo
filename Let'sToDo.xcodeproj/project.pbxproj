@@ -32,6 +32,7 @@
 		AA376BA42C39542400C371E6 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA32C39542400C371E6 /* FileManager.swift */; };
 		AA376BA62C399BCF00C371E6 /* RepositoryPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */; };
 		AA6BD31B2C3D637900107AF6 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD31A2C3D637900107AF6 /* Observable.swift */; };
+		AA6BD31D2C3D669300107AF6 /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */; };
 		AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB94B262C3BEC10005E56D2 /* Protocol+.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		AA376BA32C39542400C371E6 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryPattern.swift; sourceTree = "<group>"; };
 		AA6BD31A2C3D637900107AF6 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
 		AAB94B262C3BEC10005E56D2 /* Protocol+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocol+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				AA6BD31A2C3D637900107AF6 /* Observable.swift */,
+				AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */,
 			);
 			path = Observable;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */,
 				AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */,
 				AA376B812C3437E900C371E6 /* TaskManager.swift in Sources */,
+				AA6BD31D2C3D669300107AF6 /* ToDoListViewModel.swift in Sources */,
 				AA376B6D2C34142700C371E6 /* RegisterViewController.swift in Sources */,
 				AA376B942C35865C00C371E6 /* MainListCell.swift in Sources */,
 				AA376B6F2C34145700C371E6 /* MainHomeViewController.swift in Sources */,

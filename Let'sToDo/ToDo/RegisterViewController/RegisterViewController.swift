@@ -37,6 +37,7 @@ class RegisterViewController: BaseViewController {
     private let folderSegmentedControl = UISegmentedControl(items: ["여행", "건강관리", "전체", "재정관리", "자기계발"])
     private var saveButton: UIBarButtonItem!
 
+    var viewModel: ToDoListViewModel! //📍
     var selectedDeadline: Date?
     var selectedTag: String?
     var selectedPriority: String?
@@ -62,18 +63,6 @@ class RegisterViewController: BaseViewController {
                 print(error)
             }
         }
-    }
-
-    override func setupHierarchy() {
-        super.setupHierarchy()
-
-        view.addSubview(titleTextField)
-        view.addSubview(memoTextField)
-        view.addSubview(deadlineButton)
-        view.addSubview(tagButton)
-        view.addSubview(priorityButton)
-        view.addSubview(imageAddButton)
-        view.addSubview(folderSegmentedControl)
     }
 
     private func setupNavigationBar() {
@@ -127,6 +116,19 @@ class RegisterViewController: BaseViewController {
         delegate?.didAddNewTask()
         dismiss(animated: true)
     }
+    
+    override func setupHierarchy() {
+        super.setupHierarchy()
+
+        view.addSubview(titleTextField)
+        view.addSubview(memoTextField)
+        view.addSubview(deadlineButton)
+        view.addSubview(tagButton)
+        view.addSubview(priorityButton)
+        view.addSubview(imageAddButton)
+        view.addSubview(folderSegmentedControl)
+    }
+
     
     override func setupConstraints() {
         super.setupConstraints()
