@@ -93,6 +93,24 @@ final class ToDoListRepository {
             print("delete error")  // 삭제 실패 시 에러 메시지 출력
         }
     }
+  
+    
+    
+    
+    //폴더를 삭제하는 코드, -> 데이터베이스 매니저에 했나
+//    func removeFolder(_ folder: Folder){
+//        do {
+//            try realm.write {
+//                realm.delete(folder)
+//                print("폴더가 삭제되었습니다.")
+//            }
+//        } catch {
+//            print("폴더가 삭제가 실패했습니다.")
+//            
+//        }
+//    }
+//    
+    
     
     // 특정 필터에 따른 항목 수를 가져오는 메서드
     // - 필터 조건에 따라 항목 수를 반환

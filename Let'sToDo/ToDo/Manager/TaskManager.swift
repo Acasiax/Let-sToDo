@@ -73,15 +73,43 @@ class DatabaseManager {
     
     func remove(_ task: ToDoList) {
         try! database.write {
+            if let imageName = task.taskImagePath {
+                self.removeImageFromDocument(filename: imageName)
+            }
             database.delete(task)
         }
     }
     
+    //📍
     func remove(_ folder: Folder) {
         try! database.write {
-            // 폴더 내의 모든 ToDoList 항목도 함께 삭제
+            // 폴더 내의 모든 ToDoList 항목과 연관된 이미지도 삭제
+            for task in folder.detail88 {
+                if let imageName = task.taskImagePath {
+                    self.removeImageFromDocument(filename: imageName)
+                }
+            }
             database.delete(folder.detail88)
             database.delete(folder)
+        }
+    }
+    
+    // Documents 디렉토리에서 이미지를 삭제하는 함수
+    func removeImageFromDocument(filename: String) {
+        guard let documentDirectory = FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask).first else { return }
+
+        let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
+        
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(at: fileURL)
+            } catch {
+                print("파일 삭제 오류:", error)
+            }
+        } else {
+            print("파일이 존재하지 않음")
         }
     }
 }
