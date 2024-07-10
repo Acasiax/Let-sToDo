@@ -28,14 +28,14 @@ enum FolderFilter: String, CaseIterable {
 class RegisterViewController: BaseViewController {
     private let toDoListRepository = ToDoListRepository()
     
-    private let titleTextField = UITextField()
-    private let memoTextField = UITextField()
-    private let deadlineButton = UIButton(type: .system)
-    private let tagButton = UIButton(type: .system)
-    private let priorityButton = UIButton(type: .system)
-    private let imageAddButton = UIButton(type: .system)
-    private let folderSegmentedControl = UISegmentedControl(items: FolderFilter.allCases.map { $0.title })
-    private var saveButton: UIBarButtonItem!
+     let titleTextField = UITextField()
+     let memoTextField = UITextField()
+     let deadlineButton = UIButton(type: .system)
+     let tagButton = UIButton(type: .system)
+     let priorityButton = UIButton(type: .system)
+     let imageAddButton = UIButton(type: .system)
+     let folderSegmentedControl = UISegmentedControl(items: FolderFilter.allCases.map { $0.title })
+     var saveButton: UIBarButtonItem!
 
     var viewModel: ToDoListViewModel! {
         didSet {
@@ -54,6 +54,7 @@ class RegisterViewController: BaseViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupViews()
+        setupConstraints2()
         setupTextFieldObserver()
         setupButtonActions()
 
@@ -69,37 +70,37 @@ class RegisterViewController: BaseViewController {
     }
 
     private func bindViewModel() {
-        viewModel.taskTitle.bind { [weak self] title in
-            self?.titleTextField.text = title
+        viewModel.taskTitle.bind { title in
+            self.titleTextField.text = title
         }
-        viewModel.taskContent.bind { [weak self] content in
-            self?.memoTextField.text = content
+        viewModel.taskContent.bind { content in
+            self.memoTextField.text = content
         }
-        viewModel.taskDeadline.bind { [weak self] deadline in
+        viewModel.taskDeadline.bind { deadline in
             if let deadline = deadline {
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
-                self?.deadlineButton.setTitle(formatter.string(from: deadline), for: .normal)
+                self.deadlineButton.setTitle(formatter.string(from: deadline), for: .normal)
             } else {
-                self?.deadlineButton.setTitle("마감일", for: .normal)
+                self.deadlineButton.setTitle("마감일", for: .normal)
             }
         }
-        viewModel.taskTag.bind { [weak self] tag in
-            self?.tagButton.setTitle(tag.isEmpty ? "태그" : tag, for: .normal)
+        viewModel.taskTag.bind { tag in
+            self.tagButton.setTitle(tag.isEmpty ? "태그" : tag, for: .normal)
         }
-        viewModel.taskPriority.bind { [weak self] priority in
-            self?.priorityButton.setTitle(priority.isEmpty ? "우선 순위" : priority, for: .normal)
+        viewModel.taskPriority.bind { priority in
+            self.priorityButton.setTitle(priority.isEmpty ? "우선 순위" : priority, for: .normal)
         }
-        viewModel.taskCategory.bind { [weak self] category in
+        viewModel.taskCategory.bind { category in
             if let index = FolderFilter.allCases.firstIndex(where: { $0.title == category }) {
-                self?.folderSegmentedControl.selectedSegmentIndex = index
+                self.folderSegmentedControl.selectedSegmentIndex = index
             }
         }
-        viewModel.taskImage.bind { [weak self] image in
+        viewModel.taskImage.bind { image in
             if let _ = image {
-                self?.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
+                self.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
             } else {
-                self?.imageAddButton.setTitle("이미지 추가", for: .normal)
+                self.imageAddButton.setTitle("이미지 추가", for: .normal)
             }
         }
     }
@@ -171,53 +172,7 @@ class RegisterViewController: BaseViewController {
         view.addSubview(folderSegmentedControl)
     }
 
-    override func setupConstraints() {
-        super.setupConstraints()
-
-        let padding: CGFloat = 16
-
-        titleTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(50)
-        }
-
-        memoTextField.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(130)
-        }
-
-        deadlineButton.snp.makeConstraints { make in
-            make.top.equalTo(memoTextField.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-
-        tagButton.snp.makeConstraints { make in
-            make.top.equalTo(deadlineButton.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-
-        priorityButton.snp.makeConstraints { make in
-            make.top.equalTo(tagButton.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-
-        imageAddButton.snp.makeConstraints { make in
-            make.top.equalTo(priorityButton.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-        
-        folderSegmentedControl.snp.makeConstraints { make in
-            make.top.equalTo(imageAddButton.snp.bottom).offset(padding)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(padding)
-            make.height.equalTo(44)
-        }
-    }
+ 
 
     private func setupViews() {
         view.backgroundColor = .systemBackground

@@ -33,6 +33,7 @@
 		AA376BA62C399BCF00C371E6 /* RepositoryPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */; };
 		AA6BD31B2C3D637900107AF6 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD31A2C3D637900107AF6 /* Observable.swift */; };
 		AA6BD31D2C3D669300107AF6 /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */; };
+		AA6BD3362C3ECC2300107AF6 /* RegisterView+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD3352C3ECC2300107AF6 /* RegisterView+EXT.swift */; };
 		AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB94B262C3BEC10005E56D2 /* Protocol+.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryPattern.swift; sourceTree = "<group>"; };
 		AA6BD31A2C3D637900107AF6 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
+		AA6BD3352C3ECC2300107AF6 /* RegisterView+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegisterView+EXT.swift"; sourceTree = "<group>"; };
 		AAB94B262C3BEC10005E56D2 /* Protocol+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocol+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				AA376B6C2C34142700C371E6 /* RegisterViewController.swift */,
+				AA6BD3352C3ECC2300107AF6 /* RegisterView+EXT.swift */,
 				AA376B892C3567A600C371E6 /* Group */,
 			);
 			path = RegisterViewController;
@@ -295,6 +298,7 @@
 				AA376B6F2C34145700C371E6 /* MainHomeViewController.swift in Sources */,
 				AA376B5B2C3412FD00C371E6 /* ViewController.swift in Sources */,
 				AA376B572C3412FD00C371E6 /* AppDelegate.swift in Sources */,
+				AA6BD3362C3ECC2300107AF6 /* RegisterView+EXT.swift in Sources */,
 				AA376BA42C39542400C371E6 /* FileManager.swift in Sources */,
 				AA376B712C34148600C371E6 /* ToDoListViewController.swift in Sources */,
 				AA376BA22C38E59B00C371E6 /* DetailTodoViewController.swift in Sources */,
