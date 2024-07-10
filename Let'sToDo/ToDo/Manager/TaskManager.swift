@@ -23,7 +23,7 @@ class Folder: Object {
     // 1:n to many relationship
     @Persisted var detail88: List<ToDoList> // 여러 개의 DetailTodo
     
-    //to one relationship
+    //to one relationship 테이블 같은 건데 테이블은 아님
     @Persisted var meno: Memo?
     
     

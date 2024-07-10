@@ -79,6 +79,13 @@ class ToDoListViewController: UIViewController {
         cell.dateLB.text = formatDate(folder.regDate)
         cell.tagLB.text = "" // Folder에는 tag가 없으므로 빈 문자열로 설정
         cell.overviewLabel.text = "\(folder.detail88.count) 개의 목록"
+        
+            //overviewLabel에 폴더 이름 넣고 싶을때,셀에 목록 이름도 나오게 할때 first를 사용하자
+//        if let mainFolder = folder.detail88.first?.main.first {
+//                cell.overviewLabel.text = mainFolder.FolderName
+//            } else {
+//                cell.overviewLabel.text = "No main folder"
+//            }
         cell.checkCircle.setImage(UIImage(systemName: "circle"), for: .normal)
     }
     
