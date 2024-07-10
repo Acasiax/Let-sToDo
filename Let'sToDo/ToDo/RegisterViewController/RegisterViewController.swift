@@ -34,7 +34,7 @@ class RegisterViewController: BaseViewController {
     private let tagButton = UIButton(type: .system)
     private let priorityButton = UIButton(type: .system)
     private let imageAddButton = UIButton(type: .system)
-    private let folderSegmentedControl = UISegmentedControl(items: ["여행", "건강관리", "전체", "재정관리", "자기계발"])
+    private let folderSegmentedControl = UISegmentedControl(items: FolderFilter.allCases.map { $0.title })
     private var saveButton: UIBarButtonItem!
 
     var viewModel: ToDoListViewModel! {

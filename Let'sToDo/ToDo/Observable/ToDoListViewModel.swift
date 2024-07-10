@@ -10,6 +10,14 @@ import RealmSwift
 class ToDoListViewModel {
     var tasks: Observable<[ToDoList]> = Observable([])
     let repository = ToDoListRepository()
+    
+    var taskTitle = Observable<String>("")
+    var taskContent = Observable<String>("")
+    var taskDeadline = Observable<Date?>(nil)
+    var taskTag = Observable<String>("")
+    var taskPriority = Observable<String>("")
+    var taskCategory = Observable<String>("")
+    var taskImage = Observable<Data?>(nil)
 
     init() {
         fetchAllTasks()
