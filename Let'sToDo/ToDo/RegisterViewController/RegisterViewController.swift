@@ -37,13 +37,17 @@ class RegisterViewController: BaseViewController {
     private let folderSegmentedControl = UISegmentedControl(items: ["여행", "건강관리", "전체", "재정관리", "자기계발"])
     private var saveButton: UIBarButtonItem!
 
-    var viewModel: ToDoListViewModel! //📍
+    var viewModel: ToDoListViewModel! {
+        didSet {
+            bindViewModel()
+        }
+    }
     var selectedDeadline: Date?
     var selectedTag: String?
     var selectedPriority: String?
     var selectedImage: Data?
     var selectedFolder: String?
-    var folder: Folder? 
+    var folder: Folder?
     weak var delegate: RegisterViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -64,13 +68,49 @@ class RegisterViewController: BaseViewController {
         }
     }
 
+    private func bindViewModel() {
+        viewModel.taskTitle.bind { [weak self] title in
+            self?.titleTextField.text = title
+        }
+        viewModel.taskContent.bind { [weak self] content in
+            self?.memoTextField.text = content
+        }
+        viewModel.taskDeadline.bind { [weak self] deadline in
+            if let deadline = deadline {
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                self?.deadlineButton.setTitle(formatter.string(from: deadline), for: .normal)
+            } else {
+                self?.deadlineButton.setTitle("마감일", for: .normal)
+            }
+        }
+        viewModel.taskTag.bind { [weak self] tag in
+            self?.tagButton.setTitle(tag.isEmpty ? "태그" : tag, for: .normal)
+        }
+        viewModel.taskPriority.bind { [weak self] priority in
+            self?.priorityButton.setTitle(priority.isEmpty ? "우선 순위" : priority, for: .normal)
+        }
+        viewModel.taskCategory.bind { [weak self] category in
+            if let index = FolderFilter.allCases.firstIndex(where: { $0.title == category }) {
+                self?.folderSegmentedControl.selectedSegmentIndex = index
+            }
+        }
+        viewModel.taskImage.bind { [weak self] image in
+            if let _ = image {
+                self?.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
+            } else {
+                self?.imageAddButton.setTitle("이미지 추가", for: .normal)
+            }
+        }
+    }
+
     private func setupNavigationBar() {
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelAction))
         navigationItem.leftBarButtonItem = cancelButton
 
         saveButton = UIBarButtonItem(title: "추가", style: .done, target: self, action: #selector(saveAction))
         navigationItem.rightBarButtonItem = saveButton
-        saveButton.isEnabled = false // 초기 상태에서 비활성화
+        saveButton.isEnabled = false
 
         navigationItem.title = "새로운 할 일"
     }
@@ -79,10 +119,14 @@ class RegisterViewController: BaseViewController {
         dismiss(animated: true)
     }
    
-    //🧯
     @objc private func saveAction() {
+        guard let title = titleTextField.text, !title.isEmpty else {
+            print("제목이 비어 있습니다.")
+            return
+        }
+        
         let newTask = ToDoList()
-        newTask.taskTitle = titleTextField.text ?? ""
+        newTask.taskTitle = title
         newTask.taskContent = memoTextField.text
         newTask.taskDeadline = selectedDeadline
         newTask.taskTag = selectedTag ?? ""
@@ -92,30 +136,29 @@ class RegisterViewController: BaseViewController {
         if let selectedImage = selectedImage {
             let filename = UUID().uuidString
             saveImageToDocument(image: UIImage(data: selectedImage)!, filename: filename)
-            newTask.taskImagePath = filename // 파일 이름을 저장
+            newTask.taskImagePath = filename
         }
-    
-        // 폴더 초기화 로직 추가
-          let folderName = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
-          if let existingFolder = toDoListRepository.readFolder(named: folderName) {
-              folder = existingFolder
-          } else {
-              let newFolder = Folder()
-              newFolder.FolderName = folderName
-              toDoListRepository.createFolder(newFolder)
-              folder = newFolder
-          }
 
-          guard let folder = folder else {
-              print("폴더가 설정되지 않았습니다.")
-              return
-          }
+        let folderName = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
+        if let existingFolder = toDoListRepository.readFolder(named: folderName) {
+            folder = existingFolder
+        } else {
+            let newFolder = Folder()
+            newFolder.FolderName = folderName
+            toDoListRepository.createFolder(newFolder)
+            folder = newFolder
+        }
 
-          toDoListRepository.createItem(newTask, folder: folder)
+        guard let folder = folder else {
+            print("폴더가 설정되지 않았습니다.")
+            return
+        }
+
+        toDoListRepository.createItem(newTask, folder: folder)
         delegate?.didAddNewTask()
         dismiss(animated: true)
     }
-    
+
     override func setupHierarchy() {
         super.setupHierarchy()
 
@@ -128,7 +171,6 @@ class RegisterViewController: BaseViewController {
         view.addSubview(folderSegmentedControl)
     }
 
-    
     override func setupConstraints() {
         super.setupConstraints()
 
@@ -188,9 +230,9 @@ class RegisterViewController: BaseViewController {
         setupButton(priorityButton, title: "우선 순위")
         setupButton(imageAddButton, title: "이미지 추가")
         
-        folderSegmentedControl.selectedSegmentIndex = 0 // 기본 선택
+        folderSegmentedControl.selectedSegmentIndex = 0
         folderSegmentedControl.addTarget(self, action: #selector(folderSegmentedControlChanged), for: .valueChanged)
-        selectedFolder = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title // 기본 선택 폴더
+        selectedFolder = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
     }
 
     private func configureTextField(_ textField: UITextField, placeholder: String) {
@@ -312,7 +354,6 @@ extension RegisterViewController: PHPickerViewControllerDelegate {
         dismiss(animated: true)
     }
 }
-
 
 
 //노티피케이션
