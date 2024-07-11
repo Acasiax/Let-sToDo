@@ -42,6 +42,7 @@ class RegisterViewController: BaseViewController {
             bindViewModel()
         }
     }
+    
     var selectedDeadline: Date?
     var selectedTag: String?
     var selectedPriority: String?
