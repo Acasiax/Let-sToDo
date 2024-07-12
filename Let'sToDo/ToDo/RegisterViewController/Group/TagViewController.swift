@@ -15,6 +15,7 @@ class TagViewController: UIViewController {
     var delegate: DataDelegate?
     
     let showTagButton = UIButton()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "태그를 입력하세요"
@@ -23,6 +24,7 @@ class TagViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
+    
     
     let textField: UITextField = {
         let tf = UITextField()
