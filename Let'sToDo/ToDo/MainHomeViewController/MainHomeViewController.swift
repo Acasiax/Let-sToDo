@@ -114,34 +114,64 @@ final class MainHomeViewController: BaseViewController {
         view.addSubview(folderCollectionView)
     }
 
+//    override func setupConstraints() {
+//        titleLabel.snp.makeConstraints { make in
+//            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+//        }
+//
+//        newTaskButton.snp.makeConstraints { make in
+//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+//            make.height.equalTo(50)
+//            make.width.equalTo(150)
+//        }
+//
+//        collectionView.snp.makeConstraints { make in
+//            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+//            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+//            make.height.equalTo(view.frame.height * 0.4)
+//        }
+//        
+//        folderCollectionView.snp.makeConstraints { make in
+//            make.top.equalTo(collectionView.snp.bottom).offset(5)
+//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+//            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+//            make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
+//        }
+//    }
+
     override func setupConstraints() {
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
 
-        newTaskButton.snp.makeConstraints { make in
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(50)
-            make.width.equalTo(150)
+        newTaskButton.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(50)
+            $0.width.equalTo(150)
         }
 
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(view.frame.height * 0.4)
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(view.frame.height * 0.4)
         }
         
-        folderCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(5)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
+        folderCollectionView.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.bottom).offset(5)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.bottom.equalTo(newTaskButton.snp.top).offset(-20)
         }
     }
 
+    
+    
     @objc func registerButtonTapped() {
         let registerVC = RegisterViewController()
         registerVC.delegate = self
