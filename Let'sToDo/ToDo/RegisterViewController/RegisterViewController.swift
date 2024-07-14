@@ -11,7 +11,6 @@ import RealmSwift
 import Toast
 import PhotosUI
 
-
 enum FolderFilter: String, CaseIterable {
     case travel = "여행"
     case healthCare = "건강관리"
@@ -68,6 +67,36 @@ class RegisterViewController: BaseViewController {
                 print(error)
             }
         }
+    }
+    
+    override func setupHierarchy() {
+        super.setupHierarchy()
+
+        view.addSubview(titleTextField)
+        view.addSubview(memoTextField)
+        view.addSubview(deadlineButton)
+        view.addSubview(tagButton)
+        view.addSubview(priorityButton)
+        view.addSubview(imageAddButton)
+        view.addSubview(folderSegmentedControl)
+    }
+
+ 
+
+    private func setupViews() {
+        view.backgroundColor = .systemBackground
+
+        configureTextField(titleTextField, placeholder: "제목")
+        configureTextField(memoTextField, placeholder: "메모")
+
+        setupButton(deadlineButton, title: "마감일")
+        setupButton(tagButton, title: "태그")
+        setupButton(priorityButton, title: "우선 순위")
+        setupButton(imageAddButton, title: "이미지 추가")
+        
+        folderSegmentedControl.selectedSegmentIndex = 0
+        folderSegmentedControl.addTarget(self, action: #selector(folderSegmentedControlChanged), for: .valueChanged)
+        selectedFolder = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
     }
 
     private func bindViewModel() {
@@ -161,35 +190,6 @@ class RegisterViewController: BaseViewController {
         dismiss(animated: true)
     }
 
-    override func setupHierarchy() {
-        super.setupHierarchy()
-
-        view.addSubview(titleTextField)
-        view.addSubview(memoTextField)
-        view.addSubview(deadlineButton)
-        view.addSubview(tagButton)
-        view.addSubview(priorityButton)
-        view.addSubview(imageAddButton)
-        view.addSubview(folderSegmentedControl)
-    }
-
- 
-
-    private func setupViews() {
-        view.backgroundColor = .systemBackground
-
-        configureTextField(titleTextField, placeholder: "제목")
-        configureTextField(memoTextField, placeholder: "메모")
-
-        setupButton(deadlineButton, title: "마감일")
-        setupButton(tagButton, title: "태그")
-        setupButton(priorityButton, title: "우선 순위")
-        setupButton(imageAddButton, title: "이미지 추가")
-        
-        folderSegmentedControl.selectedSegmentIndex = 0
-        folderSegmentedControl.addTarget(self, action: #selector(folderSegmentedControlChanged), for: .valueChanged)
-        selectedFolder = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
-    }
 
     private func configureTextField(_ textField: UITextField, placeholder: String) {
         textField.placeholder = placeholder

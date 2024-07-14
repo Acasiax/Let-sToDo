@@ -114,64 +114,35 @@ final class MainHomeViewController: BaseViewController {
         view.addSubview(folderCollectionView)
     }
 
-//    override func setupConstraints() {
-//        titleLabel.snp.makeConstraints { make in
-//            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-//        }
-//
-//        newTaskButton.snp.makeConstraints { make in
-//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-//            make.height.equalTo(50)
-//            make.width.equalTo(150)
-//        }
-//
-//        collectionView.snp.makeConstraints { make in
-//            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-//            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-//            make.height.equalTo(view.frame.height * 0.4)
-//        }
-//        
-//        folderCollectionView.snp.makeConstraints { make in
-//            make.top.equalTo(collectionView.snp.bottom).offset(5)
-//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-//            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-//            make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
-//        }
-//    }
-
     override func setupConstraints() {
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
 
-        newTaskButton.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            $0.height.equalTo(50)
-            $0.width.equalTo(150)
+        newTaskButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(50)
+            make.width.equalTo(150)
         }
 
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            $0.height.equalTo(view.frame.height * 0.4)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(view.frame.height * 0.4)
         }
         
-        folderCollectionView.snp.makeConstraints {
-            $0.top.equalTo(collectionView.snp.bottom).offset(5)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            $0.bottom.equalTo(newTaskButton.snp.top).offset(-20)
+        folderCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(5)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
         }
     }
 
-    
-    
+  
     @objc func registerButtonTapped() {
         let registerVC = RegisterViewController()
         registerVC.delegate = self
@@ -247,11 +218,11 @@ extension MainHomeViewController: RegisterViewControllerDelegate {
 
 
 
-//MVVM 패턴과 옵저버 패턴에 대해 복습 정리하기
+//MVVM 패턴과 옵저버 패턴에 대해 복습 정리
 //2024년 7월 12일, 금요일
 //
 //오늘은 MVVM(Model-View-ViewModel) 패턴과 옵저버 패턴에 대해 공부하면서 느낀 점들을 정리해보기!
-//    . 이 두 가지 패턴은 UI 개발에서 매우 중요한 역할을 하며, 특히 Swift를 사용한 iOS 개발에서 자주 사용된다.
+// 이 두 가지 패턴은 UI 개발에서 매우 중요한 역할을 하며, 특히 Swift를 사용한 iOS 개발에서 자주 사용된다.
 //
 // MVVM은 애플리케이션의 UI와 비즈니스 로직을 분리하기 위해 고안된 디자인 패턴이다. 세 가지 주요 구성 요소로 나뉜다.
 //Model: 애플리케이션의 데이터와 비즈니스 로직을 담당한다. 데이터베이스, 웹 서비스, 로컬 데이터 저장소 등에서 데이터를 가져오거나 저장하는 기능을 수행한다.

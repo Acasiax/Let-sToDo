@@ -16,36 +16,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         
-        // UILabel 스타일 설정
-               UILabel.appearance().font = UIFont.systemFont(ofSize: 17)
-               UILabel.appearance().textColor = .black
-               
-               // UIButton 스타일 설정
-        UIButton.appearance().backgroundColor = .systemBlue.withAlphaComponent(0.5)
-               UIButton.appearance().setTitleColor(.white, for: .normal)
-               
-               // UITextField 스타일 설정
-               UITextField.appearance().font = UIFont.systemFont(ofSize: 17)
-               UITextField.appearance().textColor = .black
-               UITextField.appearance().backgroundColor = .white
-               
-               // UINavigationBar 스타일 설정
-               let navigationBarAppearance = UINavigationBarAppearance()
-               navigationBarAppearance.backgroundColor = .systemBackground
-               navigationBarAppearance.titleTextAttributes = [
-                   .foregroundColor: UIColor.black
-               ]
-               UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-               UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-               
-               // UITabBar 스타일 설정
-               let tabBarAppearance = UITabBarAppearance()
-               tabBarAppearance.backgroundColor = .systemBackground
-               UITabBar.appearance().standardAppearance = tabBarAppearance
-               if #available(iOS 15.0, *) {
-                   UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-               }
-        
+//        // UILabel 스타일 설정
+//               UILabel.appearance().font = UIFont.systemFont(ofSize: 17)
+//               UILabel.appearance().textColor = .black
+//               
+//               // UIButton 스타일 설정
+//        UIButton.appearance().backgroundColor = .systemBlue.withAlphaComponent(0.5)
+//               UIButton.appearance().setTitleColor(.white, for: .normal)
+//               
+//               // UITextField 스타일 설정
+//               UITextField.appearance().font = UIFont.systemFont(ofSize: 17)
+//               UITextField.appearance().textColor = .black
+//               UITextField.appearance().backgroundColor = .white
+//               
+//               // UINavigationBar 스타일 설정
+//               let navigationBarAppearance = UINavigationBarAppearance()
+//               navigationBarAppearance.backgroundColor = .systemBackground
+//               navigationBarAppearance.titleTextAttributes = [
+//                   .foregroundColor: UIColor.black
+//               ]
+//               UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+//               UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+//               
+//               // UITabBar 스타일 설정
+//               let tabBarAppearance = UITabBarAppearance()
+//               tabBarAppearance.backgroundColor = .systemBackground
+//               UITabBar.appearance().standardAppearance = tabBarAppearance
+//               if #available(iOS 15.0, *) {
+//                   UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+//               }
+//        
         
         
         
