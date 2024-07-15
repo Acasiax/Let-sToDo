@@ -11,7 +11,7 @@ import RealmSwift
 import Toast
 import PhotosUI
 
-extension RegisterViewController: Base {
+extension RegisterViewController {
     
     func setupViews() {
         view.backgroundColor = .systemBackground

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-final class MainHomeViewController: UIViewController {
+final class MainHomeViewController: UIViewController, Base {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "전체"

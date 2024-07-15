@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import Toast
 
-
 class TagViewController: UIViewController {
     
     var delegate: DataDelegate?

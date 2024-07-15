@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-extension MainHomeViewController: Base {
+extension MainHomeViewController {
     
     @objc func addFolderButtonTapped() {
         let addFolderVC = AddFolderViewController()

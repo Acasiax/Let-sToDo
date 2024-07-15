@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, Base {
     let toDoListRepository = ToDoListRepository()
     
     let titleTextField = UITextField()
