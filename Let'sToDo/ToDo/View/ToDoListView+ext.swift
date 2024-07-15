@@ -34,7 +34,7 @@ extension ToDoListViewController {
             let emptyLabel = UILabel()
             emptyLabel.text = "일정이 없습니다."
             emptyLabel.textAlignment = .center
-            emptyLabel.textColor = .gray
+            emptyLabel.textColor = .black
             emptyLabel.font = UIFont.systemFont(ofSize: 20)
             taskTableView.backgroundView = emptyLabel
         } else {
