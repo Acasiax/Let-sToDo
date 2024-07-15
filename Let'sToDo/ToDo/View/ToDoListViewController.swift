@@ -5,7 +5,6 @@
 //  Created by 이윤지 on 7/2/24.
 //
 
-
 import UIKit
 import RealmSwift
 import SnapKit
@@ -14,7 +13,7 @@ import Toast
 final class ToDoListViewController: UIViewController {
     let dbManager = DatabaseManager()
     private let toDoListRepository = ToDoListRepository()
-    var list: [Folder] = [] // Folder 배열로 변경
+    var list: [Folder] = []
     let titleLbl = UILabel()
     let taskTableView = UITableView()
     let realmDb = try! Realm()
@@ -22,7 +21,7 @@ final class ToDoListViewController: UIViewController {
     var filter: String?
     var folderFilter: String?
     var mainFilter: Filter?
-    var folder: Folder? // 선택한 폴더 정보를 저장할 변수!
+    var folder: Folder?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,24 +35,39 @@ final class ToDoListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let folderFilter = folderFilter {
-            print("폴더 필터가 설정됨: \(folderFilter)")
-            navigationItem.title = folderFilter
-            list = toDoListRepository.readFolders(with: folderFilter)
-        } else {
-            navigationItem.title = "전체"
-            list = toDoListRepository.readAllFolders()
-        }
+        updateNavigationBarTitle()
         refreshTaskList()
     }
     
     @objc func refreshTaskList() {
         if let folderFilter = folderFilter {
-            list = toDoListRepository.readFolders(with: folderFilter)
+            list = toDoListRepository.readFolders(with: folderFilter, mainFilter: mainFilter)
         } else {
-            list = toDoListRepository.readAllFolders()
+            list = toDoListRepository.readAllFolders(mainFilter: mainFilter)
         }
         taskTableView.reloadData()
+        updateEmptyState()
+    }
+    
+    private func updateNavigationBarTitle() {
+        if let folderFilter = folderFilter {
+            navigationItem.title = folderFilter
+        } else {
+            navigationItem.title = "전체"
+        }
+    }
+    
+    private func updateEmptyState() {
+        if list.isEmpty {
+            let emptyLabel = UILabel()
+            emptyLabel.text = "일정이 없습니다."
+            emptyLabel.textAlignment = .center
+            emptyLabel.textColor = .gray
+            emptyLabel.font = UIFont.systemFont(ofSize: 20)
+            taskTableView.backgroundView = emptyLabel
+        } else {
+            taskTableView.backgroundView = nil
+        }
     }
     
     private func setupUI() {
@@ -78,7 +92,7 @@ final class ToDoListViewController: UIViewController {
         cell.titleLB.text = folder.FolderName
         cell.contentLB.text = folder.optionDescription
         cell.dateLB.text = formatDate(folder.regDate)
-        cell.tagLB.text = "" // Folder에는 tag가 없으므로 빈 문자열로 설정
+        cell.tagLB.text = ""
         cell.overviewLabel.text = "\(folder.detail88.count) 개의 목록"
         cell.checkCircle.setImage(UIImage(systemName: "circle"), for: .normal)
     }
@@ -107,7 +121,7 @@ final class ToDoListViewController: UIViewController {
     
     private func createSortAction(title: String, keyPath: String, ascending: Bool, filter: String? = nil) -> UIAction {
         return UIAction(title: title) { _ in
-            self.list = self.toDoListRepository.readFoldersSorted(by: keyPath, ascending: ascending)
+            self.list = self.toDoListRepository.readFoldersSorted(by: keyPath, ascending: ascending, mainFilter: self.mainFilter)
             self.taskTableView.reloadData()
         }
     }
@@ -147,7 +161,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
         
         let selectedFolder = list[indexPath.row]
         if let firstTask = selectedFolder.detail88.first {
-            detailVC.mainTask = firstTask // 폴더 내의 첫 번째 작업을 전달
+            detailVC.mainTask = firstTask
         }
         
         detailVC.folderCategoryName = selectedFolder.FolderName
@@ -163,10 +177,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
 
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
             let folderToDelete = self.list[indexPath.row]
-            
-            // 데이터베이스에서 폴더 삭제
             self.dbManager.remove(folderToDelete)
-            
             success(true)
             self.refreshTaskList()
         }
@@ -174,5 +185,4 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
 
         return UISwipeActionsConfiguration(actions: [deleteAction, detailAction])
     }
-
 }

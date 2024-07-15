@@ -52,8 +52,22 @@ enum FolderFilter: String, CaseIterable {
     var title: String {
         return self.rawValue
     }
-}
 
+    var predicate2: NSPredicate {
+        switch self {
+        case .travel:
+            return NSPredicate(format: "taskCategory == %@", "여행")
+        case .healthCare:
+            return NSPredicate(format: "taskCategory == %@", "건강관리")
+        case .all:
+            return NSPredicate(value: true)
+        case .financeManagement:
+            return NSPredicate(format: "taskCategory == %@", "재정관리")
+        case .selfDevelopment:
+            return NSPredicate(format: "taskCategory == %@", "자기계발")
+        }
+    }
+}
 
 
 //폴더 추가뷰에서 색상 열거형

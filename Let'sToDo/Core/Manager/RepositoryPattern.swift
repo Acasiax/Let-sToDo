@@ -8,35 +8,46 @@
 import UIKit
 import RealmSwift
 
-// Repository 패턴
 final class ToDoListRepository {
     let realm = try! Realm()
 
-    // 폴더 읽기 메서드 추가
     func readFolder(named name: String) -> Folder? {
         return realm.objects(Folder.self).filter("FolderName == %@", name).first
     }
-    
-    // 폴더를 필터를 사용하여 읽어오는 메서드 추가
-    func readFolders(with filter: String?) -> [Folder] {
-        if let filter = filter {
-            return Array(realm.objects(Folder.self).filter("FolderName == %@", filter))
+
+    func readFolders(with folderFilter: String?, mainFilter: Filter? = nil) -> [Folder] {
+        var predicate = NSPredicate(value: true)
+        
+        if let folderFilter = folderFilter {
+            let folderPredicate = NSPredicate(format: "FolderName == %@", folderFilter)
+            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, folderPredicate])
+        }
+        
+        if let mainFilter = mainFilter {
+            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, mainFilter.predicate])
+        }
+        
+        return Array(realm.objects(Folder.self).filter(predicate))
+    }
+
+    func readAllFolders(mainFilter: Filter? = nil) -> [Folder] {
+        if let mainFilter = mainFilter {
+            return Array(realm.objects(Folder.self).filter(mainFilter.predicate))
         } else {
             return Array(realm.objects(Folder.self))
         }
     }
-    
-    // 모든 폴더를 읽어오는 메서드 추가
-    func readAllFolders() -> [Folder] {
-        return Array(realm.objects(Folder.self))
-    }
-    
-    // 폴더를 정렬하여 읽어오는 메서드 추가
-    func readFoldersSorted(by keyPath: String, ascending: Bool) -> [Folder] {
-        return Array(realm.objects(Folder.self).sorted(byKeyPath: keyPath, ascending: ascending))
+
+    func readFoldersSorted(by keyPath: String, ascending: Bool, mainFilter: Filter? = nil) -> [Folder] {
+        var folders = realm.objects(Folder.self).sorted(byKeyPath: keyPath, ascending: ascending)
+        
+        if let mainFilter = mainFilter {
+            folders = folders.filter(mainFilter.predicate)
+        }
+        
+        return Array(folders)
     }
 
-    // 데이터를 생성하는 메서드
     func createItem(_ data: ToDoList, folder: Folder) {
         do {
             try realm.write {
@@ -47,8 +58,7 @@ final class ToDoListRepository {
             print("save error")
         }
     }
-    
-    // 폴더를 생성하는 메서드
+
     func createFolder(_ folder: Folder) {
         do {
             try realm.write {
@@ -59,26 +69,22 @@ final class ToDoListRepository {
             print("폴더 저장 실패: \(error)")
         }
     }
-    
-    // 모든 항목을 읽어오는 메서드
+
     func readAllItems() -> [ToDoList] {
         let result = realm.objects(ToDoList.self).sorted(byKeyPath: "taskTitle", ascending: true)
         return Array(result)
     }
-    
-    // 정렬된 항목들을 읽어오는 메서드
+
     func readItemsSorted(by keyPath: String, ascending: Bool) -> [ToDoList] {
         let result = realm.objects(ToDoList.self).sorted(byKeyPath: keyPath, ascending: ascending)
         return Array(result)
     }
 
-    // 필터와 정렬 조건을 사용하여 항목들을 읽어오는 메서드
     func readItemsSortedAndFiltered(by keyPath: String, ascending: Bool, filter: String) -> [ToDoList] {
         let result = realm.objects(ToDoList.self).filter(filter).sorted(byKeyPath: keyPath, ascending: ascending)
         return Array(result)
     }
-    
-    // 항목을 삭제하는 메서드
+
     func deleteItem(_ data: ToDoList) {
         do {
             try realm.write {
@@ -90,12 +96,10 @@ final class ToDoListRepository {
         }
     }
 
-    // 특정 필터에 따른 항목 수를 가져오는 메서드
     func fetchCount(for filter: Filter) -> Int {
         return realm.objects(ToDoList.self).filter(filter.predicate).count
     }
-    
-    // 특정 폴더 필터에 따른 항목 수를 가져오는 메서드
+
     func fetchFolderCount(for folderFilter: FolderFilter, with mainFilter: Filter?) -> Int {
         var predicate = folderFilter.predicate
         if let mainFilter = mainFilter {
@@ -103,8 +107,7 @@ final class ToDoListRepository {
         }
         return realm.objects(ToDoList.self).filter(predicate).count
     }
-    
-    // 필터를 사용하여 항목을 읽어오는 메서드
+
     func readItems(with filter: String?) -> [ToDoList] {
         if let filter = filter {
             switch filter {
@@ -126,7 +129,6 @@ final class ToDoListRepository {
         }
     }
 
-    // 폴더 필터를 사용하여 항목을 읽어오는 메서드
     func readFolderItems(with filter: String?) -> [ToDoList] {
         if let filter = filter {
             switch filter {
@@ -148,7 +150,6 @@ final class ToDoListRepository {
         }
     }
 
-    // 두 개의 필터를 사용하여 항목을 읽어오는 메서드 추가
     func fetchTasks(folderFilter: String, mainFilter: Filter) -> [ToDoList] {
         let folderPredicate = NSPredicate(format: "taskCategory == %@", folderFilter)
         let mainPredicate = mainFilter.predicate
@@ -190,6 +191,7 @@ extension FolderFilter {
         }
     }
 }
+
 
 
 
