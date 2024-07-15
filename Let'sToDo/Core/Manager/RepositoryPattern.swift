@@ -114,7 +114,7 @@ final class ToDoListRepository {
     
     // 특정 필터에 따른 항목 수를 가져오는 메서드
     // - 필터 조건에 따라 항목 수를 반환
-    func fetchCount(for filter: MainHomeViewController.Filter) -> Int {
+    func fetchCount(for filter: Filter) -> Int {
         switch filter {
         case .today:
             return realm.objects(ToDoList.self).filter("taskDeadline <= %@", Date()).count
@@ -131,7 +131,7 @@ final class ToDoListRepository {
     
     // 특정 폴더 필터에 따른 항목 수를 가져오는 메서드
     // - 필터 조건에 따라 항목 수를 반환
-    func fetchFolderCount(for filter: MainHomeViewController.FolderFilter) -> Int {
+    func fetchFolderCount(for filter: FolderFilter) -> Int {
         switch filter {
         case .travel:
             return realm.objects(ToDoList.self).filter("taskCategory == '여행'").count

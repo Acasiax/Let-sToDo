@@ -10,7 +10,7 @@ import RealmSwift
 import SnapKit
 import Toast
 
-class DetailTodoViewController: UIViewController {
+final class DetailTodoViewController: UIViewController {
 
     var mainTask: ToDoList? // ToDoList 객체를 저장하는 변수
     var folderCategoryName: String?

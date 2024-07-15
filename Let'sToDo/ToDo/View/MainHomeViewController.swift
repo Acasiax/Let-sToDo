@@ -71,30 +71,6 @@ final class MainHomeViewController: BaseViewController {
     
     var folder: Folder?
    
-    enum Filter: String, CaseIterable {
-        case today = "오늘"
-        case upcoming = "예정"
-        case all = "전체"
-        case flagged = "깃발 표시"
-        case completed = "완료됨"
-
-        var title: String {
-            return self.rawValue
-        }
-    }
-    
-    enum FolderFilter: String, CaseIterable {
-        case travel = "여행"
-        case healthCare = "건강관리"
-        case all = "전체"
-        case financeManagement = "재정관리"
-        case selfDevelopment = "자기계발"
-
-        var title: String {
-            return self.rawValue
-        }
-    }
-
     private let toDoListRepository = ToDoListRepository()
     
     override func viewDidLoad() {
@@ -133,11 +109,11 @@ final class MainHomeViewController: BaseViewController {
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(view.frame.height * 0.4)
+            make.height.equalTo(250)
         }
         
         folderTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom)
+            make.top.equalTo(collectionView.snp.bottom).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
         
@@ -145,7 +121,7 @@ final class MainHomeViewController: BaseViewController {
             make.top.equalTo(folderTitleLabel.snp.bottom).offset(5)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(150)
+            make.height.equalTo(250)
         }
         
         toolbar.snp.makeConstraints { make in

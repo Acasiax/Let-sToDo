@@ -52,7 +52,6 @@ class MainListCell: UICollectionViewCell, IdentifiableCell {
     
     func configure(title: String, count: String) {
         titleLabel.text = title
-      //  titleLabel.textColor = .gray
         countLabel.text = count
         countLabel.textColor = .white
         countLabel.font = .systemFont(ofSize: 25, weight: .heavy)
@@ -104,7 +103,6 @@ class MainFolderListCell: UICollectionViewCell, IdentifiableCell {
     
     func configure(title: String, count: String) {
         titleLabel.text = title
-      //  titleLabel.textColor = .gray
         countLabel.text = count
         countLabel.textColor = .white
         countLabel.font = .systemFont(ofSize: 25, weight: .heavy)

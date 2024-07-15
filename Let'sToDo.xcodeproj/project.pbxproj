@@ -115,7 +115,9 @@
 		AA376B552C3412FD00C371E6 /* Let'sToDo */ = {
 			isa = PBXGroup;
 			children = (
+				AAD728D22C4531E10070F4D2 /* Core */,
 				AA376B6A2C3413A700C371E6 /* ToDo */,
+				AAD728D92C4532BE0070F4D2 /* Register */,
 				AA376B562C3412FD00C371E6 /* AppDelegate.swift */,
 				AA376B582C3412FD00C371E6 /* SceneDelegate.swift */,
 				AA376B5A2C3412FD00C371E6 /* ViewController.swift */,
@@ -130,26 +132,11 @@
 		AA376B6A2C3413A700C371E6 /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
+				AAD728D62C45325E0070F4D2 /* View */,
 				AA6BD3192C3D637000107AF6 /* Observable */,
-				AA376B6B2C3413B700C371E6 /* Manager */,
-				AA376B9F2C38048800C371E6 /* MainHomeViewController */,
-				AA376B9E2C38046500C371E6 /* RegisterViewController */,
-				AA376BA02C380D3600C371E6 /* ToDoListViewController */,
+				AA376B922C35864D00C371E6 /* Cell */,
 			);
 			path = ToDo;
-			sourceTree = "<group>";
-		};
-		AA376B6B2C3413B700C371E6 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				AAB94B262C3BEC10005E56D2 /* Protocol+.swift */,
-				AA376B802C3437E900C371E6 /* TaskManager.swift */,
-				AA376BA32C39542400C371E6 /* FileManager.swift */,
-				AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */,
-				AA376B922C35864D00C371E6 /* Cell */,
-				AA376B7A2C341B4600C371E6 /* BaseViewController.swift */,
-			);
-			path = Manager;
 			sourceTree = "<group>";
 		};
 		AA376B892C3567A600C371E6 /* Group */ = {
@@ -172,34 +159,6 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		AA376B9E2C38046500C371E6 /* RegisterViewController */ = {
-			isa = PBXGroup;
-			children = (
-				AA376B6C2C34142700C371E6 /* RegisterViewController.swift */,
-				AA6BD3352C3ECC2300107AF6 /* RegisterView+EXT.swift */,
-				AA376B892C3567A600C371E6 /* Group */,
-			);
-			path = RegisterViewController;
-			sourceTree = "<group>";
-		};
-		AA376B9F2C38048800C371E6 /* MainHomeViewController */ = {
-			isa = PBXGroup;
-			children = (
-				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
-				AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */,
-			);
-			path = MainHomeViewController;
-			sourceTree = "<group>";
-		};
-		AA376BA02C380D3600C371E6 /* ToDoListViewController */ = {
-			isa = PBXGroup;
-			children = (
-				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
-				AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */,
-			);
-			path = ToDoListViewController;
-			sourceTree = "<group>";
-		};
 		AA6BD3192C3D637000107AF6 /* Observable */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +166,63 @@
 				AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */,
 			);
 			path = Observable;
+			sourceTree = "<group>";
+		};
+		AAD728D22C4531E10070F4D2 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AAD728D32C4531ED0070F4D2 /* Manager */,
+				AAD728DB2C4533F00070F4D2 /* Base,Enum */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		AAD728D32C4531ED0070F4D2 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B802C3437E900C371E6 /* TaskManager.swift */,
+				AAB94B262C3BEC10005E56D2 /* Protocol+.swift */,
+				AA376BA32C39542400C371E6 /* FileManager.swift */,
+				AA376BA52C399BCF00C371E6 /* RepositoryPattern.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		AAD728D62C45325E0070F4D2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
+				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
+				AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */,
+				AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AAD728D92C4532BE0070F4D2 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				AAD728DA2C4532CA0070F4D2 /* View */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		AAD728DA2C4532CA0070F4D2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B6C2C34142700C371E6 /* RegisterViewController.swift */,
+				AA6BD3352C3ECC2300107AF6 /* RegisterView+EXT.swift */,
+				AA376B892C3567A600C371E6 /* Group */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AAD728DB2C4533F00070F4D2 /* Base,Enum */ = {
+			isa = PBXGroup;
+			children = (
+				AA376B7A2C341B4600C371E6 /* BaseViewController.swift */,
+			);
+			path = "Base,Enum";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

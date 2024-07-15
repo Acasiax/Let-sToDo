@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class AddFolderViewController: UIViewController {
+final class AddFolderViewController: UIViewController {
     
     private let iconContainerView: UIView = {
         let view = UIView()
@@ -93,7 +93,7 @@ class AddFolderViewController: UIViewController {
         
         iconImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(50) 
+            make.width.height.equalTo(50)
         }
         
         folderNameTextField.snp.makeConstraints { make in
@@ -176,60 +176,3 @@ class ColorCell: UICollectionViewCell {
     }
 }
 
-
-enum Colors: CaseIterable {
-    case red, orange, yellow, green, blue, purple, brown
-    case cyan, magenta, lime, pink, teal, lavender, olive
-    case maroon, navy, grey, black, basic
-    case customBlue, customPink, customPurple
-    
-    var color: UIColor {
-        switch self {
-        case .red:
-            return .red
-        case .orange:
-            return .orange
-        case .yellow:
-            return .yellow
-        case .green:
-            return .green
-        case .blue:
-            return .blue
-        case .purple:
-            return .purple
-        case .brown:
-            return .brown
-        case .cyan:
-            return .cyan
-        case .magenta:
-            return .magenta
-        case .lime:
-            return UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
-        case .pink:
-            return UIColor(red: 1.0, green: 0.75, blue: 0.8, alpha: 1.0)
-        case .teal:
-            return UIColor(red: 0.0, green: 0.5, blue: 0.5, alpha: 1.0)
-        case .lavender:
-            return UIColor(red: 0.9, green: 0.9, blue: 0.98, alpha: 1.0)
-        case .olive:
-            return UIColor(red: 0.5, green: 0.5, blue: 0.0, alpha: 1.0)
-        case .maroon:
-            return UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0)
-        case .navy:
-            return UIColor(red: 0.0, green: 0.0, blue: 0.5, alpha: 1.0)
-        case .grey:
-            return .gray
-        case .black:
-            return .black
-        case .basic:
-            return UIColor(red: 0.98, green: 0.89, blue: 0.73, alpha: 1.00)
-        case .customBlue:
-            return UIColor(red: 0.64, green: 0.82, blue: 1.00, alpha: 1.00)
-        case .customPink:
-            return UIColor(red: 1.00, green: 0.69, blue: 0.80, alpha: 1.00)
-        case .customPurple:
-            return UIColor(red: 0.80, green: 0.71, blue: 0.86, alpha: 1.00)
-            
-        }
-    }
-}
