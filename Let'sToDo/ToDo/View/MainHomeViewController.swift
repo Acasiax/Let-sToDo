@@ -9,8 +9,9 @@ import UIKit
 import SnapKit
 import RealmSwift
 
+// MainHomeViewController
 final class MainHomeViewController: BaseViewController {
-   
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "전체"
@@ -19,14 +20,6 @@ final class MainHomeViewController: BaseViewController {
         return label
     }()
 
-    private let folderTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "폴더"
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
-    
     private lazy var toolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.translatesAutoresizingMaskIntoConstraints = false
@@ -52,26 +45,13 @@ final class MainHomeViewController: BaseViewController {
         collectionView.register(MainListCell.self, forCellWithReuseIdentifier: MainListCell.identifier)
         return collectionView
     }()
-
-    private lazy var folderCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 170, height: 80)
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
-
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(MainFolderListCell.self, forCellWithReuseIdentifier: MainFolderListCell.identifier)
-        return collectionView
-    }()
     
     private let realmDb = try! Realm()
     
     var folder: Folder?
    
     private let toDoListRepository = ToDoListRepository()
+    weak var delegate: FilterSelectionDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +64,6 @@ final class MainHomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
-        folderCollectionView.reloadData()
     }
 
     override func configureView() {
@@ -94,8 +73,6 @@ final class MainHomeViewController: BaseViewController {
     override func setupHierarchy() {
         view.addSubview(titleLabel)
         view.addSubview(collectionView)
-        view.addSubview(folderTitleLabel)
-        view.addSubview(folderCollectionView)
         view.addSubview(toolbar)
     }
 
@@ -107,18 +84,6 @@ final class MainHomeViewController: BaseViewController {
 
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(250)
-        }
-        
-        folderTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-        }
-        
-        folderCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(folderTitleLabel.snp.bottom).offset(5)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
             make.height.equalTo(250)
@@ -146,63 +111,45 @@ final class MainHomeViewController: BaseViewController {
     private func fetchCount(for filter: Filter) -> Int {
         return toDoListRepository.fetchCount(for: filter)
     }
-    
-    private func fetchFolderCount(for folderFilter: FolderFilter) -> Int {
-        return toDoListRepository.fetchFolderCount(for: folderFilter)
+
+    private func fetchFolderCount(for folderFilter: FolderFilter, with filter: Filter) -> Int {
+        return toDoListRepository.fetchFolderCount(for: folderFilter, with: filter)
     }
+
 }
 
 extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.collectionView {
-            return Filter.allCases.count
-        } else {
-            return FolderFilter.allCases.count
-        }
+        return Filter.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.collectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainListCell.identifier, for: indexPath) as! MainListCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainListCell.identifier, for: indexPath) as! MainListCell
 
-            let filter = Filter.allCases[indexPath.item]
-            let count = fetchCount(for: filter)
-            cell.configure(title: filter.title, count: "\(count)")
+        let filter = Filter.allCases[indexPath.item]
+        let count = fetchCount(for: filter)
+        cell.configure(title: filter.title, count: "\(count)")
 
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainFolderListCell.identifier, for: indexPath) as! MainFolderListCell
-
-            let folderFilter = FolderFilter.allCases[indexPath.item]
-            let count = fetchFolderCount(for: folderFilter)
-            cell.configure(title: folderFilter.title, count: "\(count)")
-
-            return cell
-        }
+        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.collectionView {
-            let filter = Filter.allCases[indexPath.item]
-
-            let toDoListVC = ToDoListViewController()
-            toDoListVC.filter = filter.title
-            self.navigationController?.pushViewController(toDoListVC, animated: true)
-        } else {
-            let folderFilter = FolderFilter.allCases[indexPath.item]
-         
-            let toDoListVC = ToDoListViewController()
-            toDoListVC.folderFilter = folderFilter.title
-            self.navigationController?.pushViewController(toDoListVC, animated: true)
-        }
+        let folderListVC = FolderListViewController()
+        folderListVC.selectedFilter = Filter.allCases[indexPath.item]
+        folderListVC.delegate = self
+        self.navigationController?.pushViewController(folderListVC, animated: true)
+        self.delegate?.didSelectFilter(title: Filter.allCases[indexPath.item].title)
     }
 }
 
-extension MainHomeViewController: RegisterViewControllerDelegate {
+extension MainHomeViewController: RegisterViewControllerDelegate, FilterSelectionDelegate {
     func didAddNewTask() {
         collectionView.reloadData()
-        folderCollectionView.reloadData()
         self.view.makeToast("새로운 일정이 저장되었습니다.")
+    }
+    
+    func didSelectFilter(title: String) {
+        print("선택한 폴더: \(title)")
     }
 }

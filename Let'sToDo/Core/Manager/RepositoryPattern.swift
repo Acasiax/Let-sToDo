@@ -9,10 +9,9 @@ import UIKit
 import RealmSwift
 
 // Repository 패턴
-// - 대체로 사용하는 '테이블+Repository'를 이름으로
 final class ToDoListRepository {
-     let realm = try! Realm()
-    
+    let realm = try! Realm()
+
     // 폴더 읽기 메서드 추가
     func readFolder(named name: String) -> Folder? {
         return realm.objects(Folder.self).filter("FolderName == %@", name).first
@@ -38,15 +37,14 @@ final class ToDoListRepository {
     }
 
     // 데이터를 생성하는 메서드
-    // - 데이터 객체를 매개변수로 받아서 Realm 데이터베이스에 추가
     func createItem(_ data: ToDoList, folder: Folder) {
         do {
             try realm.write {
                 folder.detail88.append(data)
-                print("saved!")  // 저장 성공 메시지 출력
+                print("saved!")
             }
         } catch {
-            print("save error")  // 저장 실패 시 에러 메시지 출력
+            print("save error")
         }
     }
     
@@ -63,7 +61,6 @@ final class ToDoListRepository {
     }
     
     // 모든 항목을 읽어오는 메서드
-    // - taskTitle 기준으로 오름차순 정렬하여 반환
     func readAllItems() -> [ToDoList] {
         let result = realm.objects(ToDoList.self).sorted(byKeyPath: "taskTitle", ascending: true)
         return Array(result)
@@ -82,72 +79,32 @@ final class ToDoListRepository {
     }
     
     // 항목을 삭제하는 메서드
-    // - 데이터 객체를 매개변수로 받아서 Realm 데이터베이스에서 삭제
     func deleteItem(_ data: ToDoList) {
         do {
             try realm.write {
                 realm.delete(data)
-                print("deleted")  // 삭제 성공 메시지 출력
+                print("deleted")
             }
         } catch {
-            print("delete error")  // 삭제 실패 시 에러 메시지 출력
+            print("delete error")
         }
     }
-  
-    
-    
-    
-    //폴더를 삭제하는 코드, -> 데이터베이스 매니저에 했나
-//    func removeFolder(_ folder: Folder){
-//        do {
-//            try realm.write {
-//                realm.delete(folder)
-//                print("폴더가 삭제되었습니다.")
-//            }
-//        } catch {
-//            print("폴더가 삭제가 실패했습니다.")
-//            
-//        }
-//    }
-//    
-    
-    
+
     // 특정 필터에 따른 항목 수를 가져오는 메서드
-    // - 필터 조건에 따라 항목 수를 반환
     func fetchCount(for filter: Filter) -> Int {
-        switch filter {
-        case .today:
-            return realm.objects(ToDoList.self).filter("taskDeadline <= %@", Date()).count
-        case .upcoming:
-            return realm.objects(ToDoList.self).filter("taskDeadline > %@", Date()).count
-        case .all:
-            return realm.objects(ToDoList.self).count
-        case .flagged:
-            return realm.objects(ToDoList.self).filter("taskTag == '깃발'").count
-        case .completed:
-            return realm.objects(ToDoList.self).filter("taskPriority == '완료'").count
-        }
+        return realm.objects(ToDoList.self).filter(filter.predicate).count
     }
     
     // 특정 폴더 필터에 따른 항목 수를 가져오는 메서드
-    // - 필터 조건에 따라 항목 수를 반환
-    func fetchFolderCount(for filter: FolderFilter) -> Int {
-        switch filter {
-        case .travel:
-            return realm.objects(ToDoList.self).filter("taskCategory == '여행'").count
-        case .healthCare:
-            return realm.objects(ToDoList.self).filter("taskCategory == '건강관리'").count
-        case .all:
-            return realm.objects(ToDoList.self).count
-        case .financeManagement:
-            return realm.objects(ToDoList.self).filter("taskCategory == '재정관리'").count
-        case .selfDevelopment:
-            return realm.objects(ToDoList.self).filter("taskCategory == '자기계발'").count
+    func fetchFolderCount(for folderFilter: FolderFilter, with mainFilter: Filter?) -> Int {
+        var predicate = folderFilter.predicate
+        if let mainFilter = mainFilter {
+            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [mainFilter.predicate, folderFilter.predicate])
         }
+        return realm.objects(ToDoList.self).filter(predicate).count
     }
     
     // 필터를 사용하여 항목을 읽어오는 메서드
-    // - 필터 조건에 따라 다른 항목들을 반환
     func readItems(with filter: String?) -> [ToDoList] {
         if let filter = filter {
             switch filter {
@@ -170,7 +127,6 @@ final class ToDoListRepository {
     }
 
     // 폴더 필터를 사용하여 항목을 읽어오는 메서드
-    // - 폴더 필터 조건에 따라 다른 항목들을 반환
     func readFolderItems(with filter: String?) -> [ToDoList] {
         if let filter = filter {
             switch filter {
@@ -189,6 +145,48 @@ final class ToDoListRepository {
             }
         } else {
             return Array(realm.objects(ToDoList.self))
+        }
+    }
+
+    // 두 개의 필터를 사용하여 항목을 읽어오는 메서드 추가
+    func fetchTasks(folderFilter: String, mainFilter: Filter) -> [ToDoList] {
+        let folderPredicate = NSPredicate(format: "taskCategory == %@", folderFilter)
+        let mainPredicate = mainFilter.predicate
+        let combinedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [folderPredicate, mainPredicate])
+        return Array(realm.objects(ToDoList.self).filter(combinedPredicate))
+    }
+}
+
+extension Filter {
+    var predicate: NSPredicate {
+        switch self {
+        case .today:
+            return NSPredicate(format: "taskDeadline <= %@", Calendar.current.startOfDay(for: Date()) as NSDate)
+        case .upcoming:
+            return NSPredicate(format: "taskDeadline > %@", Calendar.current.startOfDay(for: Date()) as NSDate)
+        case .all:
+            return NSPredicate(value: true)
+        case .flagged:
+            return NSPredicate(format: "taskTag == '깃발'")
+        case .completed:
+            return NSPredicate(format: "taskPriority == '완료'")
+        }
+    }
+}
+
+extension FolderFilter {
+    var predicate: NSPredicate {
+        switch self {
+        case .travel:
+            return NSPredicate(format: "taskCategory == %@", "여행")
+        case .healthCare:
+            return NSPredicate(format: "taskCategory == %@", "건강관리")
+        case .all:
+            return NSPredicate(value: true)
+        case .financeManagement:
+            return NSPredicate(format: "taskCategory == %@", "재정관리")
+        case .selfDevelopment:
+            return NSPredicate(format: "taskCategory == %@", "자기계발")
         }
     }
 }

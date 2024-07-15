@@ -5,6 +5,7 @@
 //  Created by 이윤지 on 7/2/24.
 //
 
+
 import UIKit
 import RealmSwift
 import SnapKit
@@ -20,7 +21,7 @@ final class ToDoListViewController: UIViewController {
     
     var filter: String?
     var folderFilter: String?
-    
+    var mainFilter: Filter?
     var folder: Folder? // 선택한 폴더 정보를 저장할 변수!
     
     override func viewDidLoad() {

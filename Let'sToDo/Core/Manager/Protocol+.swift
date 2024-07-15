@@ -21,6 +21,11 @@ protocol RegisterViewControllerDelegate: AnyObject {
     func didAddNewTask() //등록한 추가를 바로 main뷰에 딜리게이트로 반영
 }
 
+protocol FilterSelectionDelegate: AnyObject {
+    func didSelectFilter(title: String)
+}
+
+
 protocol IdentifiableCell {
     static var identifier: String { get }
 }
