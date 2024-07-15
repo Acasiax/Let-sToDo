@@ -10,7 +10,7 @@ import RealmSwift
 import SnapKit
 import Toast
 
-class ToDoListViewController: UIViewController {
+final class ToDoListViewController: UIViewController {
     let dbManager = DatabaseManager()
     private let toDoListRepository = ToDoListRepository()
     var list: [Folder] = [] // Folder 배열로 변경
