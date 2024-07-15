@@ -27,25 +27,16 @@ final class MainHomeViewController: BaseViewController {
         return label
     }()
     
-    private let newTaskButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("새로운 할일", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    private let addFolderButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("목록 추가", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(addFolderButtonTapped), for: .touchUpInside)
-        return button
+    private lazy var toolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        
+        let newTaskButton = UIBarButtonItem(title: "새로운 할일", style: .plain, target: self, action: #selector(registerButtonTapped))
+        let addFolderButton = UIBarButtonItem(title: "목록 추가", style: .plain, target: self, action: #selector(addFolderButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([newTaskButton, flexibleSpace, addFolderButton], animated: false)
+        return toolbar
     }()
 
     private lazy var collectionView: UICollectionView = {
@@ -79,8 +70,7 @@ final class MainHomeViewController: BaseViewController {
     private let realmDb = try! Realm()
     
     var folder: Folder?
-   // var list:
-    
+   
     enum Filter: String, CaseIterable {
         case today = "오늘"
         case upcoming = "예정"
@@ -105,7 +95,6 @@ final class MainHomeViewController: BaseViewController {
         }
     }
 
-    
     private let toDoListRepository = ToDoListRepository()
     
     override func viewDidLoad() {
@@ -128,11 +117,10 @@ final class MainHomeViewController: BaseViewController {
 
     override func setupHierarchy() {
         view.addSubview(titleLabel)
-        view.addSubview(newTaskButton)
         view.addSubview(collectionView)
         view.addSubview(folderTitleLabel)
         view.addSubview(folderCollectionView)
-        view.addSubview(addFolderButton)
+        view.addSubview(toolbar)
     }
 
     override func setupConstraints() {
@@ -153,7 +141,6 @@ final class MainHomeViewController: BaseViewController {
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
         
-        
         folderCollectionView.snp.makeConstraints { make in
             make.top.equalTo(folderTitleLabel.snp.bottom).offset(5)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -161,27 +148,16 @@ final class MainHomeViewController: BaseViewController {
             make.height.equalTo(150)
         }
         
-        newTaskButton.snp.makeConstraints { make in
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+        toolbar.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(50)
-            make.width.equalTo(170)
-        }
-        
-       addFolderButton.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(50)
-            make.width.equalTo(170)
         }
     }
 
     @objc func addFolderButtonTapped() {
         let addFolderVC = AddFolderViewController()
-      //  addFolderVC.delegate = self
         let navController = UINavigationController(rootViewController: addFolderVC)
         self.present(navController, animated: true, completion: nil)
-        
     }
   
     @objc func registerButtonTapped() {
@@ -238,12 +214,10 @@ extension MainHomeViewController: UICollectionViewDelegate, UICollectionViewData
             toDoListVC.filter = filter.title
             self.navigationController?.pushViewController(toDoListVC, animated: true)
         } else {
-            // 폴더 선택 시 동작 설정
             let folderFilter = FolderFilter.allCases[indexPath.item]
          
             let toDoListVC = ToDoListViewController()
             toDoListVC.folderFilter = folderFilter.title
-           // toDoListVC.folder = selectedFolder //선택한 폴더 정보를 전달!
             self.navigationController?.pushViewController(toDoListVC, animated: true)
         }
     }
@@ -256,6 +230,3 @@ extension MainHomeViewController: RegisterViewControllerDelegate {
         self.view.makeToast("새로운 일정이 저장되었습니다.")
     }
 }
-
-
-

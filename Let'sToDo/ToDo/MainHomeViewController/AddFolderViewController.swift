@@ -27,19 +27,17 @@ class AddFolderViewController: UIViewController {
     }()
     
     private let folderNameTextField: UITextField = {
-            let textField = UITextField()
-            textField.placeholder = "목록 이름"
-            textField.borderStyle = .roundedRect
-            textField.backgroundColor = .lightGray.withAlphaComponent(0.2)
-            textField.textAlignment = .center
-            
-            textField.attributedPlaceholder = NSAttributedString(
-                string: "목록 이름",
-                attributes: [.font: UIFont.systemFont(ofSize: 20)]
-            )
-            
-            return textField
-        }()
+        let textField = UITextField()
+        textField.placeholder = "목록 이름"
+        textField.borderStyle = .roundedRect
+        textField.backgroundColor = .lightGray.withAlphaComponent(0.2)
+        textField.textAlignment = .center
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "목록 이름",
+            attributes: [.font: UIFont.systemFont(ofSize: 20)]
+        )
+        return textField
+    }()
     
     private let colors: [UIColor] = Colors.allCases.map { $0.color }
     private var selectedColorView: UIView?
@@ -58,20 +56,25 @@ class AddFolderViewController: UIViewController {
         return collectionView
     }()
     
-   
+    private lazy var doneButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(doneButtonTapped))
+        button.isEnabled = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupNavigationBar()
         setupUI()
         setupConstraints()
+        folderNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
     
-
     private func setupNavigationBar() {
         navigationItem.title = "새로운 목록"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(doneButtonTapped))
+        navigationItem.rightBarButtonItem = doneButton
     }
     
     private func setupUI() {
@@ -90,7 +93,7 @@ class AddFolderViewController: UIViewController {
         
         iconImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(50) // 아이콘 이미지를 더 작게 설정
+            make.width.height.equalTo(50) 
         }
         
         folderNameTextField.snp.makeConstraints { make in
@@ -106,14 +109,26 @@ class AddFolderViewController: UIViewController {
         }
     }
     
-   
     @objc private func cancelButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
     
     @objc private func doneButtonTapped() {
-       //폴더 저장 해야함
+        if let selectedColor = selectedColorView?.backgroundColor, let folderName = folderNameTextField.text {
+            print("색상: \(selectedColor)")
+            print("폴더이름: \(folderName)")
+        }
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if let text = textField.text, !text.isEmpty {
+            doneButton.isEnabled = true
+            doneButton.tintColor = view.tintColor
+        } else {
+            doneButton.isEnabled = false
+            doneButton.tintColor = .gray
+        }
     }
     
     private func setSelectedColor(_ view: UIView) {
@@ -141,7 +156,9 @@ extension AddFolderViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedColor = colors[indexPath.item]
-        iconContainerView.backgroundColor = selectedColor
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            setSelectedColor(cell)
+        }
     }
 }
 
@@ -158,6 +175,7 @@ class ColorCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 
 enum Colors: CaseIterable {
     case red, orange, yellow, green, blue, purple, brown
