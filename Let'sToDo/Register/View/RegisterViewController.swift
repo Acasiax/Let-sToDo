@@ -142,30 +142,10 @@ class RegisterViewController: BaseViewController {
             print("제목이 비어 있습니다.")
             return
         }
-        
-        let newTask = ToDoList()
-        newTask.taskTitle = title
-        newTask.taskContent = memoTextField.text
-        newTask.taskDeadline = selectedDeadline
-        newTask.taskTag = selectedTag ?? ""
-        newTask.taskPriority = selectedPriority ?? ""
-        newTask.taskCategory = selectedFolder ?? ""
 
-        if let selectedImage = selectedImage {
-            let filename = UUID().uuidString
-            saveImageToDocument(image: UIImage(data: selectedImage)!, filename: filename)
-            newTask.taskImagePath = filename
-        }
-
-        let folderName = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
-        if let existingFolder = toDoListRepository.readFolder(named: folderName) {
-            folder = existingFolder
-        } else {
-            let newFolder = Folder()
-            newFolder.FolderName = folderName
-            toDoListRepository.createFolder(newFolder)
-            folder = newFolder
-        }
+        let newTask = createNewTask(withTitle: title)
+        saveTaskImageIfNeeded(for: newTask)
+        assignTaskToFolder(newTask)
 
         guard let folder = folder else {
             print("폴더가 설정되지 않았습니다.")
@@ -176,6 +156,38 @@ class RegisterViewController: BaseViewController {
         delegate?.didAddNewTask()
         dismiss(animated: true)
     }
+
+    private func createNewTask(withTitle title: String) -> ToDoList {
+        let newTask = ToDoList()
+        newTask.taskTitle = title
+        newTask.taskContent = memoTextField.text
+        newTask.taskDeadline = selectedDeadline
+        newTask.taskTag = selectedTag ?? ""
+        newTask.taskPriority = selectedPriority ?? ""
+        newTask.taskCategory = selectedFolder ?? ""
+        return newTask
+    }
+
+    private func saveTaskImageIfNeeded(for task: ToDoList) {
+        if let selectedImage = selectedImage {
+            let filename = UUID().uuidString
+            saveImageToDocument(image: UIImage(data: selectedImage)!, filename: filename)
+            task.taskImagePath = filename
+        }
+    }
+
+    private func assignTaskToFolder(_ task: ToDoList) {
+        let folderName = FolderFilter.allCases[folderSegmentedControl.selectedSegmentIndex].title
+        folder = toDoListRepository.readFolder(named: folderName) ?? createNewFolder(named: folderName)
+    }
+
+    private func createNewFolder(named name: String) -> Folder {
+        let newFolder = Folder()
+        newFolder.FolderName = name
+        toDoListRepository.createFolder(newFolder)
+        return newFolder
+    }
+
 
 
     private func configureTextField(_ textField: UITextField, placeholder: String) {
