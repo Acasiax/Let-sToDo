@@ -38,15 +38,13 @@ final class ToDoListRepository {
         }
     }
 
-    func readFoldersSorted(by keyPath: String, ascending: Bool, mainFilter: Filter? = nil) -> [Folder] {
-        var folders = realm.objects(Folder.self).sorted(byKeyPath: keyPath, ascending: ascending)
-        
-        if let mainFilter = mainFilter {
-            folders = folders.filter(mainFilter.predicate)
-        }
-        
+    func readFoldersSorted(by keyPath: String, ascending: Bool) -> [Folder] {
+        let folders = realm.objects(Folder.self).sorted(byKeyPath: keyPath, ascending: ascending)
         return Array(folders)
     }
+
+
+
 
     func createItem(_ data: ToDoList, folder: Folder) {
         do {

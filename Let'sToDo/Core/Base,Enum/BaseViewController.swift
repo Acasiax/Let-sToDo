@@ -7,6 +7,15 @@
 
 import UIKit
 //나중에 재시도
+
+protocol Base {
+    // 기본적인 메서드나 속성 선언
+    func setupHierarchy()
+    func setupConstraints()
+    func configureView()
+}
+
+
 class BaseViewController: UIViewController {
 
     override func viewDidLoad() {

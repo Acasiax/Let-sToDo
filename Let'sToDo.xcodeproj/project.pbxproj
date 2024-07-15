@@ -14,7 +14,7 @@
 		AA376B602C3412FF00C371E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA376B5F2C3412FF00C371E6 /* Assets.xcassets */; };
 		AA376B632C3412FF00C371E6 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = AA376B622C3412FF00C371E6 /* Base */; };
 		AA376B6D2C34142700C371E6 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B6C2C34142700C371E6 /* RegisterViewController.swift */; };
-		AA376B6F2C34145700C371E6 /* MainHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */; };
+		AA376B6F2C34145700C371E6 /* MainHome+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B6E2C34145700C371E6 /* MainHome+EXT.swift */; };
 		AA376B712C34148600C371E6 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA376B702C34148600C371E6 /* ToDoListViewController.swift */; };
 		AA376B742C34168B00C371E6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA376B732C34168B00C371E6 /* SnapKit */; };
 		AA376B772C3416BF00C371E6 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AA376B762C3416BF00C371E6 /* RealmSwift */; };
@@ -37,6 +37,8 @@
 		AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB94B262C3BEC10005E56D2 /* Protocol+.swift */; };
 		AAD728D12C451DEF0070F4D2 /* AddFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */; };
 		AAD728DF2C455AAB0070F4D2 /* FolderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD728DE2C455AAB0070F4D2 /* FolderListViewController.swift */; };
+		AAD728E12C4564820070F4D2 /* ToDoListView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD728E02C4564820070F4D2 /* ToDoListView+ext.swift */; };
+		AAD728E32C4568880070F4D2 /*  MainHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD728E22C4568880070F4D2 /*  MainHomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,7 +65,7 @@
 		AA376B622C3412FF00C371E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA376B642C3412FF00C371E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA376B6C2C34142700C371E6 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewController.swift; sourceTree = "<group>"; };
+		AA376B6E2C34145700C371E6 /* MainHome+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainHome+EXT.swift"; sourceTree = "<group>"; };
 		AA376B702C34148600C371E6 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
 		AA376B7A2C341B4600C371E6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		AA376B7E2C342C1900C371E6 /* TodoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewCell.swift; sourceTree = "<group>"; };
@@ -82,6 +84,8 @@
 		AAB94B262C3BEC10005E56D2 /* Protocol+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocol+.swift"; sourceTree = "<group>"; };
 		AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderViewController.swift; sourceTree = "<group>"; };
 		AAD728DE2C455AAB0070F4D2 /* FolderListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderListViewController.swift; sourceTree = "<group>"; };
+		AAD728E02C4564820070F4D2 /* ToDoListView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDoListView+ext.swift"; sourceTree = "<group>"; };
+		AAD728E22C4568880070F4D2 /*  MainHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " MainHomeViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,9 +197,11 @@
 		AAD728D62C45325E0070F4D2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
+				AAD728E22C4568880070F4D2 /*  MainHomeViewController.swift */,
+				AA376B6E2C34145700C371E6 /* MainHome+EXT.swift */,
 				AAD728DE2C455AAB0070F4D2 /* FolderListViewController.swift */,
 				AA376B702C34148600C371E6 /* ToDoListViewController.swift */,
+				AAD728E02C4564820070F4D2 /* ToDoListView+ext.swift */,
 				AA376BA12C38E59B00C371E6 /* DetailTodoViewController.swift */,
 				AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */,
 			);
@@ -313,14 +319,16 @@
 				AAD728D12C451DEF0070F4D2 /* AddFolderViewController.swift in Sources */,
 				AA6BD31B2C3D637900107AF6 /* Observable.swift in Sources */,
 				AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */,
+				AAD728E32C4568880070F4D2 /*  MainHomeViewController.swift in Sources */,
 				AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */,
 				AA376B812C3437E900C371E6 /* TaskManager.swift in Sources */,
 				AA6BD31D2C3D669300107AF6 /* ToDoListViewModel.swift in Sources */,
 				AA376B6D2C34142700C371E6 /* RegisterViewController.swift in Sources */,
 				AA376B942C35865C00C371E6 /* MainListCell.swift in Sources */,
-				AA376B6F2C34145700C371E6 /* MainHomeViewController.swift in Sources */,
+				AA376B6F2C34145700C371E6 /* MainHome+EXT.swift in Sources */,
 				AA376B5B2C3412FD00C371E6 /* ViewController.swift in Sources */,
 				AA376B572C3412FD00C371E6 /* AppDelegate.swift in Sources */,
+				AAD728E12C4564820070F4D2 /* ToDoListView+ext.swift in Sources */,
 				AA6BD3362C3ECC2300107AF6 /* RegisterView+EXT.swift in Sources */,
 				AA376BA42C39542400C371E6 /* FileManager.swift in Sources */,
 				AA376B712C34148600C371E6 /* ToDoListViewController.swift in Sources */,
