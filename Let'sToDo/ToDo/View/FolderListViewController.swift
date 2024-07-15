@@ -65,9 +65,9 @@ class FolderListViewController: UIViewController {
         }
     }
 
-    func didSelectFilter(title: String) {
-        folderTitleLabel.text = "\(title) 폴더"
-    }
+//    func didSelectFilter(title: String) {
+//        folderTitleLabel.text = "\(title) 폴더"
+//    }
 }
 
 extension FolderListViewController: UICollectionViewDelegate, UICollectionViewDataSource {

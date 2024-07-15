@@ -53,7 +53,6 @@ final class DetailTodoViewController: UIViewController {
         tagLabel.font = .systemFont(ofSize: 14, weight: .regular)
         tagLabel.textColor = UIColor.systemGreen
         
-        // 이미지 뷰 스타일 설정
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10

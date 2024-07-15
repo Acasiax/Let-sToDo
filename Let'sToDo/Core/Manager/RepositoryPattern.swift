@@ -42,7 +42,10 @@ final class ToDoListRepository {
         let folders = realm.objects(Folder.self).sorted(byKeyPath: keyPath, ascending: ascending)
         return Array(folders)
     }
-
+    func readToDoListsSorted(by keyPath: String, ascending: Bool) -> [ToDoList] {
+           let tasks = realm.objects(ToDoList.self).sorted(byKeyPath: keyPath, ascending: ascending)
+           return Array(tasks)
+       }
 
 
 

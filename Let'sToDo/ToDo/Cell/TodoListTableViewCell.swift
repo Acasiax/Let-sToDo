@@ -67,10 +67,8 @@ class TodoListTableViewCell: UITableViewCell, IdentifiableCell {
         tagLB.numberOfLines = 1
         overviewLabel.numberOfLines = 1
 
-        // 초기 아이콘 설정
         checkCircle.setImage(UIImage(systemName: "circle"), for: .normal)
         
-        // 버튼 클릭 이벤트 핸들러 설정
         checkCircle.addTarget(self, action: #selector(checkCircleTapped), for: .touchUpInside)
     }
 

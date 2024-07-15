@@ -35,7 +35,6 @@ class MainListCell: UICollectionViewCell, IdentifiableCell {
     }
     
     func setupConstraints() {
-        // StackView 생성
         let stackView = UIStackView(arrangedSubviews: [titleLabel, countLabel])
         stackView.axis = .horizontal
         stackView.spacing = 40

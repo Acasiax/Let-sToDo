@@ -139,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				AAD728D62C45325E0070F4D2 /* View */,
-				AA6BD3192C3D637000107AF6 /* Observable */,
 				AA376B922C35864D00C371E6 /* Cell */,
 			);
 			path = ToDo;
@@ -179,6 +178,7 @@
 			children = (
 				AAD728D32C4531ED0070F4D2 /* Manager */,
 				AAD728DB2C4533F00070F4D2 /* Base,Enum */,
+				AA6BD3192C3D637000107AF6 /* Observable */,
 			);
 			path = Core;
 			sourceTree = "<group>";
