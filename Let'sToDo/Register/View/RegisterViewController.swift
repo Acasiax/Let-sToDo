@@ -11,19 +11,6 @@ import RealmSwift
 import Toast
 import PhotosUI
 
-//enum FolderFilter: String, CaseIterable {
-//    case travel = "여행"
-//    case healthCare = "건강관리"
-//    case all = "전체"
-//    case financeManagement = "재정관리"
-//    case selfDevelopment = "자기계발"
-//
-//    var title: String {
-//        return self.rawValue
-//    }
-//}
-
-
 class RegisterViewController: BaseViewController {
     private let toDoListRepository = ToDoListRepository()
     
