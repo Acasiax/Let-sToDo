@@ -35,6 +35,7 @@
 		AA6BD31D2C3D669300107AF6 /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */; };
 		AA6BD3362C3ECC2300107AF6 /* RegisterView+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6BD3352C3ECC2300107AF6 /* RegisterView+EXT.swift */; };
 		AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB94B262C3BEC10005E56D2 /* Protocol+.swift */; };
+		AAD728D12C451DEF0070F4D2 /* AddFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,6 +79,7 @@
 		AA6BD31C2C3D669300107AF6 /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
 		AA6BD3352C3ECC2300107AF6 /* RegisterView+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegisterView+EXT.swift"; sourceTree = "<group>"; };
 		AAB94B262C3BEC10005E56D2 /* Protocol+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocol+.swift"; sourceTree = "<group>"; };
+		AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				AA376B6E2C34145700C371E6 /* MainHomeViewController.swift */,
+				AAD728D02C451DEF0070F4D2 /* AddFolderViewController.swift */,
 			);
 			path = MainHomeViewController;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD728D12C451DEF0070F4D2 /* AddFolderViewController.swift in Sources */,
 				AA6BD31B2C3D637900107AF6 /* Observable.swift in Sources */,
 				AA376B912C3567FE00C371E6 /* ImageAddViewController.swift in Sources */,
 				AAB94B272C3BEC10005E56D2 /* Protocol+.swift in Sources */,

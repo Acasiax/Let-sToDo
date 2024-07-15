@@ -19,6 +19,14 @@ final class MainHomeViewController: BaseViewController {
         return label
     }()
 
+    private let folderTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "폴더"
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
+    
     private let newTaskButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("새로운 할일", for: .normal)
@@ -26,6 +34,17 @@ final class MainHomeViewController: BaseViewController {
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    private let addFolderButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("목록 추가", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(addFolderButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -111,20 +130,15 @@ final class MainHomeViewController: BaseViewController {
         view.addSubview(titleLabel)
         view.addSubview(newTaskButton)
         view.addSubview(collectionView)
+        view.addSubview(folderTitleLabel)
         view.addSubview(folderCollectionView)
+        view.addSubview(addFolderButton)
     }
 
     override func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-        }
-
-        newTaskButton.snp.makeConstraints { make in
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(50)
-            make.width.equalTo(150)
         }
 
         collectionView.snp.makeConstraints { make in
@@ -134,14 +148,41 @@ final class MainHomeViewController: BaseViewController {
             make.height.equalTo(view.frame.height * 0.4)
         }
         
+        folderTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
+        
+        
         folderCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(5)
+            make.top.equalTo(folderTitleLabel.snp.bottom).offset(5)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(newTaskButton.snp.top).offset(-20)
+            make.height.equalTo(150)
+        }
+        
+        newTaskButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(50)
+            make.width.equalTo(170)
+        }
+        
+       addFolderButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(50)
+            make.width.equalTo(170)
         }
     }
 
+    @objc func addFolderButtonTapped() {
+        let addFolderVC = AddFolderViewController()
+      //  addFolderVC.delegate = self
+        let navController = UINavigationController(rootViewController: addFolderVC)
+        self.present(navController, animated: true, completion: nil)
+        
+    }
   
     @objc func registerButtonTapped() {
         let registerVC = RegisterViewController()
@@ -218,23 +259,3 @@ extension MainHomeViewController: RegisterViewControllerDelegate {
 
 
 
-//MVVM 패턴과 옵저버 패턴에 대해 복습 정리
-//2024년 7월 12일, 금요일
-//
-//오늘은 MVVM(Model-View-ViewModel) 패턴과 옵저버 패턴에 대해 공부하면서 느낀 점들을 정리해보기!
-// 이 두 가지 패턴은 UI 개발에서 매우 중요한 역할을 하며, 특히 Swift를 사용한 iOS 개발에서 자주 사용된다.
-//
-// MVVM은 애플리케이션의 UI와 비즈니스 로직을 분리하기 위해 고안된 디자인 패턴이다. 세 가지 주요 구성 요소로 나뉜다.
-//Model: 애플리케이션의 데이터와 비즈니스 로직을 담당한다. 데이터베이스, 웹 서비스, 로컬 데이터 저장소 등에서 데이터를 가져오거나 저장하는 기능을 수행한다.
-//View: 사용자 인터페이스(UI) 요소를 나타내며, 사용자가 보는 화면을 담당한다. 버튼, 레이블, 텍스트 필드 등과 같은 UI 요소로 구성된다.
-//ViewModel: View와 Model 사이의 중개자로서, Model에서 데이터를 가져와 가공하여 View에 제공한다. 또한, View에서 발생하는 사용자 입력을 처리하여 Model에 전달한다.
-//
-//옵저버 패턴은 객체 간의 일대다(one-to-many) 의존성을 정의하여 한 객체의 상태 변화가 다른 객체들에 통보될 수 있도록 하는 디자인 패턴이다. 주로 이벤트 기반 시스템에서 사용된다.
-//
-//Subject: 상태 변화를 통보할 객체다. 상태 변화가 발생하면 옵저버들에게 알림을 보낸다.
-//Observer: 상태 변화를 통보받는 객체다. Subject로부터 알림을 받으면 적절한 작업을 수행한다.
-//MVVM 패턴에서 옵저버 패턴은 주로 ViewModel과 View 사이의 데이터 바인딩에 사용된다. ViewModel의 데이터가 변경되면 이를 View에 자동으로 반영하기 위해 옵저버 패턴이 사용된다.
-//
-//Model: 애플리케이션의 데이터를 관리한다.
-//ViewModel: Model의 데이터를 관찰하고, 이 데이터를 View에 제공하여 UI를 업데이트한다.
-//View: ViewModel을 관찰(observe)하여 데이터가 변경될 때마다 UI를 업데이트한다.

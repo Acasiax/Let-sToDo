@@ -15,7 +15,9 @@ class TodoListTableViewCell: UITableViewCell, IdentifiableCell {
     let tagLB = UILabel()
     let checkCircle = UIButton()
     var taskId: String = ""
-    var overviewLabel = UILabel() // overviewLabel 초기화
+    var overviewLabel = UILabel()
+    
+    private var isCircleFilled = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -63,11 +65,24 @@ class TodoListTableViewCell: UITableViewCell, IdentifiableCell {
         contentLB.numberOfLines = 0
         dateLB.numberOfLines = 1
         tagLB.numberOfLines = 1
-        overviewLabel.numberOfLines = 1 // overviewLabel 설정
+        overviewLabel.numberOfLines = 1
+
+        // 초기 아이콘 설정
+        checkCircle.setImage(UIImage(systemName: "circle"), for: .normal)
+        
+        // 버튼 클릭 이벤트 핸들러 설정
+        checkCircle.addTarget(self, action: #selector(checkCircleTapped), for: .touchUpInside)
+    }
+
+    @objc private func checkCircleTapped() {
+        isCircleFilled.toggle()
+        let imageName = isCircleFilled ? "circle.fill" : "circle"
+        checkCircle.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 
