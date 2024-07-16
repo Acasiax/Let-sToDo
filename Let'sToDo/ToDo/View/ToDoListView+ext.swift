@@ -8,18 +8,30 @@
 import UIKit
 
 extension ToDoListViewController {
-    
+
     @objc func refreshTaskList() {
         if let folderFilter = folderFilter {
             let folders = toDoListRepository.readFolders(with: folderFilter, mainFilter: mainFilter)
-            list = folders.flatMap { $0.detail88 }
+            list = folders.flatMap { $0.detail88.filter { toDo in
+                if let mainFilter = self.mainFilter {
+                    return toDo.matches(filter: mainFilter)
+                }
+                return true
+            }}
         } else {
             let folders = toDoListRepository.readAllFolders(mainFilter: mainFilter)
-            list = folders.flatMap { $0.detail88 }
+            list = folders.flatMap { $0.detail88.filter { toDo in
+                if let mainFilter = self.mainFilter {
+                    return toDo.matches(filter: mainFilter)
+                }
+                return true
+            }}
         }
         taskTableView.reloadData()
         updateEmptyState()
     }
+
+    
     
      func updateNavigationBarTitle() {
         if let folderFilter = folderFilter {
@@ -42,6 +54,7 @@ extension ToDoListViewController {
         }
     }
     
+
     func configureSortMenu() {
         let sortByDeadline = createSortAction(title: "마감일로 정렬", keyPath: "taskDeadline", ascending: true)
         let sortByTitle = createSortAction(title: "제목순으로", keyPath: "taskTitle", ascending: true)
@@ -49,13 +62,23 @@ extension ToDoListViewController {
         let sortMenu = UIMenu(title: "정렬 옵션", children: [sortByDeadline, sortByTitle])
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle.fill"), menu: sortMenu)
     }
-    
-    func createSortAction(title: String, keyPath: String, ascending: Bool, filter: String? = nil) -> UIAction {
+
+    func createSortAction(title: String, keyPath: String, ascending: Bool) -> UIAction {
         return UIAction(title: title) { _ in
-            self.list = self.toDoListRepository.readToDoListsSorted(by: keyPath, ascending: ascending)
+            self.sortTasks(by: keyPath, ascending: ascending)
             self.taskTableView.reloadData()
         }
     }
+
+    func sortTasks(by keyPath: String, ascending: Bool) {
+        list.sort {
+            let firstValue = $0.value(forKeyPath: keyPath) as? Date ?? Date.distantPast
+            let secondValue = $1.value(forKeyPath: keyPath) as? Date ?? Date.distantPast
+            return ascending ? firstValue < secondValue : firstValue > secondValue
+        }
+    }
+
+
     
     func setupTitleLabel() {
         titleLbl.text = "전체"
@@ -112,5 +135,34 @@ extension ToDoListViewController:  UITableViewDelegate, UITableViewDataSource  {
         deleteAction.backgroundColor = .red
         
         return UISwipeActionsConfiguration(actions: [deleteAction, detailAction])
+    }
+}
+
+extension ToDoList {
+    func matches(filter: Filter) -> Bool {
+        switch filter {
+        case .today:
+            return taskDeadline?.isToday() ?? false
+        case .upcoming:
+            return taskDeadline?.isUpcoming() ?? false
+        case .all:
+            return true
+        case .flagged:
+            return taskPriority == "High"
+        case .completed:
+            return taskCategory == "Completed"
+        }
+    }
+}
+
+
+extension Date {
+    func isToday() -> Bool {
+        let calendar = Calendar.current
+        return calendar.isDateInToday(self)
+    }
+
+    func isUpcoming() -> Bool {
+        return self > Date()
     }
 }

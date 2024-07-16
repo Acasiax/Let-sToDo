@@ -65,9 +65,7 @@ class FolderListViewController: UIViewController {
         }
     }
 
-//    func didSelectFilter(title: String) {
-//        folderTitleLabel.text = "\(title) 폴더"
-//    }
+
 }
 
 extension FolderListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -88,8 +86,14 @@ extension FolderListViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let folderFilter = FolderFilter.allCases[indexPath.item]
         let toDoListVC = ToDoListViewController()
+        
+        // var selectedFilter: Filter? FolderListViewController에 있음
+        //var folderFilter: String?  ToDoListViewController에 있음
+    // var mainFilter: Filter? ToDoListViewController에 있음
         toDoListVC.folderFilter = folderFilter.title
+        print("필터링한 폴더 이름 \(toDoListVC.folderFilter)")
         toDoListVC.mainFilter = selectedFilter
+        print("오옹 \(toDoListVC.mainFilter)")
         self.navigationController?.pushViewController(toDoListVC, animated: true)
     }
 }
