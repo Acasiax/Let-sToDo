@@ -30,37 +30,37 @@ extension RegisterViewController {
     }
     
     func bindViewModel() {
-        viewModel.taskTitle.bind { title in
-            self.titleTextField.text = title
+        viewModel.taskTitle.bind { [weak self]  title in
+            self?.titleTextField.text = title
         }
-        viewModel.taskContent.bind { content in
-            self.memoTextField.text = content
+        viewModel.taskContent.bind { [weak self]  content in
+            self?.memoTextField.text = content
         }
-        viewModel.taskDeadline.bind { deadline in
+        viewModel.taskDeadline.bind { [weak self]  deadline in
             if let deadline = deadline {
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
-                self.deadlineButton.setTitle(formatter.string(from: deadline), for: .normal)
+                self?.deadlineButton.setTitle(formatter.string(from: deadline), for: .normal)
             } else {
-                self.deadlineButton.setTitle("마감일", for: .normal)
+                self?.deadlineButton.setTitle("마감일", for: .normal)
             }
         }
-        viewModel.taskTag.bind { tag in
-            self.tagButton.setTitle(tag.isEmpty ? "태그" : tag, for: .normal)
+        viewModel.taskTag.bind { [weak self]  tag in
+            self?.tagButton.setTitle(tag.isEmpty ? "태그" : tag, for: .normal)
         }
-        viewModel.taskPriority.bind { priority in
-            self.priorityButton.setTitle(priority.isEmpty ? "우선 순위" : priority, for: .normal)
+        viewModel.taskPriority.bind { [weak self] priority in
+            self?.priorityButton.setTitle(priority.isEmpty ? "우선 순위" : priority, for: .normal)
         }
-        viewModel.taskCategory.bind { category in
+        viewModel.taskCategory.bind { [weak self] category in
             if let index = FolderFilter.allCases.firstIndex(where: { $0.title == category }) {
-                self.folderSegmentedControl.selectedSegmentIndex = index
+                self?.folderSegmentedControl.selectedSegmentIndex = index
             }
         }
-        viewModel.taskImage.bind { image in
+        viewModel.taskImage.bind { [weak self] image in
             if let _ = image {
-                self.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
+                self?.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
             } else {
-                self.imageAddButton.setTitle("이미지 추가", for: .normal)
+                self?.imageAddButton.setTitle("이미지 추가", for: .normal)
             }
         }
     }
