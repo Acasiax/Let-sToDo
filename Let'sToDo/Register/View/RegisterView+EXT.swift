@@ -56,13 +56,20 @@ extension RegisterViewController {
                 self?.folderSegmentedControl.selectedSegmentIndex = index
             }
         }
-        viewModel.taskImage.bind { [weak self] image in
-            if let _ = image {
-                self?.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
-            } else {
-                self?.imageAddButton.setTitle("이미지 추가", for: .normal)
-            }
-        }
+        
+        viewModel.taskImage.bind { [weak self] result in
+                    switch result {
+                    case .success(let image):
+                        if let _ = image {
+                            self?.imageAddButton.setTitle("이미지 선택 완료", for: .normal)
+                        } else {
+                            self?.imageAddButton.setTitle("이미지 추가", for: .normal)
+                        }
+                    case .failure(let error):
+                        print("Error binding image: \(error)")
+                    }
+                }
+            
     }
     
     func setupNavigationBar() {

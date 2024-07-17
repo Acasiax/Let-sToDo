@@ -18,7 +18,8 @@ class ToDoListViewModel {
     var taskTag = Observable<String>("")
     var taskPriority = Observable<String>("")
     var taskCategory = Observable<String>("")
-    var taskImage = Observable<Data?>(nil)
+   // var taskImage = Observable<Data?>(nil)
+    var taskImage = Observable<Result<Data?, Error>>(.success(nil))
 
     init() {
         fetchAllTasks()
